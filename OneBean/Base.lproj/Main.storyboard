@@ -1,24 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0G-8a-uFh" customClass="FSCalendar">
+                                <rect key="frame" x="5" y="64" width="404" height="617"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="617" id="Hlf-9D-LXA"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="6W0-gq-qYI"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="0Hu-7a-l2d"/>
+                                </connections>
+                            </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgi-vt-9Zx">
+                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="h4f-LZ-VRk">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="gHb-a7-vau">
+                                            <rect key="frame" x="8" y="8" width="398" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="tyd-cs-jl2"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="gHb-a7-vau" secondAttribute="trailing" id="Jta-S1-Kl2"/>
+                                        <constraint firstItem="gHb-a7-vau" firstAttribute="leading" secondItem="h4f-LZ-VRk" secondAttribute="leadingMargin" id="SC8-hO-CP6"/>
+                                        <constraint firstItem="gHb-a7-vau" firstAttribute="top" secondItem="h4f-LZ-VRk" secondAttribute="top" constant="8" id="Sj9-8a-1FO"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="gHb-a7-vau" secondAttribute="bottom" id="Ysv-GX-xK5"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmb-sy-jZ4">
+                                <rect key="frame" x="103.5" y="728" width="207" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="dlG-dA-sWG"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add Mood"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="A0G-8a-uFh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7M1-yN-6NV"/>
+                            <constraint firstAttribute="trailing" secondItem="xgi-vt-9Zx" secondAttribute="trailing" id="9lb-0K-mgE"/>
+                            <constraint firstItem="A0G-8a-uFh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="E1c-yp-2gD"/>
+                            <constraint firstItem="xgi-vt-9Zx" firstAttribute="top" secondItem="Nmb-sy-jZ4" secondAttribute="bottom" constant="20" id="II1-WD-ZXf"/>
+                            <constraint firstAttribute="bottom" secondItem="xgi-vt-9Zx" secondAttribute="bottom" id="JJ0-xK-UfU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0G-8a-uFh" secondAttribute="trailing" constant="5" id="Lz9-W7-Z6G"/>
+                            <constraint firstItem="Nmb-sy-jZ4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZxH-ub-ZqI"/>
+                            <constraint firstItem="A0G-8a-uFh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="lTM-75-wHi"/>
+                            <constraint firstItem="xgi-vt-9Zx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="snA-aD-5lp"/>
+                            <constraint firstItem="Nmb-sy-jZ4" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.5" id="tQ4-Dk-TI5"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="addMoodButton" destination="Nmb-sy-jZ4" id="ohe-gQ-0Ss"/>
+                        <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
+                        <outlet property="stackView" destination="gHb-a7-vau" id="YIA-VO-h8L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.623188405797109" y="115.84821428571428"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

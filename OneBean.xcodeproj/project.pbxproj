@@ -13,6 +13,10 @@
 		0592695329B4A97900730B9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0592695129B4A97900730B9C /* Main.storyboard */; };
 		0592695529B4A97A00730B9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0592695429B4A97A00730B9C /* Assets.xcassets */; };
 		0592695829B4A97A00730B9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0592695629B4A97A00730B9C /* LaunchScreen.storyboard */; };
+		05FFB20B29B62BD100C8156E /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB20A29B62BD100C8156E /* Mood.swift */; };
+		05FFB20D29B62C1700C8156E /* UIColor+OneBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB20C29B62C1700C8156E /* UIColor+OneBean.swift */; };
+		05FFB20F29B62C2D00C8156E /* UIImage+OneBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB20E29B62C2D00C8156E /* UIImage+OneBean.swift */; };
+		F518F6D1B8D89FE3F5E9B67D /* Pods_OneBean.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01EA3A7EE1986BA67D156F5 /* Pods_OneBean.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,12 @@
 		0592695429B4A97A00730B9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0592695729B4A97A00730B9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0592695929B4A97A00730B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05FFB20A29B62BD100C8156E /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
+		05FFB20C29B62C1700C8156E /* UIColor+OneBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+OneBean.swift"; sourceTree = "<group>"; };
+		05FFB20E29B62C2D00C8156E /* UIImage+OneBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+OneBean.swift"; sourceTree = "<group>"; };
+		1A46FE6D97F68C634467CD08 /* Pods-OneBean.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneBean.release.xcconfig"; path = "Target Support Files/Pods-OneBean/Pods-OneBean.release.xcconfig"; sourceTree = "<group>"; };
+		C31BE69414C27B1AD66F8BBC /* Pods-OneBean.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneBean.debug.xcconfig"; path = "Target Support Files/Pods-OneBean/Pods-OneBean.debug.xcconfig"; sourceTree = "<group>"; };
+		D01EA3A7EE1986BA67D156F5 /* Pods_OneBean.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneBean.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F518F6D1B8D89FE3F5E9B67D /* Pods_OneBean.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +53,8 @@
 			children = (
 				0592694A29B4A97900730B9C /* OneBean */,
 				0592694929B4A97900730B9C /* Products */,
+				A26D7C4BDBD660D4A961B0DF /* Pods */,
+				234EAF55FF3E00AF27B357A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,10 +74,30 @@
 				0592694F29B4A97900730B9C /* ViewController.swift */,
 				0592695129B4A97900730B9C /* Main.storyboard */,
 				0592695429B4A97A00730B9C /* Assets.xcassets */,
+				05FFB20A29B62BD100C8156E /* Mood.swift */,
+				05FFB20C29B62C1700C8156E /* UIColor+OneBean.swift */,
+				05FFB20E29B62C2D00C8156E /* UIImage+OneBean.swift */,
 				0592695629B4A97A00730B9C /* LaunchScreen.storyboard */,
 				0592695929B4A97A00730B9C /* Info.plist */,
 			);
 			path = OneBean;
+			sourceTree = "<group>";
+		};
+		234EAF55FF3E00AF27B357A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D01EA3A7EE1986BA67D156F5 /* Pods_OneBean.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A26D7C4BDBD660D4A961B0DF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C31BE69414C27B1AD66F8BBC /* Pods-OneBean.debug.xcconfig */,
+				1A46FE6D97F68C634467CD08 /* Pods-OneBean.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +107,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0592695C29B4A97A00730B9C /* Build configuration list for PBXNativeTarget "OneBean" */;
 			buildPhases = (
+				08B31A74129F2B8C8379137C /* [CP] Check Pods Manifest.lock */,
 				0592694429B4A97900730B9C /* Sources */,
 				0592694529B4A97900730B9C /* Frameworks */,
 				0592694629B4A97900730B9C /* Resources */,
+				DDC763069C2538E5DC893C3E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,11 +168,56 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		08B31A74129F2B8C8379137C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneBean-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DDC763069C2538E5DC893C3E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneBean/Pods-OneBean-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneBean/Pods-OneBean-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OneBean/Pods-OneBean-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0592694429B4A97900730B9C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05FFB20F29B62C2D00C8156E /* UIImage+OneBean.swift in Sources */,
+				05FFB20D29B62C1700C8156E /* UIColor+OneBean.swift in Sources */,
+				05FFB20B29B62BD100C8156E /* Mood.swift in Sources */,
 				0592695029B4A97900730B9C /* ViewController.swift in Sources */,
 				0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */,
 				0592694E29B4A97900730B9C /* SceneDelegate.swift in Sources */,
@@ -265,6 +345,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -284,6 +365,7 @@
 		};
 		0592695D29B4A97A00730B9C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C31BE69414C27B1AD66F8BBC /* Pods-OneBean.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -312,6 +394,7 @@
 		};
 		0592695E29B4A97A00730B9C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A46FE6D97F68C634467CD08 /* Pods-OneBean.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

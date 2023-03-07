@@ -6,14 +6,152 @@
 //
 
 import UIKit
+import FSCalendar
 
 class ViewController: UIViewController {
 
+    @IBOutlet var calendarView: FSCalendar!
+    
+    @IBOutlet var stackView: UIStackView!
+    @IBOutlet var addMoodButton: UIButton!
+    
+    var currentMood: Mood? {
+        didSet {
+            guard let currentMood = currentMood else {
+                addMoodButton?.setTitle(nil, for: .normal)
+                addMoodButton?.backgroundColor = nil
+                return
+            }
+
+            addMoodButton?.setTitle("I'm \(currentMood.name)", for: .normal)
+            addMoodButton?.backgroundColor = currentMood.color
+            
+            // TODO if date selected update mood image
+            calendarView.reloadData()
+        }
+    }
+
+    @objc func moodSelectionChanged(_ sender: UIButton) {
+        //
+        guard let selectedIndex = moodButtons.firstIndex(of: sender) else {
+            preconditionFailure(
+                    "Unable to find the tapped button in the buttons array.")
+        }
+        //
+        currentMood = moods[selectedIndex]
+        
+    }
+    
+    var moodButtons: [UIButton] = [] {
+        didSet {
+            oldValue.forEach { $0.removeFromSuperview() }
+            moodButtons.forEach { stackView.addArrangedSubview($0)}
+        }
+    }
+
+    var moods: [Mood] = [] {
+        didSet {
+            currentMood = moods.first
+            moodButtons = moods.map { mood in
+                let moodButton = UIButton()
+                moodButton.setImage(mood.image, for: .normal)
+                moodButton.imageView?.contentMode = .scaleAspectFit
+                moodButton.adjustsImageWhenHighlighted = false
+                moodButton.addTarget(self,
+                                     action: #selector(moodSelectionChanged(_:)),
+                                     for: .touchUpInside)
+                return moodButton
+            }
+        }
+    }
+    
+    let dateFormatter = DateFormatter()
+    var selectedDate : Date?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
+        addMoodButton.layer.cornerRadius = addMoodButton.bounds.height / 2
+
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        calendarView.delegate = self
+        calendarView.dataSource = self
+        
+        calendarView.scrollEnabled = true
+        calendarView.scrollDirection = .vertical
+        
+        calendarView.backgroundColor = UIColor(red: 241/255, green: 249/255, blue: 255/255, alpha: 1)
+        calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 1)
+        calendarView.appearance.todayColor = UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
+        
+        calendarView.appearance.subtitleSelectionColor = .red
+        //calendarView.appearance.titleOffset = CGPoint(x:0,y:100)
+        //calendarView.appearance.calendar.pagingEnabled = true
+        //calendarView.appearance.calendar.preferredWeekdayHeight = 100
+        //calendarView.appearance.calendar.collectionView
     }
+}
 
-
+extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+    
+    //
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
+        switch dateFormatter.string(from: date){
+        case dateFormatter.string(from: Date()):
+            return CGPoint(x:0.0, y:30.0)
+        default:
+            return CGPoint(x:0.0, y:0.0)
+        }
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        selectedDate = date
+        print(dateFormatter.string(from: selectedDate!) + " 선택됨")
+    }
+    //
+    public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print(dateFormatter.string(from: date) + " 해제됨")
+        selectedDate = nil
+    }
+    func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
+            
+            switch dateFormatter.string(from: date) {
+                
+            case dateFormatter.string(from: Date()):
+                return "Today"
+            default:
+                return nil
+            }
+    }
+    
+    func calendar(_ calendar: FSCalendar!, hasEventForDate date: Date) -> Bool {
+        return true
+    }
+    
+    func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
+        
+        // TODO data source to show image for date
+        switch dateFormatter.string(from: date){
+        case dateFormatter.string(from: Date()):
+            let tempImage = currentMood?.image
+            
+            // resize image
+            let scaledImageSize = CGSize(
+                width: (tempImage?.size.width ?? 1) * 0.3,
+                height: (tempImage?.size.height ?? 1) * 0.3)
+            
+            let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+            let scaledImage = renderer.image { _ in
+                tempImage?.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+            }
+            return scaledImage
+        default:
+            return nil
+        }
+    }
 }
 
