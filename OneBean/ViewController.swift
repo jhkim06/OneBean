@@ -56,7 +56,7 @@ class ViewController: UIViewController {
                 let moodButton = UIButton()
                 moodButton.setImage(mood.image, for: .normal)
                 moodButton.imageView?.contentMode = .scaleAspectFit
-                moodButton.adjustsImageWhenHighlighted = false
+                //moodButton.adjustsImageWhenHighlighted = false
                 moodButton.addTarget(self,
                                      action: #selector(moodSelectionChanged(_:)),
                                      for: .touchUpInside)
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
     }
     
     let dateFormatter = DateFormatter()
-    var selectedDate : Date?
+    var selectedDate = Date() // default to today
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,6 @@ class ViewController: UIViewController {
         
         moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
         addMoodButton.layer.cornerRadius = addMoodButton.bounds.height / 2
-
         
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
@@ -89,10 +88,6 @@ class ViewController: UIViewController {
         calendarView.appearance.todayColor = UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
         
         calendarView.appearance.subtitleSelectionColor = .red
-        //calendarView.appearance.titleOffset = CGPoint(x:0,y:100)
-        //calendarView.appearance.calendar.pagingEnabled = true
-        //calendarView.appearance.calendar.preferredWeekdayHeight = 100
-        //calendarView.appearance.calendar.collectionView
     }
 }
 
@@ -101,8 +96,8 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
         switch dateFormatter.string(from: date){
-        case dateFormatter.string(from: Date()):
-            return CGPoint(x:0.0, y:30.0)
+        case dateFormatter.string(from: selectedDate):
+            return CGPoint(x:0.0, y:25.0)
         default:
             return CGPoint(x:0.0, y:0.0)
         }
@@ -110,33 +105,38 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
-        print(dateFormatter.string(from: selectedDate!) + " 선택됨")
+        print(dateFormatter.string(from: selectedDate) + " 선택됨")
     }
     //
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(dateFormatter.string(from: date) + " 해제됨")
-        selectedDate = nil
+        selectedDate = Date()
     }
+    
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
             
-            switch dateFormatter.string(from: date) {
-                
+        //selectedDate = date
+        switch dateFormatter.string(from: date) {
             case dateFormatter.string(from: Date()):
                 return "Today"
             default:
                 return nil
-            }
+        }
     }
     
     func calendar(_ calendar: FSCalendar!, hasEventForDate date: Date) -> Bool {
         return true
     }
     
+    // show image in the calendar
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
         
         // TODO data source to show image for date
+        //print(dateFormatter.string(from: selectedDate))
+        
+        // TODO 1 show the image for the selected date
         switch dateFormatter.string(from: date){
-        case dateFormatter.string(from: Date()):
+        case dateFormatter.string(from: selectedDate):
             let tempImage = currentMood?.image
             
             // resize image
