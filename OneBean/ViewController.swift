@@ -26,7 +26,8 @@ class ViewController: UIViewController {
             addMoodButton?.setTitle("I'm \(currentMood.name)", for: .normal)
             addMoodButton?.backgroundColor = currentMood.color
             
-            // TODO if date selected update mood image
+            // TODO if date selected update Log array
+            logItemStore.createItem(date: selectedDate, mood: currentMood)
             calendarView.reloadData()
         }
     }
@@ -49,6 +50,7 @@ class ViewController: UIViewController {
         }
     }
 
+    //
     var moods: [Mood] = [] {
         didSet {
             currentMood = moods.first
@@ -67,6 +69,8 @@ class ViewController: UIViewController {
     
     let dateFormatter = DateFormatter()
     var selectedDate = Date() // default to today
+    
+    var logItemStore: LogItemStore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,12 +99,10 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
-        switch dateFormatter.string(from: date){
-        case dateFormatter.string(from: selectedDate):
+        if logItemStore.allLogItems.firstIndex(where: {$0.date == date}) != nil {
             return CGPoint(x:0.0, y:25.0)
-        default:
-            return CGPoint(x:0.0, y:0.0)
         }
+        return CGPoint(x:0.0, y:0.0)
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -135,6 +137,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
         //print(dateFormatter.string(from: selectedDate))
         
         // TODO 1 show the image for the selected date
+        /*
         switch dateFormatter.string(from: date){
         case dateFormatter.string(from: selectedDate):
             let tempImage = currentMood?.image
@@ -152,6 +155,24 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
         default:
             return nil
         }
+        */
+        //
+        if let found = logItemStore.allLogItems.firstIndex(where: {$0.date == date}) {
+            
+            let tempImage = logItemStore.allLogItems[found].mood.image
+            
+            // resize image
+            let scaledImageSize = CGSize(
+                width: (tempImage.size.width ) * 0.3,
+                height: (tempImage.size.height ) * 0.3)
+            
+            let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+            let scaledImage = renderer.image { _ in
+                tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+            }
+            return scaledImage
+        }
+        return nil
     }
 }
 
