@@ -113,6 +113,16 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
         return CGPoint(x:0.0, y:0.0)
     }
     
+    // selection condition
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+            // 날짜 3개까지만 선택되도록
+            if date > Date() {
+                return false
+            } else {
+                return true
+            }
+    }
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
         print(dateFormatter.string(from: selectedDate) + " 선택됨")
