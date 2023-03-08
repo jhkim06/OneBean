@@ -87,9 +87,17 @@ class ViewController: UIViewController {
         calendarView.scrollEnabled = true
         calendarView.scrollDirection = .vertical
         
-        calendarView.backgroundColor = UIColor(red: 241/255, green: 249/255, blue: 255/255, alpha: 1)
+        calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
         calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 1)
         calendarView.appearance.todayColor = UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
+        
+        // 
+        calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 30.0)
+        
+        calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 20.0)
+        
+        calendarView.appearance.weekdayTextColor = .gray
+        calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 20.0)
         
         calendarView.appearance.subtitleSelectionColor = .red
     }
