@@ -95,7 +95,7 @@ class ViewController: UIViewController {
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
         calendarView.appearance.headerTitleColor = .gray
         
-        calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 15.0)
+        calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 10.0)
         
         calendarView.appearance.weekdayTextColor = .gray
         calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
@@ -108,7 +108,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
-        if logItemStore.allLogItems.firstIndex(where: {$0.date == date}) != nil {
+        if logItemStore.allLogItems.contains(where: {$0.key == date}) {
             return CGPoint(x:0.0, y:25.0)
         }
         return CGPoint(x:0.0, y:0.0)
@@ -153,38 +153,13 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     // show image in the calendar
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
         
-        // TODO data source to show image for date
-        //print(dateFormatter.string(from: selectedDate))
-        
-        // TODO 1 show the image for the selected date
-        /*
-        switch dateFormatter.string(from: date){
-        case dateFormatter.string(from: selectedDate):
-            let tempImage = currentMood?.image
+        if logItemStore.allLogItems.contains(where: {$0.key == date}) {
+            let tempImage = logItemStore.allLogItems[date]!.mood.image
             
             // resize image
             let scaledImageSize = CGSize(
-                width: (tempImage?.size.width ?? 1) * 0.3,
-                height: (tempImage?.size.height ?? 1) * 0.3)
-            
-            let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
-            let scaledImage = renderer.image { _ in
-                tempImage?.draw(in: CGRect(origin: .zero, size: scaledImageSize))
-            }
-            return scaledImage
-        default:
-            return nil
-        }
-        */
-        //
-        if let found = logItemStore.allLogItems.firstIndex(where: {$0.date == date}) {
-            
-            let tempImage = logItemStore.allLogItems[found].mood.image
-            
-            // resize image
-            let scaledImageSize = CGSize(
-                width: (tempImage.size.width ) * 0.3,
-                height: (tempImage.size.height ) * 0.3)
+                width: (tempImage.size.width ) * 0.2,
+                height: (tempImage.size.height ) * 0.2)
             
             let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
             let scaledImage = renderer.image { _ in
@@ -192,6 +167,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
             }
             return scaledImage
         }
+        
         return nil
     }
 }
