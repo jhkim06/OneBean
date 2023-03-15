@@ -16,61 +16,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0G-8a-uFh" customClass="FSCalendar">
-                                <rect key="frame" x="5" y="64" width="404" height="617"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="617" id="Hlf-9D-LXA"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="6W0-gq-qYI"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="0Hu-7a-l2d"/>
-                                </connections>
-                            </view>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgi-vt-9Zx">
-                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="h4f-LZ-VRk">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="gHb-a7-vau">
-                                            <rect key="frame" x="8" y="8" width="398" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="67" translatesAutoresizingMaskIntoConstraints="NO" id="lfF-TN-dF4">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0G-8a-uFh" customClass="FSCalendar">
+                                        <rect key="frame" x="5" y="0.0" width="404" height="552"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="6W0-gq-qYI"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="0Hu-7a-l2d"/>
+                                        </connections>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmb-sy-jZ4">
+                                        <rect key="frame" x="162" y="619" width="90.5" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="trY-MH-5Jo"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add Mood"/>
+                                    </button>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgi-vt-9Zx">
+                                        <rect key="frame" x="0.0" y="721" width="414" height="97"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="h4f-LZ-VRk">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="97"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="gHb-a7-vau">
+                                                    <rect key="frame" x="8" y="8" width="398" height="81"/>
+                                                </stackView>
+                                            </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="tyd-cs-jl2"/>
+                                                <constraint firstAttribute="bottom" secondItem="gHb-a7-vau" secondAttribute="bottom" constant="8" id="NxB-j6-YD9"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gHb-a7-vau" secondAttribute="trailing" id="fCf-UU-phQ"/>
+                                                <constraint firstItem="gHb-a7-vau" firstAttribute="top" secondItem="h4f-LZ-VRk" secondAttribute="top" constant="8" id="vi0-VB-ieV"/>
+                                                <constraint firstItem="gHb-a7-vau" firstAttribute="leading" secondItem="h4f-LZ-VRk" secondAttribute="leadingMargin" id="yZU-7a-cK2"/>
                                             </constraints>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="gHb-a7-vau" secondAttribute="trailing" id="Jta-S1-Kl2"/>
-                                        <constraint firstItem="gHb-a7-vau" firstAttribute="leading" secondItem="h4f-LZ-VRk" secondAttribute="leadingMargin" id="SC8-hO-CP6"/>
-                                        <constraint firstItem="gHb-a7-vau" firstAttribute="top" secondItem="h4f-LZ-VRk" secondAttribute="top" constant="8" id="Sj9-8a-1FO"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="gHb-a7-vau" secondAttribute="bottom" id="Ysv-GX-xK5"/>
-                                    </constraints>
-                                </view>
-                                <blurEffect style="regular"/>
-                            </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmb-sy-jZ4">
-                                <rect key="frame" x="103.5" y="728" width="207" height="48"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="97" id="5Px-Bp-6Vd"/>
+                                            <constraint firstAttribute="width" constant="414" id="lqd-OD-iYi"/>
+                                        </constraints>
+                                        <blurEffect style="regular"/>
+                                    </visualEffectView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="dlG-dA-sWG"/>
+                                    <constraint firstItem="A0G-8a-uFh" firstAttribute="leading" secondItem="lfF-TN-dF4" secondAttribute="leading" constant="5" id="3ig-64-zJO"/>
+                                    <constraint firstItem="xgi-vt-9Zx" firstAttribute="leading" secondItem="lfF-TN-dF4" secondAttribute="leadingMargin" id="M3T-Nu-JhC"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="xgi-vt-9Zx" secondAttribute="trailing" id="odP-Be-bff"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Add Mood"/>
-                            </button>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.95686274509803915" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="A0G-8a-uFh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7M1-yN-6NV"/>
-                            <constraint firstAttribute="trailing" secondItem="xgi-vt-9Zx" secondAttribute="trailing" id="9lb-0K-mgE"/>
-                            <constraint firstItem="A0G-8a-uFh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="E1c-yp-2gD"/>
-                            <constraint firstItem="xgi-vt-9Zx" firstAttribute="top" secondItem="Nmb-sy-jZ4" secondAttribute="bottom" constant="20" id="II1-WD-ZXf"/>
-                            <constraint firstAttribute="bottom" secondItem="xgi-vt-9Zx" secondAttribute="bottom" id="JJ0-xK-UfU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0G-8a-uFh" secondAttribute="trailing" constant="5" id="Lz9-W7-Z6G"/>
-                            <constraint firstItem="Nmb-sy-jZ4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZxH-ub-ZqI"/>
-                            <constraint firstItem="A0G-8a-uFh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="lTM-75-wHi"/>
-                            <constraint firstItem="xgi-vt-9Zx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="snA-aD-5lp"/>
-                            <constraint firstItem="Nmb-sy-jZ4" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.5" id="tQ4-Dk-TI5"/>
+                            <constraint firstItem="lfF-TN-dF4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="0cE-c9-1L2"/>
+                            <constraint firstItem="lfF-TN-dF4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PIh-JM-Ef2"/>
+                            <constraint firstItem="lfF-TN-dF4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="f5B-cq-KZZ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="lfF-TN-dF4" secondAttribute="bottom" id="uIW-H5-H03"/>
+                            <constraint firstItem="lfF-TN-dF4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="y4O-ok-VAg"/>
                         </constraints>
                     </view>
                     <connections>

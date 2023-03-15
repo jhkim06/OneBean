@@ -92,12 +92,13 @@ class ViewController: UIViewController {
         calendarView.appearance.todayColor = UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
         
         // 
-        calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 30.0)
+        calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
+        calendarView.appearance.headerTitleColor = .gray
         
-        calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 20.0)
+        calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 15.0)
         
         calendarView.appearance.weekdayTextColor = .gray
-        calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 20.0)
+        calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
         
         calendarView.appearance.subtitleSelectionColor = .red
     }
@@ -115,12 +116,13 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     // selection condition
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-            // 날짜 3개까지만 선택되도록
-            if date > Date() {
+        
+        // block to select future date
+        if date > Date() {
                 return false
-            } else {
-                return true
-            }
+        } else {
+            return true
+        }
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
