@@ -92,6 +92,7 @@ class ViewController: UIViewController {
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
         calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.5)
         calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
+        calendarView.appearance.borderRadius = 0.7
         
         // 
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
@@ -120,7 +121,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleSelectionColorFor date: Date) -> UIColor? {
         
-        return UIColor.white // Set the title selection color to clear to remove the default selection text color
+        return UIColor.black // Set the title selection color to clear to remove the default selection text color
     }
     /*
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
