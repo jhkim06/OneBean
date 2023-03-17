@@ -88,8 +88,9 @@ class ViewController: UIViewController {
         calendarView.scrollDirection = .vertical
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
-        calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 1)
-        calendarView.appearance.todayColor = UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
+        calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.5)
+        calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
+        calendarView.appearance.borderRadius = 0.7
         
         // 
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
@@ -106,10 +107,24 @@ class ViewController: UIViewController {
 
 extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, isSelected date: Date) -> Bool {
+        return true // Return true to indicate that the date is selected
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleSelectionColorFor date: Date) -> UIColor? {
+        
+        return UIColor.white // Set the title selection color to clear to remove the default selection text color
+    }
+    /*
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+        return UIColor.clear // Set the fill selection color to clear to remove the default selection background color
+    }
+    */
+    
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
-            return CGPoint(x:0.0, y:25.0)
+            return CGPoint(x:0.0, y:10.0)
         }
         return CGPoint(x:0.0, y:0.0)
     }
@@ -138,12 +153,15 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
             
         //selectedDate = date
+        /*
         switch dateFormatter.string(from: date) {
             case dateFormatter.string(from: Date()):
                 return "Today"
             default:
                 return nil
         }
+        */
+        return nil
     }
     
     func calendar(_ calendar: FSCalendar!, hasEventForDate date: Date) -> Bool {
@@ -158,8 +176,8 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
             
             // resize image
             let scaledImageSize = CGSize(
-                width: (tempImage.size.width ) * 0.2,
-                height: (tempImage.size.height ) * 0.2)
+                width: (tempImage.size.width ) * 0.15,
+                height: (tempImage.size.height ) * 0.15)
             
             let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
             let scaledImage = renderer.image { _ in
