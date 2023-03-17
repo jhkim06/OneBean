@@ -87,10 +87,11 @@ class ViewController: UIViewController {
         calendarView.scrollEnabled = true
         calendarView.scrollDirection = .vertical
         
+        calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cell")
+        
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
         calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.5)
         calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
-        calendarView.appearance.borderRadius = 0.7
         
         // 
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
@@ -106,6 +107,12 @@ class ViewController: UIViewController {
 }
 
 extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+
+    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
+        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
+        
+        return cell
+    }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, isSelected date: Date) -> Bool {
         return true // Return true to indicate that the date is selected
@@ -142,6 +149,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
+        print(calendar.frame.origin)
         print(dateFormatter.string(from: selectedDate) + " 선택됨")
     }
     //

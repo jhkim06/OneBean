@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		053C650229C4523700708FF1 /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053C650129C4523700708FF1 /* CustomCalendarCell.swift */; };
 		0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694B29B4A97900730B9C /* AppDelegate.swift */; };
 		0592694E29B4A97900730B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694D29B4A97900730B9C /* SceneDelegate.swift */; };
 		0592695029B4A97900730B9C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694F29B4A97900730B9C /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		053C650129C4523700708FF1 /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		0592694829B4A97900730B9C /* OneBean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneBean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0592694B29B4A97900730B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0592694D29B4A97900730B9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				0592694B29B4A97900730B9C /* AppDelegate.swift */,
 				0592694D29B4A97900730B9C /* SceneDelegate.swift */,
 				0592694F29B4A97900730B9C /* ViewController.swift */,
+				053C650129C4523700708FF1 /* CustomCalendarCell.swift */,
 				0592695129B4A97900730B9C /* Main.storyboard */,
 				0592695429B4A97A00730B9C /* Assets.xcassets */,
 				05FFB20A29B62BD100C8156E /* Mood.swift */,
@@ -225,6 +228,7 @@
 				05FFB20D29B62C1700C8156E /* UIColor+OneBean.swift in Sources */,
 				05FFB20B29B62BD100C8156E /* Mood.swift in Sources */,
 				05FFB21329B781A200C8156E /* LogItemStore.swift in Sources */,
+				053C650229C4523700708FF1 /* CustomCalendarCell.swift in Sources */,
 				05FFB21129B7806D00C8156E /* LogItem.swift in Sources */,
 				0592695029B4A97900730B9C /* ViewController.swift in Sources */,
 				0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */,
