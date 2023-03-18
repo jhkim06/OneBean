@@ -87,6 +87,7 @@ class ViewController: UIViewController {
         calendarView.scrollEnabled = true
         calendarView.scrollDirection = .vertical
         
+        
         calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cell")
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
@@ -104,6 +105,8 @@ class ViewController: UIViewController {
         calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
         
         calendarView.appearance.subtitleSelectionColor = .red
+        
+        calendarView.placeholderType = .none // show only the days of the current month
     }
 }
 
@@ -150,7 +153,6 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
-        print(calendar.frame.origin)
         print(dateFormatter.string(from: selectedDate) + " 선택됨")
     }
     //
@@ -194,7 +196,6 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
             }
             return scaledImage
         }
-        
         return nil
     }
 }

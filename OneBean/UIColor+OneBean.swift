@@ -17,4 +17,3 @@ extension UIColor {
     static let sad = UIColor(named: "sadBlue")!
     static let sleepy = UIColor(named: "sleepyLightRed")!
 }
-
