@@ -26,8 +26,8 @@ class CustomCalendarCell: FSCalendarCell {
         let diameter: CGFloat = min(self.shapeLayer.frame.height, self.shapeLayer.frame.width)
         
         self.shapeLayer.path = UIBezierPath(roundedRect:
-            CGRect(x: (self.contentView.frame.width-diameter)/2,
-                   y: (self.contentView.frame.height-diameter)*0.7,
+            CGRect(x: (self.contentView.frame.width-diameter)*0.8, // FIXME do not use hard coded numbers
+                   y: (self.contentView.frame.height-diameter)*0.5,
                    width: diameter*0.65, height: diameter*0.4), cornerRadius: 10).cgPath
     }
 }

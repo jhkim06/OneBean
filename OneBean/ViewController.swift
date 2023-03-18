@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         calendarView.scrollEnabled = true
         calendarView.scrollDirection = .vertical
         
-        
+        // to use custom cell
         calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cell")
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
