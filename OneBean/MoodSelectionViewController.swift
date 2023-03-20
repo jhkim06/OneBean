@@ -61,6 +61,8 @@ class MoodSelectionViewController: UIViewController {
             }
         }
     }
+    
+    // https://betterprogramming.pub/how-to-present-a-view-controller-with-blurred-background-in-ios-4350017e6073
     lazy var blurredView: UIView = {
         // 1. create container view
         let containerView = UIView()
@@ -86,13 +88,18 @@ class MoodSelectionViewController: UIViewController {
         
         setupView()
     }
+    @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
+        
+            dismiss(animated: true)
+    }
     
     func setupView() {
         // 6. add blur view and send it to back
         view.addSubview(blurredView)
         view.sendSubviewToBack(blurredView)
     }
-    
+   
+    // https://betterprogramming.pub/5-ways-to-pass-data-between-view-controllers-18acb467f5ec
     @IBAction func dismissAction(_ sender: Any) {
         
         if let vc = presentingViewController as? ViewController {

@@ -93,7 +93,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
-            return CGPoint(x:0.0, y:20.0)
+            return CGPoint(x:0.0, y:15.0)
         }
         return CGPoint(x:0.0, y:0.0)
     }
