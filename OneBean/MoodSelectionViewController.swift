@@ -67,12 +67,12 @@ class MoodSelectionViewController: UIViewController {
         // 1. create container view
         let containerView = UIView()
         // 2. create custom blur view
-        let blurEffect = UIBlurEffect(style: .light)
-        let customBlurEffectView = CustomVisualEffectView(effect: blurEffect, intensity: 0.2)
+        let blurEffect = UIBlurEffect(style: .prominent)
+        let customBlurEffectView = CustomVisualEffectView(effect: blurEffect, intensity: 0.7)
         customBlurEffectView.frame = self.view.bounds
         // 3. create semi-transparent black view
         let dimmedView = UIView()
-        dimmedView.backgroundColor = .black.withAlphaComponent(0.6)
+        dimmedView.backgroundColor = .black.withAlphaComponent(0.5)
         dimmedView.frame = self.view.bounds
         
         // 4. add both as subviews
@@ -83,13 +83,12 @@ class MoodSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
         addMoodButton.layer.cornerRadius = addMoodButton.bounds.height/2
         
-        setupView()
     }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
-        
             dismiss(animated: true)
     }
     

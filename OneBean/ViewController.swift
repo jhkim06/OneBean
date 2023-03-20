@@ -47,11 +47,9 @@ class ViewController: UIViewController {
         calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
         calendarView.appearance.borderRadius = 0.7
         calendarView.appearance.titleTodayColor = .black
-        calendarView.appearance.calendar.rowHeight = 1000.0
         calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
         
-        
-        // 
+        //
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
         calendarView.appearance.headerTitleColor = .gray
         
