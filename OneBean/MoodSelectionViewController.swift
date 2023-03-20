@@ -61,23 +61,22 @@ class MoodSelectionViewController: UIViewController {
             }
         }
     }
-    
     // https://betterprogramming.pub/how-to-present-a-view-controller-with-blurred-background-in-ios-4350017e6073
     lazy var blurredView: UIView = {
         // 1. create container view
         let containerView = UIView()
         // 2. create custom blur view
-        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffect = UIBlurEffect(style: .light)
         let customBlurEffectView = CustomVisualEffectView(effect: blurEffect, intensity: 0.7)
         customBlurEffectView.frame = self.view.bounds
         // 3. create semi-transparent black view
         let dimmedView = UIView()
-        dimmedView.backgroundColor = .black.withAlphaComponent(0.5)
+        dimmedView.backgroundColor = .black.withAlphaComponent(0.2)
         dimmedView.frame = self.view.bounds
         
         // 4. add both as subviews
         containerView.addSubview(customBlurEffectView)
-        containerView.addSubview(dimmedView)
+        //containerView.addSubview(dimmedView)
         return containerView
     }()
     
@@ -86,7 +85,6 @@ class MoodSelectionViewController: UIViewController {
         setupView()
         moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
         addMoodButton.layer.cornerRadius = addMoodButton.bounds.height/2
-        
     }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
             dismiss(animated: true)

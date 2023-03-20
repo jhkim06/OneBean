@@ -142,6 +142,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     // show image in the calendar
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
         
+        
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
             let tempImage = logItemStore.allLogItems[date]!.mood.image
             
@@ -150,13 +151,33 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
                 width: (tempImage.size.width ) * 0.25,
                 height: (tempImage.size.height ) * 0.25)
             
+            print(scaledImageSize.width)
+            
             let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
             let scaledImage = renderer.image { _ in
                 tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
             }
             return scaledImage
+        } else {
+        
+            let startAngle = CGFloat(0.0)
+            let endAngle = CGFloat(360.0)
+            
+            let path = UIBezierPath(arcCenter: CGPoint(x: 25, y: 25), radius: 20, startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true)
+            
+            let size = CGSize(width: 50, height: 50)
+            let circle = UIGraphicsImageRenderer(size: size).image { _ in
+                UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7).setStroke()
+                path.lineWidth = 1
+                path.stroke()
+            }
+            return circle
         }
-        return nil
     }
 }
 
+extension CGFloat {
+    func toRadians() -> CGFloat {
+        return self * CGFloat(Double.pi) / 180.0
+    }
+}
