@@ -14,6 +14,8 @@
 		0592695329B4A97900730B9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0592695129B4A97900730B9C /* Main.storyboard */; };
 		0592695529B4A97A00730B9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0592695429B4A97A00730B9C /* Assets.xcassets */; };
 		0592695829B4A97A00730B9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0592695629B4A97A00730B9C /* LaunchScreen.storyboard */; };
+		05D6AA7F29C7F7CB00A42F02 /* MoodSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D6AA7E29C7F7CB00A42F02 /* MoodSelectionViewController.swift */; };
+		05D6AA8129C81C5100A42F02 /* CustomVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D6AA8029C81C5100A42F02 /* CustomVisualEffectView.swift */; };
 		05FFB20B29B62BD100C8156E /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB20A29B62BD100C8156E /* Mood.swift */; };
 		05FFB20D29B62C1700C8156E /* UIColor+OneBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB20C29B62C1700C8156E /* UIColor+OneBean.swift */; };
 		05FFB20F29B62C2D00C8156E /* UIImage+OneBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FFB20E29B62C2D00C8156E /* UIImage+OneBean.swift */; };
@@ -32,6 +34,8 @@
 		0592695429B4A97A00730B9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0592695729B4A97A00730B9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0592695929B4A97A00730B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05D6AA7E29C7F7CB00A42F02 /* MoodSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodSelectionViewController.swift; sourceTree = "<group>"; };
+		05D6AA8029C81C5100A42F02 /* CustomVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVisualEffectView.swift; sourceTree = "<group>"; };
 		05FFB20A29B62BD100C8156E /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
 		05FFB20C29B62C1700C8156E /* UIColor+OneBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+OneBean.swift"; sourceTree = "<group>"; };
 		05FFB20E29B62C2D00C8156E /* UIImage+OneBean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+OneBean.swift"; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 				0592694F29B4A97900730B9C /* ViewController.swift */,
 				053C650129C4523700708FF1 /* CustomCalendarCell.swift */,
 				0592695129B4A97900730B9C /* Main.storyboard */,
+				05D6AA8029C81C5100A42F02 /* CustomVisualEffectView.swift */,
+				05D6AA7E29C7F7CB00A42F02 /* MoodSelectionViewController.swift */,
 				0592695429B4A97A00730B9C /* Assets.xcassets */,
 				05FFB20A29B62BD100C8156E /* Mood.swift */,
 				05FFB21029B7806D00C8156E /* LogItem.swift */,
@@ -226,9 +232,11 @@
 			files = (
 				05FFB20F29B62C2D00C8156E /* UIImage+OneBean.swift in Sources */,
 				05FFB20D29B62C1700C8156E /* UIColor+OneBean.swift in Sources */,
+				05D6AA7F29C7F7CB00A42F02 /* MoodSelectionViewController.swift in Sources */,
 				05FFB20B29B62BD100C8156E /* Mood.swift in Sources */,
 				05FFB21329B781A200C8156E /* LogItemStore.swift in Sources */,
 				053C650229C4523700708FF1 /* CustomCalendarCell.swift in Sources */,
+				05D6AA8129C81C5100A42F02 /* CustomVisualEffectView.swift in Sources */,
 				05FFB21129B7806D00C8156E /* LogItem.swift in Sources */,
 				0592695029B4A97900730B9C /* ViewController.swift in Sources */,
 				0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */,

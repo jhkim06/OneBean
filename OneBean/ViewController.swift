@@ -11,62 +11,16 @@ import FSCalendar
 class ViewController: UIViewController {
 
     @IBOutlet var calendarView: FSCalendar!
-    
-    @IBOutlet var stackView: UIStackView!
-    @IBOutlet var addMoodButton: UIButton!
-    
-    var currentMood: Mood? {
-        didSet {
-            guard let currentMood = currentMood else {
-                addMoodButton?.setTitle(nil, for: .normal)
-                addMoodButton?.backgroundColor = nil
-                return
-            }
 
-            addMoodButton?.setTitle("I'm \(currentMood.name)", for: .normal)
-            addMoodButton?.backgroundColor = currentMood.color
-            
-            // TODO if date selected update Log array
-            logItemStore.createItem(date: selectedDate, mood: currentMood)
-            calendarView.reloadData()
-        }
-    }
-
-    @objc func moodSelectionChanged(_ sender: UIButton) {
-        //
-        guard let selectedIndex = moodButtons.firstIndex(of: sender) else {
-            preconditionFailure(
-                    "Unable to find the tapped button in the buttons array.")
-        }
-        //
-        currentMood = moods[selectedIndex]
-        
-    }
-    
-    var moodButtons: [UIButton] = [] {
-        didSet {
-            oldValue.forEach { $0.removeFromSuperview() }
-            moodButtons.forEach { stackView.addArrangedSubview($0)}
+    @IBAction func selectMood(_ sender: UIButton) {
+        if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
+            moodSelectionViewController.modalPresentationStyle = .overCurrentContext
+            moodSelectionViewController.modalTransitionStyle = .crossDissolve
+            present(moodSelectionViewController, animated: true)
         }
     }
 
     //
-    var moods: [Mood] = [] {
-        didSet {
-            currentMood = moods.first
-            moodButtons = moods.map { mood in
-                let moodButton = UIButton()
-                moodButton.setImage(mood.image, for: .normal)
-                moodButton.imageView?.contentMode = .scaleAspectFit
-                //moodButton.adjustsImageWhenHighlighted = false
-                moodButton.addTarget(self,
-                                     action: #selector(moodSelectionChanged(_:)),
-                                     for: .touchUpInside)
-                return moodButton
-            }
-        }
-    }
-    
     let dateFormatter = DateFormatter()
     var selectedDate = Date() // default to today
     
@@ -76,8 +30,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
-        addMoodButton.layer.cornerRadius = addMoodButton.bounds.height / 2
         
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
@@ -91,9 +43,10 @@ class ViewController: UIViewController {
         calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cell")
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
-        calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.5)
+        calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.7)
         calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
         calendarView.appearance.borderRadius = 0.7
+        calendarView.appearance.titleTodayColor = .black
         
         // 
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
@@ -107,6 +60,11 @@ class ViewController: UIViewController {
         calendarView.appearance.subtitleSelectionColor = .red
         
         calendarView.placeholderType = .none // show only the days of the current month
+    }
+    
+    func setMood(_ mood: Mood) {
+        logItemStore.createItem(date: selectedDate, mood: mood)
+        calendarView.reloadData()
     }
 }
 
@@ -135,7 +93,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
-            return CGPoint(x:0.0, y:10.0)
+            return CGPoint(x:0.0, y:20.0)
         }
         return CGPoint(x:0.0, y:0.0)
     }
@@ -187,8 +145,8 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
             
             // resize image
             let scaledImageSize = CGSize(
-                width: (tempImage.size.width ) * 0.15,
-                height: (tempImage.size.height ) * 0.15)
+                width: (tempImage.size.width ) * 0.25,
+                height: (tempImage.size.height ) * 0.25)
             
             let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
             let scaledImage = renderer.image { _ in

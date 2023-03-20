@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let logItemController = window!.rootViewController as! ViewController
         logItemController.logItemStore = LogItemStore()
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
