@@ -47,6 +47,9 @@ class ViewController: UIViewController {
         calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
         calendarView.appearance.borderRadius = 0.7
         calendarView.appearance.titleTodayColor = .black
+        calendarView.appearance.calendar.rowHeight = 1000.0
+        calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
+        
         
         // 
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
@@ -73,6 +76,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
         
+        //cell.backgroundColor = .red
         return cell
     }
     
@@ -93,7 +97,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
-            return CGPoint(x:0.0, y:15.0)
+            return CGPoint(x:0.0, y:0.0)
         }
         return CGPoint(x:0.0, y:0.0)
     }
