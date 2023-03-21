@@ -16,6 +16,8 @@ enum ImageResource: String {
     case meh
     case sad
     case sleepy
+    case bg
+    case happy2
 }
 
 extension UIImage {

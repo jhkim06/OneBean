@@ -30,7 +30,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         calendarView.delegate = self
@@ -157,7 +156,8 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
             return scaledImage
         // default image for each cell
         } else {
-        
+            
+            /*
             let startAngle = CGFloat(0.0)
             let endAngle = CGFloat(360.0)
             
@@ -170,6 +170,20 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
                 path.stroke()
             }
             return circle
+            */
+            
+            let tempImage = UIImage(resource: .bg)
+            
+            // resize image
+            let scaledImageSize = CGSize(
+                width: (tempImage.size.width ) * 0.3,
+                height: (tempImage.size.height ) * 0.3)
+            
+            let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+            let scaledImage = renderer.image { _ in
+                tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+            }
+            return scaledImage
         }
     }
 }

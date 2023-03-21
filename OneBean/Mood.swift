@@ -33,6 +33,10 @@ extension Mood {
     static let happy = Mood(name: "happy",
                             image: UIImage(resource: .happy),
                             color: UIColor.happy)
+    
+    static let happy2 = Mood(name: "happy2",
+                            image: UIImage(resource: .happy2),
+                            color: UIColor.happy)
 
     static let meh = Mood(name: "meh",
                           image: UIImage(resource: .meh),

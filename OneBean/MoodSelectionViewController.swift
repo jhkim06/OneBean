@@ -87,7 +87,7 @@ class MoodSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
+        moods = [.happy2, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
     }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
