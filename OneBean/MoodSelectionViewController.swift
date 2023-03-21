@@ -10,25 +10,29 @@ import UIKit
 class MoodSelectionViewController: UIViewController {
  
     @IBOutlet var stackView: UIStackView!
-    @IBOutlet var addMoodButton: UIButton!
-    
+    var selectMood: UIButton!
+   
     var currentMood: Mood? {
         didSet {
             guard let currentMood = currentMood else {
-                addMoodButton?.setTitle(nil, for: .normal)
-                addMoodButton?.backgroundColor = nil
+                selectMood?.setTitle(nil, for: .normal)
+                selectMood?.backgroundColor = nil
                 return
             }
-
-            addMoodButton?.setTitle("I'm \(currentMood.name)", for: .normal)
-            addMoodButton?.backgroundColor = currentMood.color
+            print(currentMood.name)
+            //dismiss(animated: true)
+            
+            if let vc = presentingViewController as? ViewController {
+                dismiss(animated: true, completion: {
+                    vc.setMood(currentMood)
+                })
+            }
+            
+            //selectMood?.setTitle("I'm \(currentMood.name)", for: .normal)
+            //selectMood?.backgroundColor = currentMood.color
         }
     }
     
-    func getMood() -> Mood {
-        return currentMood!
-    }
-
     @objc func moodSelectionChanged(_ sender: UIButton) {
         //
         guard let selectedIndex = moodButtons.firstIndex(of: sender) else {
@@ -48,7 +52,7 @@ class MoodSelectionViewController: UIViewController {
     //
     var moods: [Mood] = [] {
         didSet {
-            currentMood = moods.first
+            //currentMood = moods.first
             moodButtons = moods.map { mood in
                 let moodButton = UIButton()
                 moodButton.setImage(mood.image, for: .normal)
@@ -84,7 +88,7 @@ class MoodSelectionViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         moods = [.happy, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
-        addMoodButton.layer.cornerRadius = addMoodButton.bounds.height/2
+        //selectMood.layer.cornerRadius = selectMood.bounds.height/2
     }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
             dismiss(animated: true)
@@ -100,8 +104,12 @@ class MoodSelectionViewController: UIViewController {
     @IBAction func dismissAction(_ sender: Any) {
         
         if let vc = presentingViewController as? ViewController {
-            dismiss(animated: true, completion: {
-                vc.setMood(self.getMood())
+            dismiss(animated: true, completion: { [self] in
+                //print(self.getMood())
+                guard let mood = self.currentMood else {
+                   return
+                }
+                vc.setMood(mood)
             })
         }
     }

@@ -84,7 +84,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleSelectionColorFor date: Date) -> UIColor? {
         
-        return UIColor.black // Set the title selection color to clear to remove the default selection text color
+        return UIColor.black
     }
     /*
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
@@ -102,7 +102,6 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     // selection condition
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        
         // block to select future date
         if date > Date() {
                 return false
@@ -151,13 +150,12 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
                 width: (tempImage.size.width ) * 0.25,
                 height: (tempImage.size.height ) * 0.25)
             
-            print(scaledImageSize.width)
-            
             let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
             let scaledImage = renderer.image { _ in
                 tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
             }
             return scaledImage
+        // default image for each cell
         } else {
         
             let startAngle = CGFloat(0.0)
