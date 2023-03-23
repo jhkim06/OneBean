@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oF3-Fw-6gd">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -8,16 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Calendar-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CalendarViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKF-d7-iVG">
-                                <rect key="frame" x="154.5" y="811" width="105.5" height="31"/>
+                                <rect key="frame" x="154.5" y="762" width="105.5" height="31"/>
                                 <color key="tintColor" red="0.38039215686274508" green="0.68235294117647061" blue="0.44705882352941173" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Select Mood"/>
@@ -47,13 +47,30 @@
                             <constraint firstItem="A0G-8a-uFh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ute-Iz-4Ui"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="hY9-Zh-Ht5"/>
                     <connections>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53.623188405797109" y="115.84821428571428"/>
+            <point key="canvasLocation" x="684.05797101449275" y="346.875"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="ndD-YL-gig">
+            <objects>
+                <viewController id="GGh-3E-DCZ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uuR-BY-FIL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="HDI-lJ-Ote"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="gV9-Py-3tN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mw4-1m-0dA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-226" y="1130"/>
         </scene>
         <!--Mood Selection View Controller-->
         <scene sceneID="ApO-iT-ceW">
@@ -73,29 +90,36 @@
                                 </connections>
                             </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIn-3H-jM2">
-                                <rect key="frame" x="2" y="729" width="410" height="66"/>
+                                <rect key="frame" x="2" y="695" width="410" height="100"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="oGG-1U-dXC">
-                                    <rect key="frame" x="0.0" y="0.0" width="410" height="66"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="410" height="100"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="o3s-e9-0Ik">
-                                            <rect key="frame" x="8" y="8" width="394" height="50"/>
+                                            <rect key="frame" x="8" y="42" width="394" height="50"/>
                                             <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="BEq-Fs-fCk"/>
                                             </constraints>
                                         </stackView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How was your day?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-Na-M0Q">
+                                            <rect key="frame" x="119" y="5" width="172.5" height="28"/>
+                                            <fontDescription key="fontDescription" name="KohinoorBangla-Regular" family="Kohinoor Bangla" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="o3s-e9-0Ik" secondAttribute="trailingMargin" id="Fng-ph-77t"/>
-                                        <constraint firstItem="o3s-e9-0Ik" firstAttribute="top" secondItem="oGG-1U-dXC" secondAttribute="top" constant="8" id="JRh-7u-uh5"/>
+                                        <constraint firstItem="cVI-Na-M0Q" firstAttribute="top" secondItem="oGG-1U-dXC" secondAttribute="top" constant="5" id="J17-VR-fzv"/>
                                         <constraint firstItem="o3s-e9-0Ik" firstAttribute="leading" secondItem="oGG-1U-dXC" secondAttribute="leadingMargin" id="dfq-8I-sGa"/>
+                                        <constraint firstItem="cVI-Na-M0Q" firstAttribute="centerX" secondItem="oGG-1U-dXC" secondAttribute="centerX" id="jpc-Kg-xvI"/>
                                         <constraint firstAttribute="bottom" secondItem="o3s-e9-0Ik" secondAttribute="bottom" constant="8" id="u0K-ej-nZ7"/>
                                     </constraints>
                                 </view>
                                 <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="66" id="rMt-ry-i8g"/>
+                                    <constraint firstAttribute="height" constant="100" id="rMt-ry-i8g"/>
                                 </constraints>
                                 <blurEffect style="regular"/>
                             </visualEffectView>
@@ -125,10 +149,29 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="875.36231884057975" y="115.84821428571428"/>
+            <point key="canvasLocation" x="683" y="-321"/>
+        </scene>
+        <!--TabBarController-->
+        <scene sceneID="bhw-vQ-p1p">
+            <objects>
+                <tabBarController storyboardIdentifier="TabBarController" title="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="oF3-Fw-6gd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vh1-eP-Fmu">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="OZR-1s-H7R"/>
+                        <segue destination="GGh-3E-DCZ" kind="relationship" relationship="viewControllers" id="zA1-yy-BBw"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v3X-eO-Kpv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-226.08695652173915" y="346.875"/>
         </scene>
     </scenes>
     <resources>
+        <image name="calendar" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

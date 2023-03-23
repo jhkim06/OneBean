@@ -19,10 +19,11 @@ class MoodSelectionViewController: UIViewController {
                 selectMood?.backgroundColor = nil
                 return
             }
-            print(currentMood.name)
+            //print(currentMood.name)
             //dismiss(animated: true)
             
-            if let vc = presentingViewController as? ViewController {
+            //if let vc = presentingViewController as? CalendarViewController {
+            if let vc = presentingViewController?.children[0] as? CalendarViewController {
                 dismiss(animated: true, completion: {
                     vc.setMood(currentMood)
                 })
@@ -87,7 +88,7 @@ class MoodSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        moods = [.happy2, .sad, .angry, .goofy, .crying, .confused, .sleepy, .meh]
+        moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
     }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
@@ -103,7 +104,9 @@ class MoodSelectionViewController: UIViewController {
     // https://betterprogramming.pub/5-ways-to-pass-data-between-view-controllers-18acb467f5ec
     @IBAction func dismissAction(_ sender: Any) {
         
-        if let vc = presentingViewController as? ViewController {
+        //if let vc = presentingViewController as? CalendarViewController {
+        // TabBarItemViewController is now rootViewController
+        if let vc = presentingViewController?.children[0] as? CalendarViewController {
             dismiss(animated: true, completion: { [self] in
                 //print(self.getMood())
                 guard let mood = self.currentMood else {

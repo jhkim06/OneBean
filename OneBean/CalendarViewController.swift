@@ -8,7 +8,7 @@
 import UIKit
 import FSCalendar
 
-class ViewController: UIViewController {
+class CalendarViewController: UIViewController {
 
     @IBOutlet var calendarView: FSCalendar!
 
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
 
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)

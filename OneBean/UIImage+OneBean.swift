@@ -8,16 +8,12 @@
 import UIKit
 
 enum ImageResource: String {
-    case angry // angry = "angry"
-    case confused
-    case crying
-    case goofy
+    case bad // angry = "angry"
     case happy
-    case meh
+    case good
     case sad
-    case sleepy
+    case soso
     case bg
-    case happy2
 }
 
 extension UIImage {

@@ -17,7 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
-        let logItemController = window!.rootViewController as! ViewController
+        //let logItemController = window!.rootViewController as! ViewController
+        let barItemController = window!.rootViewController as! UITabBarController
+        let logItemController = barItemController.viewControllers?[0] as! CalendarViewController
         logItemController.logItemStore = LogItemStore()
     }
 

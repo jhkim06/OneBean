@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "happy.png",
+      "filename" : "83F7052D-B88C-4548-8231-5B2E75BDE963.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "happy@2x.png",
+      "filename" : "83F7052D-B88C-4548-8231-5B2E75BDE963@2x.jpeg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "happy@3x.png",
+      "filename" : "83F7052D-B88C-4548-8231-5B2E75BDE963@3x.jpeg",
       "idiom" : "universal",
       "scale" : "3x"
     }
