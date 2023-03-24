@@ -22,9 +22,15 @@ class CalendarViewController: UIViewController {
 
     //
     let dateFormatter = DateFormatter()
-    var selectedDate = Date() // default to today
+    var selectedDate = String() // default to today
     
-    var logItemStore: LogItemStore!
+    var logItemStore: LogItemStore! // FIXME logItemStore required to be accessed from multiple view controller
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        selectedDate = dateFormatter.string(from:Date())
+        print(selectedDate)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +70,7 @@ class CalendarViewController: UIViewController {
     
     func setMood(_ mood: Mood) {
         logItemStore.createItem(date: selectedDate, mood: mood)
+        print("setMood")
         calendarView.reloadData()
     }
 }
@@ -93,6 +100,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
+        let date = dateFormatter.string(from:date)
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
             return CGPoint(x:0.0, y:0.0)
         }
@@ -102,7 +110,8 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     // selection condition
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         // block to select future date
-        if date > Date() {
+        let date = dateFormatter.string(from:date)
+        if date > dateFormatter.string(from:Date()) {
                 return false
         } else {
             return true
@@ -110,13 +119,13 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        selectedDate = date
-        print(dateFormatter.string(from: selectedDate) + " 선택됨")
+        selectedDate = dateFormatter.string(from:date)
+        print(selectedDate  + " 선택됨")
     }
     //
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(dateFormatter.string(from: date) + " 해제됨")
-        selectedDate = Date()
+        selectedDate = dateFormatter.string(from:Date())
     }
     
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
@@ -140,9 +149,15 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     // show image in the calendar
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
         
+        let date = dateFormatter.string(from:date)
         
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
+            print(date)
             let tempImage = logItemStore.allLogItems[date]!.mood.image
+            
+            //if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
+            //    print("TODAY")
+            //}
             
             // resize image
             let scaledImageSize = CGSize(

@@ -7,11 +7,16 @@
 
 import UIKit
 
+
 class LogItemStore {
     
-    var allLogItems = Dictionary<Date, LogItem>()
-
-    @discardableResult func createItem(date: Date, mood: Mood) -> LogItem {
+    var allLogItems = Dictionary<String, LogItem>() // data type...
+    var dates = [String]()
+    
+    let dateFormatter = DateFormatter()
+    
+    
+    @discardableResult func createItem(date: String, mood: Mood) -> LogItem {
         
         let newItem = LogItem(date: date, mood: mood)
         
@@ -21,6 +26,9 @@ class LogItemStore {
         } else {
             // add new item
             allLogItems[date] = newItem
+            dates.append(date)
+            dates.sort()
+            print("\(date) added")
         }
         return newItem
     }

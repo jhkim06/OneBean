@@ -9,10 +9,10 @@ import UIKit
 
 class LogItem {
     
-    var date: Date
+    var date: String
     var mood: Mood
     
-    init(date: Date, mood: Mood) {
+    init(date: String, mood: Mood) {
         self.date = date
         self.mood = mood
     }

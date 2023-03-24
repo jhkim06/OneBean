@@ -105,7 +105,6 @@ class MoodSelectionViewController: UIViewController {
     @IBAction func dismissAction(_ sender: Any) {
         
         //if let vc = presentingViewController as? CalendarViewController {
-        // TabBarItemViewController is now rootViewController
         if let vc = presentingViewController?.children[0] as? CalendarViewController {
             dismiss(animated: true, completion: { [self] in
                 //print(self.getMood())
