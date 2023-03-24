@@ -28,7 +28,6 @@ class LogItemStore {
             allLogItems[date] = newItem
             dates.append(date)
             dates.sort()
-            print("\(date) added")
         }
         return newItem
     }

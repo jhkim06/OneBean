@@ -27,6 +27,7 @@ class MoodListViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         if let vc = parent?.children[0] as? CalendarViewController {
+            print("set logItemstore")
             self.logItemStore = vc.logItemStore
         }
         tableView.reloadData()
@@ -36,16 +37,28 @@ class MoodListViewController: UITableViewController {
         super.viewDidLoad()
         //tableView.rowHeight = 100.0
     }
+   
+    //  to add space between the cells create sections for each item
+    // https://stackoverflow.com/questions/6216839/how-to-add-spacing-between-uitableviewcell/33931591#33931591
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        if let vc = parent?.children[0] as? CalendarViewController {
+            //print("set logItemstore in number of sections")
+            self.logItemStore = vc.logItemStore
+        }
+        //print(self.logItemStore)
+        return self.logItemStore.allLogItems.count
+    }
     
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
-        return self.logItemStore.allLogItems.count
+        //return self.logItemStore.allLogItems.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let date = logItemStore.dates[indexPath.row]
+        let date = logItemStore.dates[indexPath.section]
         let moodItem = logItemStore.allLogItems[date]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell",

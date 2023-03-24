@@ -70,7 +70,6 @@ class CalendarViewController: UIViewController {
     
     func setMood(_ mood: Mood) {
         logItemStore.createItem(date: selectedDate, mood: mood)
-        print("setMood")
         calendarView.reloadData()
     }
 }
