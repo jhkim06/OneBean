@@ -13,21 +13,20 @@ class MoodListViewController: UITableViewController {
     
     /*
     override init(style: UITableView.Style) {
-
         super.init(style: .insetGrouped)
-     
-     }
-     */
+    }
+    */
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear MoodListView")
         super.viewWillAppear(animated)
         
         if let vc = parent?.children[0] as? CalendarViewController {
-            print("set logItemstore")
+            //print("set logItemstore")
             self.logItemStore = vc.logItemStore
         }
         tableView.reloadData()
@@ -35,6 +34,9 @@ class MoodListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 70
         //tableView.rowHeight = 100.0
     }
    
@@ -70,14 +72,28 @@ class MoodListViewController: UITableViewController {
         let dateString = date
         cell.detailTextLabel?.text = "on \(dateString)"
         
+        //cell.layer.cornerRadius = 10
+        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60 // set the height of each row
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 2.0
     }
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // Add spacing between cells
-        cell.separatorInset = UIEdgeInsets(top: 100, left: 0, bottom: 100, right: 0)
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showLog":
+            if let section = tableView.indexPathForSelectedRow?.section {
+                let date = logItemStore.dates[section]
+                let logItem = logItemStore.allLogItems[date]
+            
+                let detailViewController = segue.destination as! DetailViewController
+                detailViewController.currentLogItem = logItem
+            }
+        default:
+            preconditionFailure("Unexpected segue identifier.")
+        }
     }
+
 }

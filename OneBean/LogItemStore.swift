@@ -15,7 +15,6 @@ class LogItemStore {
     
     let dateFormatter = DateFormatter()
     
-    
     @discardableResult func createItem(date: String, mood: Mood) -> LogItem {
         
         let newItem = LogItem(date: date, mood: mood)

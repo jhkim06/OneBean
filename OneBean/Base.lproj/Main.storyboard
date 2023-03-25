@@ -60,7 +60,7 @@
         <scene sceneID="DI2-3c-D8r">
             <objects>
                 <tableViewController id="ASQ-XI-3Sh" customClass="MoodListViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="2pQ-DY-F3x" customClass="Mood" customModule="OneBean" customModuleProvider="target">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="2pQ-DY-F3x">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -93,6 +93,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="d0f-S7-KxQ" kind="show" identifier="showLog" id="6If-8M-zzw"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -104,7 +107,80 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0WS-Yz-pep" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="682.60869565217399" y="1092.8571428571429"/>
+            <point key="canvasLocation" x="119" y="1195"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="W07-Sz-m9l">
+            <objects>
+                <viewController id="d0f-S7-KxQ" customClass="DetailViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ar0-T3-Tc2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="T8E-o2-Zzk">
+                                <rect key="frame" x="5" y="8" width="404" height="792"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TRB-zh-VgH">
+                                        <rect key="frame" x="0.0" y="0.0" width="404" height="100"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Az3-6Y-s2b">
+                                        <rect key="frame" x="0.0" y="120" width="404" height="672"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Today's note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ra3-2h-qVv">
+                                                <rect key="frame" x="0.0" y="0.0" width="404" height="542"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bu-2y-yTI">
+                                                <rect key="frame" x="0.0" y="544" width="404" height="128"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" id="lC2-dl-X0u"/>
+                                                </constraints>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Az3-6Y-s2b" secondAttribute="trailing" id="3Am-UM-dIj"/>
+                                    <constraint firstItem="Az3-6Y-s2b" firstAttribute="top" secondItem="T8E-o2-Zzk" secondAttribute="top" constant="120" id="3j4-He-nAV"/>
+                                    <constraint firstItem="TRB-zh-VgH" firstAttribute="leading" secondItem="T8E-o2-Zzk" secondAttribute="leading" id="g6T-pz-hsw"/>
+                                    <constraint firstAttribute="trailing" secondItem="TRB-zh-VgH" secondAttribute="trailing" id="jmd-vC-KCP"/>
+                                    <constraint firstItem="Az3-6Y-s2b" firstAttribute="leading" secondItem="T8E-o2-Zzk" secondAttribute="leading" id="pl3-ad-beF"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rxV-TZ-mIK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="rxV-TZ-mIK" firstAttribute="trailing" secondItem="T8E-o2-Zzk" secondAttribute="trailingMargin" constant="5" id="18M-nJ-wCH"/>
+                            <constraint firstItem="rxV-TZ-mIK" firstAttribute="bottom" secondItem="T8E-o2-Zzk" secondAttribute="bottom" constant="8" id="VzF-pc-Mna"/>
+                            <constraint firstItem="T8E-o2-Zzk" firstAttribute="leadingMargin" secondItem="rxV-TZ-mIK" secondAttribute="leading" constant="5" id="yN7-ZW-Kvc"/>
+                            <constraint firstItem="T8E-o2-Zzk" firstAttribute="top" secondItem="rxV-TZ-mIK" secondAttribute="top" constant="8" id="zHW-po-EuB"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Bci-xt-CAZ" appends="YES" id="Nmv-2a-aoL"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="zJd-C5-KFe"/>
+                    <connections>
+                        <outlet property="stackView" destination="TRB-zh-VgH" id="TUb-5f-FKO"/>
+                        <outlet property="textView" destination="5bu-2y-yTI" id="Xi5-5K-xv2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iLr-ms-IQP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Bci-xt-CAZ">
+                    <connections>
+                        <action selector="backgroundTapped:" destination="d0f-S7-KxQ" id="JeO-Fk-An5"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1070" y="1195"/>
         </scene>
         <!--Mood Selection View Controller-->
         <scene sceneID="ApO-iT-ceW">
@@ -143,6 +219,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="o3s-e9-0Ik" secondAttribute="trailingMargin" id="Fng-ph-77t"/>
                                         <constraint firstItem="cVI-Na-M0Q" firstAttribute="top" secondItem="oGG-1U-dXC" secondAttribute="top" constant="5" id="J17-VR-fzv"/>
@@ -152,6 +229,7 @@
                                     </constraints>
                                 </view>
                                 <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="rMt-ry-i8g"/>
                                 </constraints>
@@ -183,7 +261,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1371" y="347"/>
+            <point key="canvasLocation" x="1500" y="347"/>
         </scene>
         <!--TabBarController-->
         <scene sceneID="bhw-vQ-p1p">
@@ -208,6 +286,9 @@
     <resources>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="calendar.day.timeline.left" catalog="system" width="128" height="91"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

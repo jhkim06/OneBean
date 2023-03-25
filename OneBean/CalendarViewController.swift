@@ -29,7 +29,7 @@ class CalendarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selectedDate = dateFormatter.string(from:Date())
-        print(selectedDate)
+        calendarView.reloadData()
     }
     
     override func viewDidLoad() {
