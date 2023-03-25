@@ -86,15 +86,12 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
-
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
         }
     }
 
-    
-    
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         // if let vc = presentingViewController as? CalendarViewController
         if let vc = presentingViewController?.children[1] as? MoodListViewController {

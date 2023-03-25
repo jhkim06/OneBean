@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		050CFE0429CEC382005D0A91 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050CFE0329CEC382005D0A91 /* DetailViewController.swift */; };
 		050CFE0629CEEE50005D0A91 /* UITextView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050CFE0529CEEE50005D0A91 /* UITextView+Additions.swift */; };
+		050CFE0829CEF527005D0A91 /* LogItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050CFE0729CEF527005D0A91 /* LogItemCell.swift */; };
 		053C650229C4523700708FF1 /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053C650129C4523700708FF1 /* CustomCalendarCell.swift */; };
 		0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694B29B4A97900730B9C /* AppDelegate.swift */; };
 		0592694E29B4A97900730B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694D29B4A97900730B9C /* SceneDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		050CFE0329CEC382005D0A91 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		050CFE0529CEEE50005D0A91 /* UITextView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Additions.swift"; sourceTree = "<group>"; };
+		050CFE0729CEF527005D0A91 /* LogItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogItemCell.swift; sourceTree = "<group>"; };
 		053C650129C4523700708FF1 /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		0592694829B4A97900730B9C /* OneBean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneBean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0592694B29B4A97900730B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				0592694F29B4A97900730B9C /* CalendarViewController.swift */,
 				053C650129C4523700708FF1 /* CustomCalendarCell.swift */,
 				0592695129B4A97900730B9C /* Main.storyboard */,
+				050CFE0729CEF527005D0A91 /* LogItemCell.swift */,
 				05D6AA8029C81C5100A42F02 /* CustomVisualEffectView.swift */,
 				05D6AA7E29C7F7CB00A42F02 /* MoodSelectionViewController.swift */,
 				05CAA17D29CD3AEF0055C313 /* MoodListViewController.swift */,
@@ -250,6 +253,7 @@
 				05D6AA8129C81C5100A42F02 /* CustomVisualEffectView.swift in Sources */,
 				05FFB21129B7806D00C8156E /* LogItem.swift in Sources */,
 				0592695029B4A97900730B9C /* CalendarViewController.swift in Sources */,
+				050CFE0829CEF527005D0A91 /* LogItemCell.swift in Sources */,
 				05CAA17E29CD3AEF0055C313 /* MoodListViewController.swift in Sources */,
 				0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */,
 				0592694E29B4A97900730B9C /* SceneDelegate.swift in Sources */,
