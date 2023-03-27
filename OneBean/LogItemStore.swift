@@ -20,7 +20,9 @@ class LogItemStore {
         let newItem = LogItem(date: date, mood: mood)
         
         if allLogItems.contains(where: {$0.key == date}) {
+            newItem.setNote(note: allLogItems[date]!.note )
             allLogItems.removeValue(forKey: date)
+            
             allLogItems[date] = newItem
         } else {
             // add new item
