@@ -7,10 +7,14 @@
 
 import UIKit
 
-struct Mood {
+struct Mood: Equatable {
     var name: String
     var image: UIImage
     var color: UIColor
+    
+    static func ==(lhs: Mood, rhs: Mood) -> Bool {
+        return lhs.name == rhs.name
+    }
 }
 
 extension Mood {

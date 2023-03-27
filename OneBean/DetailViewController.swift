@@ -10,41 +10,21 @@ import UIKit
 class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView: UITextView!
-    @IBOutlet var stackView: UIStackView!
+    @IBOutlet var moodSelector: ImageSelector!
  
     var currentLogItem: LogItem!
     var currentMood: Mood!
     
-    @objc func moodSelectionChanged(_ sender: UIButton) {
-        //
-        guard let selectedIndex = moodButtons.firstIndex(of: sender) else {
-            preconditionFailure(
-                    "Unable to find the tapped button in the buttons array.")
-        }
-        //
+    @IBAction private func moodSelectionChanged(_ sender: ImageSelector) {
+        let selectedIndex = sender.selectedIndex
+
         currentMood = moods[selectedIndex]
-    }
-    
-    var moodButtons: [UIButton] = [] {
-        didSet {
-            oldValue.forEach { $0.removeFromSuperview() }
-            moodButtons.forEach { stackView.addArrangedSubview($0)}
-        }
     }
     
     var moods: [Mood] = [] {
         didSet {
             //currentMood = moods.first
-            moodButtons = moods.map { mood in
-                let moodButton = UIButton()
-                moodButton.setImage(mood.image, for: .normal)
-                moodButton.imageView?.contentMode = .scaleAspectFit
-                //moodButton.adjustsImageWhenHighlighted = false
-                moodButton.addTarget(self,
-                                     action: #selector(moodSelectionChanged(_:)),
-                                     for: .touchUpInside)
-                return moodButton
-            }
+            moodSelector.images = moods.map { $0.image }
         }
     }
    
@@ -52,8 +32,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         super.viewWillAppear(animated)
         
         currentMood = currentLogItem.mood
+        moodSelector.selectedIndex = moods.firstIndex(where: {$0 == currentMood})!
         
-        textView.layer.borderColor = CGColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.7)
+        textView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
         textView.layer.borderWidth = 2.0
         textView.layer.cornerRadius = 5
         textView.text = currentLogItem.note
