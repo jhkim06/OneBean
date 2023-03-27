@@ -78,23 +78,15 @@ class MoodListViewController: UITableViewController {
         cell.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true
         cell.imageView?.centerYAnchor.constraint(equalTo: marginguide.centerYAnchor).isActive = true
         //cell.imageView?.bottomAnchor.constraint(equalTo: marginguide.bottomAnchor).isActive = true
-
         cell.imageView?.contentMode = .scaleAspectFill
         cell.imageView?.layer.cornerRadius = 20 //half of your width or height
-
         cell.imageView?.image = moodItem?.mood.image
         //cell.textLabel?.text = "I was \(moodEntry.mood.name)"
-
+        
         let dateString = date
         cell.dateLabel?.text = "on \(dateString)"
        
-        /*
-        cell.textView.text = moodItem?.note
-        cell.textView.isEditable = false
-        cell.textView.isScrollEnabled = false
-        */
         cell.noteLabel?.text = moodItem?.note
-        //cell.layer.cornerRadius = 10
         
         return cell
     }
