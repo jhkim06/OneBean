@@ -12,12 +12,13 @@ class MoodListViewController: UITableViewController {
     var logItemStore: LogItemStore!
     
     @IBAction func deleteLogItem(_ sender: UIButton) {
-        print("delete")
-        //setEditing(true, animated: false)
+        
+        // convert point to indexPath 
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else {return}
+        
         let date = logItemStore.dates[indexPath.section]
-        print("\(date) will be removed")
+        // TODO add warning message before deletion
         logItemStore.removeItem(date: date)
         tableView.reloadData()
     }
@@ -33,8 +34,7 @@ class MoodListViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //setEditing(true, animated: true)
-        print("viewWillAppear MoodListView")
+        //print("viewWillAppear MoodListView")
         super.viewWillAppear(animated)
         
         if let vc = parent?.children[0] as? CalendarViewController {

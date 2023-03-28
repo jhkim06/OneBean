@@ -30,9 +30,9 @@ class ImageSelector: UIControl {
             selectorStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             selectorStackView.topAnchor.constraint(equalTo: topAnchor, constant: 35),
             //selectorStackView.topAnchor.constraint(equalTo: topAnchor),
-            selectorStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            selectorStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             highlightView.heightAnchor.constraint(equalTo: highlightView.widthAnchor),
-                    highlightView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
+                    highlightView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.6),
                     highlightView.centerYAnchor
                         .constraint(equalTo: selectorStackView.centerYAnchor),
         ])
