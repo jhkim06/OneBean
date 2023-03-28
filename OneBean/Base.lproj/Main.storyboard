@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oF3-Fw-6gd">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -164,10 +164,10 @@
                                 <rect key="frame" x="10" y="8" width="394" height="750"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bk0-BZ-jOJ" customClass="ImageSelector" customModule="OneBean" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="90"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How was your day?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x68-b7-LK3">
-                                                <rect key="frame" x="118.5" y="8" width="157.5" height="17"/>
+                                                <rect key="frame" x="118.5" y="0.0" width="157.5" height="30"/>
                                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="18"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -176,31 +176,26 @@
                                         <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="x68-b7-LK3" firstAttribute="centerX" secondItem="bk0-BZ-jOJ" secondAttribute="centerX" id="4f7-9Q-9TR"/>
-                                            <constraint firstAttribute="bottom" secondItem="x68-b7-LK3" secondAttribute="bottom" constant="55" id="GPa-Xb-P9k"/>
-                                            <constraint firstItem="x68-b7-LK3" firstAttribute="top" secondItem="bk0-BZ-jOJ" secondAttribute="topMargin" id="bK5-eG-qOe"/>
+                                            <constraint firstAttribute="bottom" secondItem="x68-b7-LK3" secondAttribute="bottom" constant="60" id="GPa-Xb-P9k"/>
                                         </constraints>
                                         <connections>
                                             <action selector="moodSelectionChanged:" destination="d0f-S7-KxQ" eventType="valueChanged" id="gzF-Go-W8N"/>
                                         </connections>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Az3-6Y-s2b">
-                                        <rect key="frame" x="0.0" y="100" width="394" height="650"/>
+                                        <rect key="frame" x="0.0" y="110" width="394" height="640"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="SJc-R1-Ndi">
-                                                <rect key="frame" x="0.0" y="0.0" width="394" height="409.5"/>
-                                                <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today's note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ra3-2h-qVv">
-                                                <rect key="frame" x="0.0" y="419.5" width="394" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="394" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="CWC-jN-RYN"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="5bu-2y-yTI">
-                                                <rect key="frame" x="0.0" y="450" width="394" height="200"/>
+                                                <rect key="frame" x="0.0" y="31" width="394" height="200"/>
                                                 <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="lmT-Fc-GMA"/>
@@ -209,11 +204,16 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="SJc-R1-Ndi">
+                                                <rect key="frame" x="0.0" y="241" width="394" height="399"/>
+                                                <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Az3-6Y-s2b" firstAttribute="top" secondItem="T8E-o2-Zzk" secondAttribute="top" constant="100" id="3j4-He-nAV"/>
+                                    <constraint firstItem="Az3-6Y-s2b" firstAttribute="top" secondItem="T8E-o2-Zzk" secondAttribute="top" constant="110" id="3j4-He-nAV"/>
+                                    <constraint firstItem="x68-b7-LK3" firstAttribute="top" secondItem="T8E-o2-Zzk" secondAttribute="top" id="eyq-kz-JPu"/>
                                 </constraints>
                             </stackView>
                         </subviews>

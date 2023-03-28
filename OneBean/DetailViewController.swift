@@ -52,10 +52,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
         self.textView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
-        
+       
+        /*
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-
+        */
     }
     @objc func tapDone(sender: Any) {
         self.view.endEditing(true)
