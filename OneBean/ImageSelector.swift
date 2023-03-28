@@ -15,7 +15,7 @@ class ImageSelector: UIControl {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.alignment = .center
-        stackView.spacing = 12.0
+        stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -28,7 +28,8 @@ class ImageSelector: UIControl {
         NSLayoutConstraint.activate([
             selectorStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             selectorStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            selectorStackView.topAnchor.constraint(equalTo: topAnchor),
+            selectorStackView.topAnchor.constraint(equalTo: topAnchor, constant: 35),
+            //selectorStackView.topAnchor.constraint(equalTo: topAnchor),
             selectorStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             highlightView.heightAnchor.constraint(equalTo: highlightView.widthAnchor),
                     highlightView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),

@@ -32,4 +32,8 @@ class LogItemStore {
         }
         return newItem
     }
+    func removeItem(date: String) {
+        allLogItems.removeValue(forKey: date)
+        
+    }
 }

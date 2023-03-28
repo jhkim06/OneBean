@@ -11,6 +11,17 @@ class MoodListViewController: UITableViewController {
     
     var logItemStore: LogItemStore!
     
+    @IBAction func deleteLogItem(_ sender: UIButton) {
+        print("delete")
+        //setEditing(true, animated: false)
+        let point = sender.convert(CGPoint.zero, to: tableView)
+        guard let indexPath = tableView.indexPathForRow(at: point) else {return}
+        let date = logItemStore.dates[indexPath.section]
+        print("\(date) will be removed")
+        logItemStore.removeItem(date: date)
+        tableView.reloadData()
+    }
+    
     /*
     override init(style: UITableView.Style) {
         super.init(style: .insetGrouped)
@@ -22,6 +33,7 @@ class MoodListViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //setEditing(true, animated: true)
         print("viewWillAppear MoodListView")
         super.viewWillAppear(animated)
         
