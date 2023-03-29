@@ -10,6 +10,7 @@ import UIKit
 class MoodListViewController: UITableViewController {
     
     var logItemStore: LogItemStore!
+    @IBOutlet var mothYear: UILabel!
     
     @IBAction func deleteLogItem(_ sender: UIButton) {
         
@@ -38,6 +39,15 @@ class MoodListViewController: UITableViewController {
         //print("viewWillAppear MoodListView")
         super.viewWillAppear(animated)
         
+        let myFormat = Date.FormatStyle()
+            .year()
+            .month()
+        
+        let currentTime = Date().formatted(myFormat)
+        
+        // textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
+        self.mothYear.text = currentTime
+        
         if let vc = parent?.children[0] as? CalendarViewController {
             //print("set logItemstore")
             self.logItemStore = vc.logItemStore
@@ -61,6 +71,7 @@ class MoodListViewController: UITableViewController {
             self.logItemStore = vc.logItemStore
         }
         //print(self.logItemStore)
+        // TODO show only logs of the selected month
         return self.logItemStore.allLogItems.count
     }
     

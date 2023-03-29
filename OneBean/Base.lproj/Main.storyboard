@@ -67,7 +67,19 @@
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ygj-R0-6SF">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="39"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUm-yG-D75" userLabel="MonthYear">
+                                    <rect key="frame" x="186.5" y="9.5" width="41.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="zUm-yG-D75" firstAttribute="centerX" secondItem="ygj-R0-6SF" secondAttribute="centerX" id="lfH-0j-SsG"/>
+                                <constraint firstItem="zUm-yG-D75" firstAttribute="centerY" secondItem="ygj-R0-6SF" secondAttribute="centerY" id="vVy-yi-oX6"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogItemCell" rowHeight="101" id="QIL-Ge-EA4" customClass="LogItemCell" customModule="OneBean" customModuleProvider="target">
@@ -147,6 +159,9 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Timeline" image="calendar.day.timeline.left" catalog="system" id="MKo-Ie-3bJ"/>
+                    <connections>
+                        <outlet property="mothYear" destination="zUm-yG-D75" id="Ulq-RC-ayE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0WS-Yz-pep" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
