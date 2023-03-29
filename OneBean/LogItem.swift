@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LogItem {
+class LogItem: Codable {
     
     var date: String
     var mood: Mood

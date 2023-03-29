@@ -206,7 +206,6 @@
                                             </textView>
                                             <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="SJc-R1-Ndi">
                                                 <rect key="frame" x="0.0" y="241" width="394" height="399"/>
-                                                <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                         </subviews>
                                     </stackView>

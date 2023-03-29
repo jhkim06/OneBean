@@ -13,7 +13,38 @@ class LogItemStore {
     var allLogItems = Dictionary<String, LogItem>() // data type...
     var dates = [String]()
     
+    let itemArchiveURL: URL = {
+        let documentsDirectories =
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first! // in iOS only one URL returned
+        return documentDirectory.appendingPathComponent("logitems.plist")
+    }()
+    
     let dateFormatter = DateFormatter()
+    
+    init() {
+        
+        do {
+            let data = try Data(contentsOf: itemArchiveURL)
+            let unarchiver = PropertyListDecoder()
+            let logitems = try unarchiver.decode([String: LogItem].self, from: data)
+            allLogItems = logitems
+            
+            for (date_, _) in allLogItems {
+                dates.append(date_)
+            }
+            dates.sort()
+            //print("saved item count: \(allLogItems.count)")
+        } catch {
+            print("Error reading in saved items: \(error)")
+        }
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self,
+                                       selector: #selector(saveChanges),
+                                       name: UIScene.didEnterBackgroundNotification,
+                                       object: nil)
+    }
     
     @discardableResult func createItem(date: String, mood: Mood) -> LogItem {
         
@@ -37,15 +68,17 @@ class LogItemStore {
         
     }
     
-    func saveChanges() -> Bool {
-
+    @objc func saveChanges() -> Bool {
+        print("Saving items to: \(itemArchiveURL)")
         do {
             let encoder = PropertyListEncoder()
             let data = try encoder.encode(allLogItems)
+            try data.write(to: itemArchiveURL, options: [.atomic])
+            print("Saved all of the items")
+            return true
         } catch let encodingError {
             print("Error encoding allLogItems: \(encodingError)")
+            return false
         }
-
-        return false
     }
 }

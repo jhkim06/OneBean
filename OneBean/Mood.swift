@@ -39,11 +39,13 @@ struct Mood: Equatable, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         let imageData = try? container.decode(Data.self, forKey: .image)
-        image = UIImage(data: imageData!)!
+        image = UIImage(data: imageData!, scale: 2.0)!
+        print("in decode \(image.size.width)")
         color = try container.decode(Color.self, forKey: .color).uiColor
     }
     
     func encode(to encoder: Encoder) throws {
+        print("in encode \(image.size.width)")
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(name, forKey: .name)

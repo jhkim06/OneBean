@@ -8,6 +8,8 @@
 import UIKit
 
 class ImageSelector: UIControl {
+    
+    @IBOutlet var view: UIView!
 
     private let selectorStackView: UIStackView = {
         let stackView = UIStackView()
@@ -17,7 +19,9 @@ class ImageSelector: UIControl {
         stackView.alignment = .center
         stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        //stackView.layer.borderWidth = 2.0
+        //stackView.layer.cornerRadius = 1.0
+        
         return stackView
     }()
     
@@ -40,6 +44,7 @@ class ImageSelector: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViewHierarchy()
+        //view.layer.cornerRadius = 100.0
     }
 
     required init?(coder aDecoder: NSCoder) {

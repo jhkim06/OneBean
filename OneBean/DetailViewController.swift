@@ -33,6 +33,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
         currentMood = currentLogItem.mood
         moodSelector.selectedIndex = moods.firstIndex(where: {$0 == currentMood})!
+        moodSelector.layer.cornerRadius = 5
         
         textView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
         textView.layer.borderWidth = 2.0
@@ -52,7 +53,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
         self.textView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
-       
         /*
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -61,6 +61,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @objc func tapDone(sender: Any) {
         self.view.endEditing(true)
     }
+    /*
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -73,7 +74,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             self.view.frame.origin.y = 0
         }
     }
-
+    */
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         // if let vc = presentingViewController as? CalendarViewController
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
