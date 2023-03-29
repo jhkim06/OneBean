@@ -20,6 +20,7 @@ class MoodListViewController: UITableViewController {
         let date = logItemStore.dates[indexPath.section]
         // TODO add warning message before deletion
         logItemStore.removeItem(date: date)
+        //logItemStore.saveChanges()
         tableView.reloadData()
     }
     

@@ -153,7 +153,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         if logItemStore.allLogItems.contains(where: {$0.key == date}) {
             print(date)
             let tempImage = logItemStore.allLogItems[date]!.mood.image
-            print("image width: \(tempImage.size.width)")
+            //print("image width: \(tempImage.size.width)")
             
             //if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
             //    print("TODAY")

@@ -44,6 +44,11 @@ class LogItemStore {
                                        selector: #selector(saveChanges),
                                        name: UIScene.didEnterBackgroundNotification,
                                        object: nil)
+        notificationCenter.addObserver(self,
+                                       selector: #selector(saveChanges),
+                                       name: UIScene.willDeactivateNotification,
+                                       object: nil)
+
     }
     
     @discardableResult func createItem(date: String, mood: Mood) -> LogItem {
@@ -65,7 +70,9 @@ class LogItemStore {
     }
     func removeItem(date: String) {
         allLogItems.removeValue(forKey: date)
-        
+        if let index = dates.firstIndex(of: date) {
+            dates.remove(at: index)
+        }
     }
     
     @objc func saveChanges() -> Bool {
