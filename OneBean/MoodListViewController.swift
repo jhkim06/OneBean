@@ -10,6 +10,7 @@ import UIKit
 class MoodListViewController: UITableViewController {
     
     var logItemStore: LogItemStore!
+    @IBOutlet weak var mothView: UIView!
     @IBOutlet var mothYear: UILabel!
     
     @IBAction func deleteLogItem(_ sender: UIButton) {
@@ -39,6 +40,7 @@ class MoodListViewController: UITableViewController {
         //print("viewWillAppear MoodListView")
         super.viewWillAppear(animated)
         
+        
         let myFormat = Date.FormatStyle()
             .year()
             .month()
@@ -57,6 +59,24 @@ class MoodListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.addSubview(mothView)
+        /*
+        mothView.frame = CGRect(x: 0,
+                                //y: self.view.bounds.size.height - mothView.bounds.size.height,
+                                y: 20,
+                                width: self.view.bounds.size.width,
+                                height: 30.0)
+        */
+        
+        mothView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mothView.widthAnchor.constraint(equalToConstant: 300),
+            mothView.heightAnchor.constraint(equalToConstant: 50),
+            mothView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            mothView.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20)
+        ])
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 70
