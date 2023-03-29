@@ -13,6 +13,17 @@ class MoodListViewController: UITableViewController {
     @IBOutlet weak var mothView: UIView!
     @IBOutlet var mothYear: UILabel!
     
+    
+    @IBAction func selectMonth(_ sender: Any) {
+        
+        if let monthSelectionViewController = storyboard?.instantiateViewController(identifier: "MonthSelectionViewController") {
+            print("selectMonth")
+            monthSelectionViewController.modalPresentationStyle = .overCurrentContext
+            monthSelectionViewController.modalTransitionStyle = .crossDissolve
+            present(monthSelectionViewController, animated: true)
+        }
+    }
+    
     @IBAction func deleteLogItem(_ sender: UIButton) {
         
         // convert point to indexPath 
