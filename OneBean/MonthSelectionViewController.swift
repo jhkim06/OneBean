@@ -8,6 +8,19 @@
 import UIKit
 
 class MonthSelectionViewController: UIViewController {
+    
+    @IBOutlet var monthView: UIView!
+    
+    @IBAction func selectJan(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("Jan", "2023")
+            })
+        }
+    }
+    @IBAction func selectFeb(_ sender: Any) {
+    }
+    
     // https://betterprogramming.pub/how-to-present-a-view-controller-with-blurred-background-in-ios-4350017e6073
     lazy var blurredView: UIView = {
         // 1. create container view
@@ -30,7 +43,8 @@ class MonthSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        //selectMood.layer.cornerRadius = selectMood.bounds.height/2
+        monthView.layer.cornerRadius = 5
+        
     }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
             dismiss(animated: true)

@@ -13,7 +13,6 @@ class MoodListViewController: UITableViewController {
     @IBOutlet weak var mothView: UIView!
     @IBOutlet var mothYear: UILabel!
     
-    
     @IBAction func selectMonth(_ sender: Any) {
         
         if let monthSelectionViewController = storyboard?.instantiateViewController(identifier: "MonthSelectionViewController") {
@@ -52,17 +51,19 @@ class MoodListViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         
-        let myFormat = Date.FormatStyle()
-            .year()
-            .month()
+        //let myFormat = Date.FormatStyle()
+        //    .year()
+        //    .month()
         
-        let currentTime = Date().formatted(myFormat)
+        //let currentTime = Date().formatted(myFormat)
         
         // textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
-        self.mothYear.text = currentTime
+        //self.mothYear.text = currentTime
         
         if let vc = parent?.children[0] as? CalendarViewController {
             //print("set logItemstore")
+            // show only logs in the selected month
+            // self.logItemStore = self.func(vc.logItemstore) ?
             self.logItemStore = vc.logItemStore
         }
         tableView.reloadData()
@@ -92,6 +93,19 @@ class MoodListViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 70
         //tableView.rowHeight = 100.0
+        
+        let myFormat = Date.FormatStyle()
+            .year()
+            .month()
+        
+        let currentTime = Date().formatted(myFormat)
+        
+        // textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
+        self.mothYear.text = currentTime
+    }
+    
+    func setMonthYear(_ month: String, _ year: String) {
+        self.mothYear.text = month + " " + year
     }
    
     //  to add space between the cells create sections for each item
