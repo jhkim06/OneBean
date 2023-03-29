@@ -59,7 +59,22 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         */
     }
     @objc func tapDone(sender: Any) {
+        
+        if let selectedRange = textView.selectedTextRange {
+            let cursorPosition = textView.offset(from: textView.beginningOfDocument, to: selectedRange.start)
+            //textView.replace(selectedRange, withText: "test")
+            print("\(cursorPosition)")
+        }
         self.view.endEditing(true)
+    }
+    @IBAction func addTime(sender: UIButton) {
+       
+        let currentTime = Date()
+        //currentTime.formatted(date: .complete, time: .complete)
+        
+        if let selectedRange = textView.selectedTextRange {
+            textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
+        }
     }
     /*
     @objc func keyboardWillShow(notification: NSNotification) {
