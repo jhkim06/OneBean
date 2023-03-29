@@ -36,4 +36,16 @@ class LogItemStore {
         allLogItems.removeValue(forKey: date)
         
     }
+    
+    func saveChanges() -> Bool {
+
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(allLogItems)
+        } catch let encodingError {
+            print("Error encoding allLogItems: \(encodingError)")
+        }
+
+        return false
+    }
 }

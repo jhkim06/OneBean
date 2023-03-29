@@ -7,10 +7,49 @@
 
 import UIKit
 
-struct Mood: Equatable {
+struct Color : Codable {
+    var red : CGFloat = 0.0, green: CGFloat = 0.0, blue: CGFloat = 0.0, alpha: CGFloat = 0.0
+    
+    var uiColor : UIColor {
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    init(uiColor : UIColor) {
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+    }
+}
+
+struct Mood: Equatable, Codable {
     var name: String
     var image: UIImage
     var color: UIColor
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case image
+        case color
+    }
+    init(name: String, image: UIImage, color: UIColor) {
+        self.name = name
+        self.image = image
+        self.color = color
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        let imageData = try? container.decode(Data.self, forKey: .image)
+        image = UIImage(data: imageData!)!
+        color = try container.decode(Color.self, forKey: .color).uiColor
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(name, forKey: .name)
+        try container.encode(image.pngData(), forKey: .image)
+        try container.encode(Color(uiColor: color), forKey: .color)
+    }
     
     static func ==(lhs: Mood, rhs: Mood) -> Bool {
         return lhs.name == rhs.name
