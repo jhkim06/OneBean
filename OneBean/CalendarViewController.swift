@@ -24,7 +24,7 @@ class CalendarViewController: UIViewController {
     let dateFormatter = DateFormatter()
     var selectedDate = String() // default to today
     
-    var logItemStore: LogItemStore! // FIXME logItemStore required to be accessed from multiple view controller
+    var logItemStore: LogItemStore!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -100,8 +100,13 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
         let date = dateFormatter.string(from:date)
-        if logItemStore.allLogItems.contains(where: {$0.key == date}) {
-            return CGPoint(x:0.0, y:0.0)
+        let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = date.components(separatedBy: "-")[2]
+        
+        if logItemStore.allLogItems.contains(where: {$0.key == monthYear}) {
+            if ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true) {
+                return CGPoint(x:0.0, y:0.0)
+            }
         }
         return CGPoint(x:0.0, y:0.0)
     }
@@ -110,6 +115,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         // block to select future date
         let date = dateFormatter.string(from:date)
+        
         if date > dateFormatter.string(from:Date()) {
                 return false
         } else {
@@ -149,57 +155,65 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
         
         let date = dateFormatter.string(from:date)
-        
-        if logItemStore.allLogItems.contains(where: {$0.key == date}) {
-            print(date)
-            let tempImage = logItemStore.allLogItems[date]!.mood.image
-            //print("image width: \(tempImage.size.width)")
+        //print(date)
+        // FIXME following lines are repeated fix this
+        let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = date.components(separatedBy: "-")[2]
+        //print("mothYear \(monthYear)")
+        if logItemStore.allLogItems.contains(where: {$0.key == monthYear}) {
+            //print("month year exitst")
+            if ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true) {
             
-            //if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
-            //    print("TODAY")
-            //}
-            
-            // resize image
-            let scaledImageSize = CGSize(
-                width: (tempImage.size.width ) * 0.25,
-                height: (tempImage.size.height ) * 0.25)
-            
-            let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
-            let scaledImage = renderer.image { _ in
-                tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+                let tempImage = logItemStore.allLogItems[monthYear]?[day]!.mood.image
+                //print("image width: \(tempImage.size.width)")
+                
+                //if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
+                //    print("TODAY")
+                //}
+                
+                // resize image
+                let scaledImageSize = CGSize(
+                    width: (tempImage!.size.width ) * 0.25,
+                    height: (tempImage!.size.height ) * 0.25)
+                
+                let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+                let scaledImage = renderer.image { _ in
+                    tempImage!.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+                }
+                return scaledImage
             }
-            return scaledImage
-        // default image for each cell
-        } else {
-            
-            /*
-            let startAngle = CGFloat(0.0)
-            let endAngle = CGFloat(360.0)
-            
-            let path = UIBezierPath(arcCenter: CGPoint(x: 25, y: 25), radius: 20, startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true)
-            
-            let size = CGSize(width: 50, height: 50)
-            let circle = UIGraphicsImageRenderer(size: size).image { _ in
-                UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7).setStroke()
-                path.lineWidth = 1
-                path.stroke()
-            }
-            return circle
-            */
-            
-            let tempImage = UIImage(resource: .bg)
-            
-            // resize image
-            let scaledImageSize = CGSize(
-                width: (tempImage.size.width ) * 0.3,
-                height: (tempImage.size.height ) * 0.3)
-            
-            let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
-            let scaledImage = renderer.image { _ in
-                tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
-            }
-            return scaledImage
         }
+        // default image for each cell
+            
+        // default image
+        /*
+        let startAngle = CGFloat(0.0)
+        let endAngle = CGFloat(360.0)
+        
+        let path = UIBezierPath(arcCenter: CGPoint(x: 25, y: 25), radius: 20, startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true)
+        
+        let size = CGSize(width: 50, height: 50)
+        let circle = UIGraphicsImageRenderer(size: size).image { _ in
+            UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7).setStroke()
+            path.lineWidth = 1
+            path.stroke()
+        }
+        return circle
+        */
+        
+        let tempImage = UIImage(resource: .bg)
+        
+        // resize image
+        let scaledImageSize = CGSize(
+            width: (tempImage.size.width ) * 0.3,
+            height: (tempImage.size.height ) * 0.3)
+        
+        let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+        let scaledImage = renderer.image { _ in
+            tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+        }
+        return scaledImage
+        
     }
 }
 
