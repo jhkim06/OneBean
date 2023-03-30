@@ -39,6 +39,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         textView.layer.borderWidth = 2.0
         textView.layer.cornerRadius = 5
         textView.text = currentLogItem.note
+        
+        let endPosition = textView.endOfDocument
+        textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
+        textView.scrollRangeToVisible(textView.selectedRange)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,6 +53,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textView.delegate = self
         
         moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
@@ -57,6 +62,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         */
+        
     }
     /*
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -83,6 +89,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if let selectedRange = textView.selectedTextRange {
             //self.currentLogItem
             textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
+            //print("current position \(selectedRange)")
         }
     }
     
@@ -94,7 +101,31 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 vc.tableView.reloadData()
             })
         }
-        
         //dismiss(animated: true)
     }
+    /*
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let endPosition = textView.endOfDocument
+        textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
+        textView.scrollRangeToVisible(textView.selectedRange)
+    }
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        
+        if let selectedRange = textView.selectedTextRange {
+            //self.currentLogItem
+            print("before \(selectedRange)")
+        }
+        
+        let endPosition = textView.endOfDocument
+        textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
+        textView.scrollRangeToVisible(textView.selectedRange)
+        
+        if let selectedRange = textView.selectedTextRange {
+            //self.currentLogItem
+            print("after \(selectedRange)")
+        }
+        
+        return true
+    }
+    */
 }
