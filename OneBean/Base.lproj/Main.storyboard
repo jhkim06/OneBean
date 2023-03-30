@@ -200,13 +200,34 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZe-uZ-Ddb" userLabel="left">
+                                        <rect key="frame" x="31.5" y="97" width="37" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
+                                        <connections>
+                                            <action selector="moveLeft:" destination="yJI-T3-wmH" eventType="touchUpInside" id="dat-ri-Sh6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3v-u9-0go" userLabel="right">
+                                        <rect key="frame" x="325.5" y="97" width="37" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system"/>
+                                        <connections>
+                                            <action selector="moveLeft:" destination="yJI-T3-wmH" eventType="touchUpInside" id="0Hv-jJ-JKc"/>
+                                            <action selector="moveRight:" destination="yJI-T3-wmH" eventType="touchUpInside" id="5ZW-u0-1Tj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="mJn-Vt-26c" firstAttribute="centerX" secondItem="rS1-74-Ha4" secondAttribute="centerX" id="0nT-Rv-vPL"/>
+                                    <constraint firstItem="mJn-Vt-26c" firstAttribute="top" secondItem="DZe-uZ-Ddb" secondAttribute="bottom" constant="5" id="40F-j8-UBB"/>
+                                    <constraint firstItem="W3v-u9-0go" firstAttribute="centerX" secondItem="xEa-af-vrO" secondAttribute="centerX" id="7l7-sT-YZB"/>
                                     <constraint firstAttribute="height" constant="300" id="JMt-69-Zfr"/>
+                                    <constraint firstItem="EJ4-wj-gv5" firstAttribute="centerX" secondItem="DZe-uZ-Ddb" secondAttribute="centerX" id="K2u-gf-8fL"/>
                                     <constraint firstItem="mJn-Vt-26c" firstAttribute="leading" secondItem="rS1-74-Ha4" secondAttribute="leading" constant="10" id="fMi-9k-JNc"/>
                                     <constraint firstAttribute="trailing" secondItem="mJn-Vt-26c" secondAttribute="trailing" constant="10" id="mbd-se-PEI"/>
+                                    <constraint firstItem="W3v-u9-0go" firstAttribute="centerY" secondItem="DZe-uZ-Ddb" secondAttribute="centerY" id="vIz-TT-wag"/>
                                     <constraint firstAttribute="bottom" secondItem="mJn-Vt-26c" secondAttribute="bottom" constant="18" id="yRT-0f-MyW"/>
                                 </constraints>
                             </view>
@@ -225,6 +246,7 @@
                     </view>
                     <connections>
                         <outlet property="marButton" destination="6Ms-xy-AH7" id="lY4-UU-Nrn"/>
+                        <outlet property="monthStackView" destination="mJn-Vt-26c" id="4Ql-vN-R5r"/>
                         <outlet property="monthView" destination="rS1-74-Ha4" id="n4T-gZ-dcs"/>
                     </connections>
                 </viewController>
@@ -235,7 +257,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-691" y="1195"/>
+            <point key="canvasLocation" x="-691.304347826087" y="1194.6428571428571"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="DI2-3c-D8r">
@@ -577,6 +599,8 @@
         <image name="arrowtriangle.down.circle" catalog="system" width="128" height="121"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="calendar.day.timeline.left" catalog="system" width="128" height="91"/>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

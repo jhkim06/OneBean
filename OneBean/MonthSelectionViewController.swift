@@ -11,7 +11,20 @@ class MonthSelectionViewController: UIViewController {
     
     @IBOutlet var monthView: UIView!
     
+    @IBOutlet var monthStackView: UIStackView!
+    
     @IBOutlet var marButton: UIButton!
+    
+    @IBAction func moveLeft(_ sender: Any) {
+        self.monthStackView.slideToLeft()
+        // update year
+        // update month button
+    }
+    @IBAction func moveRight(_ sender: Any) {
+        self.monthStackView.slideToRight()
+        // update year
+        // update month button
+    }
     
     @IBAction func selectJan(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
@@ -78,6 +91,9 @@ class MonthSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         setupView()
         monthView.layer.cornerRadius = 5
         
@@ -90,5 +106,48 @@ class MonthSelectionViewController: UIViewController {
         // 6. add blur view and send it to back
         view.addSubview(blurredView)
         view.sendSubviewToBack(blurredView)
+    }
+}
+
+extension UIView {
+    // Name this function in a way that makes sense to you...
+    // slideFromLeft, slideRight, slideLeftToRight, etc. are great alternative names
+    func slideToLeft(duration: TimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+        // Create a CATransition animation
+        let slideToLeftTransition = CATransition()
+
+        // Set its callback delegate to the completionDelegate that was provided (if any)
+        if let delegate: AnyObject = completionDelegate {
+            slideToLeftTransition.delegate = delegate as! CAAnimationDelegate
+        }
+
+        // Customize the animation's properties
+        slideToLeftTransition.type = CATransitionType.push
+        slideToLeftTransition.subtype = CATransitionSubtype.fromRight
+        slideToLeftTransition.duration = duration
+        slideToLeftTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        slideToLeftTransition.fillMode = CAMediaTimingFillMode.removed
+
+        // Add the animation to the View's layer
+        self.layer.add(slideToLeftTransition, forKey: "slideToLeftTransition")
+    }
+    func slideToRight(duration: TimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+        // Create a CATransition animation
+        let slideToRightTransition = CATransition()
+
+        // Set its callback delegate to the completionDelegate that was provided (if any)
+        if let delegate: AnyObject = completionDelegate {
+            slideToRightTransition.delegate = delegate as! CAAnimationDelegate
+        }
+
+        // Customize the animation's properties
+        slideToRightTransition.type = CATransitionType.push
+        slideToRightTransition.subtype = CATransitionSubtype.fromLeft
+        slideToRightTransition.duration = duration
+        slideToRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        slideToRightTransition.fillMode = CAMediaTimingFillMode.removed
+
+        // Add the animation to the View's layer
+        self.layer.add(slideToRightTransition, forKey: "slideToRightTransition")
     }
 }
