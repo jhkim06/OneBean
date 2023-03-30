@@ -10,13 +10,13 @@ import UIKit
 class MoodListViewController: UITableViewController {
     
     var logItemStore: LogItemStore!
+    var selectedMonthYear: String!
     @IBOutlet weak var mothView: UIView!
-    @IBOutlet var mothYear: UILabel!
+    @IBOutlet var monthYear: UILabel!
     
     @IBAction func selectMonth(_ sender: Any) {
         
         if let monthSelectionViewController = storyboard?.instantiateViewController(identifier: "MonthSelectionViewController") {
-            print("selectMonth")
             monthSelectionViewController.modalPresentationStyle = .overCurrentContext
             monthSelectionViewController.modalTransitionStyle = .crossDissolve
             present(monthSelectionViewController, animated: true)
@@ -28,8 +28,11 @@ class MoodListViewController: UITableViewController {
         // convert point to indexPath 
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else {return}
+        //print("section \(indexPath.section)")
         
-        let date = logItemStore.dates[indexPath.section]
+        let day = logItemStore.dates[self.selectedMonthYear]?[indexPath.section]
+        //print("in deleteLogItem \(day)")
+        let date = self.selectedMonthYear + "-" + day!
         // TODO add warning message before deletion
         logItemStore.removeItem(date: date)
         //logItemStore.saveChanges()
@@ -101,11 +104,26 @@ class MoodListViewController: UITableViewController {
         let currentTime = Date().formatted(myFormat)
         
         // textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
-        self.mothYear.text = currentTime
+        self.monthYear.text = currentTime
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        self.selectedMonthYear = dateFormatter.string(from:Date()).components(separatedBy: "-")[..<2].joined(separator: "-")
+        //print("raw \(dateFormatter.string(from:Date())) selectedMonthYear \(selectedMonthYear)")
     }
     
     func setMonthYear(_ month: String, _ year: String) {
-        self.mothYear.text = month + " " + year
+        self.selectedMonthYear = year + "-" + month
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM"
+        let date_ = dateFormatter.date(from:self.selectedMonthYear)
+        
+        let myFormat = Date.FormatStyle()
+            .year()
+            .month()
+        
+        let selectedMonth = date_!.formatted(myFormat)
+        self.monthYear.text = selectedMonth
     }
    
     //  to add space between the cells create sections for each item
@@ -115,9 +133,14 @@ class MoodListViewController: UITableViewController {
             //print("set logItemstore in number of sections")
             self.logItemStore = vc.logItemStore
         }
-        //print(self.logItemStore)
-        // TODO show only logs of the selected month
-        return self.logItemStore.allLogItems.count
+        //print(self.selectedMonthYear)
+        if let monthLogs = self.logItemStore.allLogItems[self.selectedMonthYear] {
+            //print("number of data: \(monthLogs.count)")
+            return monthLogs.count
+        }
+        else {
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView,
@@ -129,8 +152,14 @@ class MoodListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let date = logItemStore.dates[indexPath.section]
-        let moodItem = logItemStore.allLogItems[date]
+        //print("\(self.selectedMonthYear) \(indexPath.section)")
+        /*
+        for (key, _) in logItemStore.dates[self.selectedMonthYear]! {
+            print(key)
+        }
+        */
+        let day = logItemStore.dates[self.selectedMonthYear]![indexPath.section]
+        let moodItem = logItemStore.allLogItems[self.selectedMonthYear]![day]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "LogItemCell",
                                                  for: indexPath) as! LogItemCell
@@ -152,8 +181,7 @@ class MoodListViewController: UITableViewController {
         cell.imageView?.image = moodItem?.mood.image
         //cell.textLabel?.text = "I was \(moodEntry.mood.name)"
         
-        let dateString = date
-        cell.dateLabel?.text = "on \(dateString)"
+        cell.dateLabel?.text = "on \(day)"
        
         cell.noteLabel?.text = moodItem?.note
         
@@ -168,8 +196,8 @@ class MoodListViewController: UITableViewController {
         switch segue.identifier {
         case "showLog":
             if let section = tableView.indexPathForSelectedRow?.section {
-                let date = logItemStore.dates[section]
-                let logItem = logItemStore.allLogItems[date]
+                let day = logItemStore.dates[self.selectedMonthYear]![section]
+                let logItem = logItemStore.allLogItems[self.selectedMonthYear]![day]
             
                 let detailViewController = segue.destination as! DetailViewController
                 detailViewController.currentLogItem = logItem

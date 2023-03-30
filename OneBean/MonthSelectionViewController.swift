@@ -14,12 +14,46 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectJan(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("Jan", "2023")
+                vc.setMonthYear("01", "2023")
+                vc.tableView.reloadData()
             })
         }
     }
     @IBAction func selectFeb(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("02", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
+    @IBAction func selectMar(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("03", "2023")
+                vc.tableView.reloadData()
+            })
+        }
+    }
+    @IBAction func selectApr(_ sender: Any) {
+    }
+    @IBAction func selectMay(_ sender: Any) {
+    }
+    @IBAction func selectJun(_ sender: Any) {
+    }
+    @IBAction func selectJul(_ sender: Any) {
+    }
+    @IBAction func selectAug(_ sender: Any) {
+    }
+    @IBAction func selectSep(_ sender: Any) {
+    }
+    @IBAction func selectOct(_ sender: Any) {
+    }
+    @IBAction func selectNov(_ sender: Any) {
+    }
+    @IBAction func selectDec(_ sender: Any) {
+    }
+    
     
     // https://betterprogramming.pub/how-to-present-a-view-controller-with-blurred-background-in-ios-4350017e6073
     lazy var blurredView: UIView = {

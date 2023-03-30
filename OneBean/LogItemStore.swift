@@ -9,9 +9,8 @@ import UIKit
 
 class LogItemStore {
     
-    var allLogItems = Dictionary<String, LogItem>() // data type...
-    // var allLogItems_ = Dictionary<String, Dictionary<String, LogItem>>() // data type...
-    var dates = [String]()
+    var allLogItems = Dictionary<String, Dictionary<String, LogItem>>()
+    var dates = Dictionary<String, [String]>()
     
     let itemArchiveURL: URL = {
         let documentsDirectories =
@@ -27,14 +26,27 @@ class LogItemStore {
         do {
             let data = try Data(contentsOf: itemArchiveURL)
             let unarchiver = PropertyListDecoder()
-            let logitems = try unarchiver.decode([String: LogItem].self, from: data)
+            let logitems = try unarchiver.decode([String: [String: LogItem]].self, from: data)
             allLogItems = logitems
             
-            for (date_, _) in allLogItems {
-                dates.append(date_)
+            // set dates using allLogItems
+            for (monthYear_, _) in allLogItems {
+                //print(monthYear_)
+                for (day_, _) in allLogItems[monthYear_]! {
+                    //print("day \(day_)")
+                    if dates[monthYear_]?.count == nil {
+                        //print("first day")
+                        dates[monthYear_] = [day_]
+                    } else {
+                        //print("not first day \(dates[monthYear_]?.count)")
+                        dates[monthYear_]?.append(day_)
+                    }
+                    //print(day_)
+                }
+                dates[monthYear_]?.sort()
             }
-            dates.sort()
-            //print("saved item count: \(allLogItems.count)")
+            //print("check all logItems \(allLogItems.count)")
+            //print("check dates \(dates.count)")
         } catch {
             print("Error reading in saved items: \(error)")
         }
@@ -52,29 +64,50 @@ class LogItemStore {
     }
     
     @discardableResult func createItem(date: String, mood: Mood) -> LogItem {
+        let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = date.components(separatedBy: "-")[2]
         
         let newItem = LogItem(date: date, mood: mood)
         
-        if allLogItems.contains(where: {$0.key == date}) {
-            newItem.setNote(note: allLogItems[date]!.note )
-            allLogItems.removeValue(forKey: date)
+        if allLogItems.contains(where: {$0.key == monthYear}) {
             
-            allLogItems[date] = newItem
+            if ((allLogItems[monthYear]?.contains(where: {$0.key == day})) == true) {
+            
+                let str = allLogItems[monthYear]?[day]?.note
+                newItem.setNote(note: str!)
+                
+                allLogItems[monthYear]?.removeValue(forKey: day)
+                allLogItems[monthYear]?[day] = newItem
+            }
+            else {
+                allLogItems[monthYear]?[day] = newItem
+                
+                if allLogItems[monthYear]?.count == 0 { // compare to line 38
+                    dates[monthYear] = [day]
+                } else {
+                    dates[monthYear]?.append(day)
+                }
+                dates[monthYear]?.sort()
+            }
         } else {
             // add new item
-            allLogItems[date] = newItem
-            dates.append(date)
-            dates.sort()
+            allLogItems[monthYear] = [day:newItem]
+            
+            dates[monthYear] = [day]
+            dates[monthYear]?.sort()
         }
         return newItem
     }
     func removeItem(date: String) {
-        allLogItems.removeValue(forKey: date)
-        if let index = dates.firstIndex(of: date) {
-            dates.remove(at: index)
+        let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = date.components(separatedBy: "-")[2]
+        
+        allLogItems[monthYear]?.removeValue(forKey: day)
+        
+        if let index = dates[monthYear]?.firstIndex(of: day) {
+            dates[monthYear]?.remove(at: index)
         }
     }
-    
     @objc func saveChanges() -> Bool {
         print("Saving items to: \(itemArchiveURL)")
         do {
