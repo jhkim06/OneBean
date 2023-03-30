@@ -7,10 +7,10 @@
 
 import UIKit
 
-
 class LogItemStore {
     
     var allLogItems = Dictionary<String, LogItem>() // data type...
+    // var allLogItems_ = Dictionary<String, Dictionary<String, LogItem>>() // data type...
     var dates = [String]()
     
     let itemArchiveURL: URL = {
