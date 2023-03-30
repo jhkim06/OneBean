@@ -11,6 +11,8 @@ class MonthSelectionViewController: UIViewController {
     
     @IBOutlet var monthView: UIView!
     
+    @IBOutlet var marButton: UIButton!
+    
     @IBAction func selectJan(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {

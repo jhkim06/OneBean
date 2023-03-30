@@ -58,18 +58,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         */
     }
-    @objc func tapDone(sender: Any) {
-        self.view.endEditing(true)
-    }
-    @IBAction func addTime(sender: UIButton) {
-       
-        let currentTime = Date()
-        //currentTime.formatted(date: .complete, time: .complete)
-        
-        if let selectedRange = textView.selectedTextRange {
-            textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
-        }
-    }
     /*
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -84,6 +72,20 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         }
     }
     */
+    @objc func tapDone(sender: Any) {
+        self.view.endEditing(true)
+    }
+    @IBAction func addTime(sender: UIButton) {
+       
+        let currentTime = Date()
+        //currentTime.formatted(date: .complete, time: .complete)
+        
+        if let selectedRange = textView.selectedTextRange {
+            //self.currentLogItem
+            textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
+        }
+    }
+    
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         // if let vc = presentingViewController as? CalendarViewController
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
