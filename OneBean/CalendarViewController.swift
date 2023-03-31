@@ -49,7 +49,7 @@ class CalendarViewController: UIViewController {
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
         calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
-        calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
+        calendarView.appearance.todayColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.2)
         //calendarView.appearance.borderRadius = 0.7
         calendarView.appearance.titleTodayColor = .black
         calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
@@ -83,7 +83,7 @@ class CalendarViewController: UIViewController {
             
             self.calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
             self.calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
-            self.calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
+            self.calendarView.appearance.todayColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.2)
             self.calendarView.appearance.titleTodayColor = .black
             self.calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
         
