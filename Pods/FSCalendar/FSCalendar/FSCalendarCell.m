@@ -240,7 +240,7 @@
     
     if (![_image isEqual:_imageView.image]) {
         _imageView.image = _image;
-        _imageView.hidden = !_image;
+        _imageView.hidden = !_image; // give error NSCalendarDayChanged
     }
     
     if (_eventIndicator.hidden == (_numberOfEvents > 0)) {

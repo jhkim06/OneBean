@@ -45,15 +45,14 @@ class CalendarViewController: UIViewController {
         calendarView.scrollDirection = .vertical
         
         // to use custom cell
-        calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cell")
+        calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cellCustom")
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
         calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
         calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
-        calendarView.appearance.borderRadius = 0.7
+        //calendarView.appearance.borderRadius = 0.7
         calendarView.appearance.titleTodayColor = .black
         calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
-        
         //
         calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
         calendarView.appearance.headerTitleColor = .gray
@@ -66,18 +65,48 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.subtitleSelectionColor = .red
         
         calendarView.placeholderType = .none // show only the days of the current month
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
     }
     
     func setMood(_ mood: Mood) {
         logItemStore.createItem(date: selectedDate, mood: mood)
         calendarView.reloadData()
     }
+    
+    @objc func handleDayChangedNotification(_ notification: Notification) {
+        // Handle date change here
+        print("The calendar day has changed.")
+        OperationQueue.main.addOperation { [self] in
+            
+            self.calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cellCustom")
+            
+            self.calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
+            self.calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+            self.calendarView.appearance.todayColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 0.2)
+            self.calendarView.appearance.titleTodayColor = .black
+            self.calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
+        
+            self.calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
+            calendarView.appearance.headerTitleColor = .gray
+        
+            calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 10.0)
+        
+            calendarView.appearance.weekdayTextColor = .gray
+            calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
+            calendarView.appearance.subtitleSelectionColor = .red
+        
+            calendarView.placeholderType = .none // show only the days of the current month
+            
+            calendarView.today = Date()
+        }
+    }
 }
 
 extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
 
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
-        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
+        let cell = calendar.dequeueReusableCell(withIdentifier: "cellCustom", for: date, at: position)
         
         //cell.backgroundColor = .red
         return cell
@@ -125,6 +154,13 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = dateFormatter.string(from:date)
+        
+        /*
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+        
+        nc.post(name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+        */
         print(selectedDate  + " 선택됨")
     }
     //

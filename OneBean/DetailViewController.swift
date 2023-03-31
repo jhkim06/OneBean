@@ -39,7 +39,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         textView.layer.borderWidth = 2.0
         textView.layer.cornerRadius = 5
         textView.text = currentLogItem.note
-        
+    }
+    
+    func setCursorToEnd() {
         let endPosition = textView.endOfDocument
         textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
         textView.scrollRangeToVisible(textView.selectedRange)
@@ -49,6 +51,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         super.viewWillDisappear(animated)
         currentLogItem.setMood(mood: currentMood)
         currentLogItem.setNote(note: textView.text)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setCursorToEnd()
     }
     
     override func viewDidLoad() {
@@ -62,7 +68,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         */
-        
     }
     /*
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -109,6 +114,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
         textView.scrollRangeToVisible(textView.selectedRange)
     }
+    
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
         if let selectedRange = textView.selectedTextRange {
@@ -128,4 +134,5 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         return true
     }
     */
+    
 }

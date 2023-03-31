@@ -18,6 +18,8 @@ class CustomCalendarCell: FSCalendarCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+    
+        
     }
     
     override func layoutSubviews() {
@@ -29,5 +31,9 @@ class CustomCalendarCell: FSCalendarCell {
                                                 CGRect(x: 8.0, // FIXME do not use hard-coded numbers
                    y: -5.0, //(self.contentView.frame.height-diameter)*0.01,
                    width: diameter*0.65, height: diameter*0.3), cornerRadius: 10).cgPath
+    }
+    override func configureAppearance() {
+         super.configureAppearance()
+         // Override the build-in appearance configuration
     }
 }
