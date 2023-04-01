@@ -51,22 +51,76 @@ class MonthSelectionViewController: UIViewController {
         }
     }
     @IBAction func selectApr(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("04", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectMay(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("05", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectJun(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("06", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectJul(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("07", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectAug(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("08", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectSep(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("09", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectOct(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("10", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectNov(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("11", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     @IBAction func selectDec(_ sender: Any) {
+        if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            dismiss(animated: true, completion: {
+                vc.setMonthYear("12", "2023")
+                vc.tableView.reloadData()
+            })
+        }
     }
     
     
