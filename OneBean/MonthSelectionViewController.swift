@@ -10,18 +10,26 @@ import UIKit
 class MonthSelectionViewController: UIViewController {
     
     @IBOutlet var monthView: UIView!
-    
     @IBOutlet var monthStackView: UIStackView!
-    
     @IBOutlet var marButton: UIButton!
     
-    @IBAction func moveLeft(_ sender: Any) {
-        self.monthStackView.slideToLeft()
+    @IBOutlet var year: UILabel!
+    
+    var selectedMonthYear: String!
+    var yearInt: Int!
+    
+    @IBAction func previousYear(_ sender: Any) {
+        self.monthStackView.slideToRight()
+        self.yearInt = self.yearInt - 1
+        self.year.text = String(self.yearInt)
         // update year
         // update month button
     }
-    @IBAction func moveRight(_ sender: Any) {
-        self.monthStackView.slideToRight()
+    
+    @IBAction func nextYear(_ sender: Any) {
+        self.monthStackView.slideToLeft()
+        self.yearInt = self.yearInt + 1
+        self.year.text = String(self.yearInt)
         // update year
         // update month button
     }
@@ -123,7 +131,6 @@ class MonthSelectionViewController: UIViewController {
         }
     }
     
-    
     // https://betterprogramming.pub/how-to-present-a-view-controller-with-blurred-background-in-ios-4350017e6073
     lazy var blurredView: UIView = {
         // 1. create container view
@@ -143,10 +150,15 @@ class MonthSelectionViewController: UIViewController {
         return containerView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.year.text = selectedMonthYear.components(separatedBy: "-")[0]
+        self.yearInt = Int(self.year.text!) ?? 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         setupView()
         monthView.layer.cornerRadius = 5
@@ -166,13 +178,13 @@ class MonthSelectionViewController: UIViewController {
 extension UIView {
     // Name this function in a way that makes sense to you...
     // slideFromLeft, slideRight, slideLeftToRight, etc. are great alternative names
-    func slideToLeft(duration: TimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+    func slideToLeft(duration: TimeInterval = 0.5, completionDelegate: AnyObject? = nil) {
         // Create a CATransition animation
         let slideToLeftTransition = CATransition()
 
         // Set its callback delegate to the completionDelegate that was provided (if any)
         if let delegate: AnyObject = completionDelegate {
-            slideToLeftTransition.delegate = delegate as! CAAnimationDelegate
+            slideToLeftTransition.delegate = (delegate as! CAAnimationDelegate)
         }
 
         // Customize the animation's properties
@@ -185,13 +197,14 @@ extension UIView {
         // Add the animation to the View's layer
         self.layer.add(slideToLeftTransition, forKey: "slideToLeftTransition")
     }
-    func slideToRight(duration: TimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+    
+    func slideToRight(duration: TimeInterval = 0.5, completionDelegate: AnyObject? = nil) {
         // Create a CATransition animation
         let slideToRightTransition = CATransition()
 
         // Set its callback delegate to the completionDelegate that was provided (if any)
         if let delegate: AnyObject = completionDelegate {
-            slideToRightTransition.delegate = delegate as! CAAnimationDelegate
+            slideToRightTransition.delegate = (delegate as! CAAnimationDelegate)
         }
 
         // Customize the animation's properties

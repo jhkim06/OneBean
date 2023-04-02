@@ -61,11 +61,11 @@
             <objects>
                 <viewController storyboardIdentifier="MonthSelectionViewController" id="yJI-T3-wmH" customClass="MonthSelectionViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vUP-qS-Ari">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rS1-74-Ha4">
-                                <rect key="frame" x="10" y="194" width="394" height="300"/>
+                                <rect key="frame" x="10" y="150" width="394" height="300"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="mJn-Vt-26c">
                                         <rect key="frame" x="10" y="133" width="374" height="149"/>
@@ -205,7 +205,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
                                         <connections>
-                                            <action selector="moveLeft:" destination="yJI-T3-wmH" eventType="touchUpInside" id="dat-ri-Sh6"/>
+                                            <action selector="previousYear:" destination="yJI-T3-wmH" eventType="touchUpInside" id="ocW-i7-uco"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3v-u9-0go" userLabel="right">
@@ -213,10 +213,15 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system"/>
                                         <connections>
-                                            <action selector="moveLeft:" destination="yJI-T3-wmH" eventType="touchUpInside" id="0Hv-jJ-JKc"/>
-                                            <action selector="moveRight:" destination="yJI-T3-wmH" eventType="touchUpInside" id="5ZW-u0-1Tj"/>
+                                            <action selector="nextYear:" destination="yJI-T3-wmH" eventType="touchUpInside" id="lh6-fB-MYN"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OJE-Hb-XV7" userLabel="year">
+                                        <rect key="frame" x="173" y="75" width="48.5" height="28"/>
+                                        <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -224,7 +229,9 @@
                                     <constraint firstItem="mJn-Vt-26c" firstAttribute="top" secondItem="DZe-uZ-Ddb" secondAttribute="bottom" constant="5" id="40F-j8-UBB"/>
                                     <constraint firstItem="W3v-u9-0go" firstAttribute="centerX" secondItem="xEa-af-vrO" secondAttribute="centerX" id="7l7-sT-YZB"/>
                                     <constraint firstAttribute="height" constant="300" id="JMt-69-Zfr"/>
+                                    <constraint firstItem="mJn-Vt-26c" firstAttribute="top" secondItem="OJE-Hb-XV7" secondAttribute="bottom" constant="30" id="Jne-Fg-UYk"/>
                                     <constraint firstItem="EJ4-wj-gv5" firstAttribute="centerX" secondItem="DZe-uZ-Ddb" secondAttribute="centerX" id="K2u-gf-8fL"/>
+                                    <constraint firstItem="OJE-Hb-XV7" firstAttribute="centerX" secondItem="rS1-74-Ha4" secondAttribute="centerX" id="Zr4-nQ-HdR"/>
                                     <constraint firstItem="mJn-Vt-26c" firstAttribute="leading" secondItem="rS1-74-Ha4" secondAttribute="leading" constant="10" id="fMi-9k-JNc"/>
                                     <constraint firstAttribute="trailing" secondItem="mJn-Vt-26c" secondAttribute="trailing" constant="10" id="mbd-se-PEI"/>
                                     <constraint firstItem="W3v-u9-0go" firstAttribute="centerY" secondItem="DZe-uZ-Ddb" secondAttribute="centerY" id="vIz-TT-wag"/>
@@ -244,10 +251,12 @@
                             <outletCollection property="gestureRecognizers" destination="Hci-cE-h04" appends="YES" id="cNu-Nr-F5P"/>
                         </connections>
                     </view>
+                    <navigationItem key="navigationItem" id="wY2-PA-vmp"/>
                     <connections>
                         <outlet property="marButton" destination="6Ms-xy-AH7" id="lY4-UU-Nrn"/>
                         <outlet property="monthStackView" destination="mJn-Vt-26c" id="4Ql-vN-R5r"/>
                         <outlet property="monthView" destination="rS1-74-Ha4" id="n4T-gZ-dcs"/>
+                        <outlet property="year" destination="OJE-Hb-XV7" id="JAv-g9-YJN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kw3-oG-cId" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -257,7 +266,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-691.304347826087" y="1194.6428571428571"/>
+            <point key="canvasLocation" x="-697.10144927536237" y="1145.0892857142856"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="DI2-3c-D8r">
@@ -369,7 +378,7 @@
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="chevron.down" catalog="system"/>
                             <connections>
-                                <action selector="selectMonth:" destination="ASQ-XI-3Sh" eventType="touchUpInside" id="iRJ-hb-Rb9"/>
+                                <segue destination="yJI-T3-wmH" kind="show" identifier="showMonth" id="KmR-PP-HwE"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2022년 12월" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUm-yG-D75" userLabel="MonthYear">

@@ -14,15 +14,6 @@ class MoodListViewController: UITableViewController {
     @IBOutlet weak var mothView: UIView!
     @IBOutlet var monthYear: UILabel!
     
-    @IBAction func selectMonth(_ sender: Any) {
-        
-        if let monthSelectionViewController = storyboard?.instantiateViewController(identifier: "MonthSelectionViewController") {
-            monthSelectionViewController.modalPresentationStyle = .overCurrentContext
-            monthSelectionViewController.modalTransitionStyle = .crossDissolve
-            present(monthSelectionViewController, animated: true)
-        }
-    }
-    
     @IBAction func deleteLogItem(_ sender: UIButton) {
         
         // convert point to indexPath 
@@ -163,7 +154,6 @@ class MoodListViewController: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "LogItemCell",
                                                  for: indexPath) as! LogItemCell
-        
 
         //imageView auto layout constraints
         cell.imageView?.translatesAutoresizingMaskIntoConstraints = false
@@ -182,7 +172,6 @@ class MoodListViewController: UITableViewController {
         //cell.textLabel?.text = "I was \(moodEntry.mood.name)"
         
         cell.dateLabel?.text = "on \(day)"
-       
         cell.noteLabel?.text = moodItem?.note
         
         return cell
@@ -202,9 +191,14 @@ class MoodListViewController: UITableViewController {
                 let detailViewController = segue.destination as! DetailViewController
                 detailViewController.currentLogItem = logItem
             }
+        case "showMonth":
+            print("showMonth segue")
+            
+            let monthSelectionViewController = segue.destination as! MonthSelectionViewController
+            monthSelectionViewController.selectedMonthYear = self.selectedMonthYear
+            
         default:
             preconditionFailure("Unexpected segue identifier.")
         }
     }
-
 }
