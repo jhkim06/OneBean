@@ -37,15 +37,16 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectJan(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("01", "2023")
+                vc.setMonthYear("01", self.year.text!)
                 vc.tableView.reloadData()
             })
+            //dismiss(animated: true)
         }
     }
     @IBAction func selectFeb(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("02", "2023")
+                vc.setMonthYear("02", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -53,7 +54,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectMar(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("03", "2023")
+                vc.setMonthYear("03", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -61,7 +62,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectApr(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("04", "2023")
+                vc.setMonthYear("04", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -69,7 +70,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectMay(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("05", "2023")
+                vc.setMonthYear("05", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -77,7 +78,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectJun(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("06", "2023")
+                vc.setMonthYear("06", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -85,7 +86,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectJul(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("07", "2023")
+                vc.setMonthYear("07", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -93,7 +94,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectAug(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("08", "2023")
+                vc.setMonthYear("08", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -101,7 +102,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectSep(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("09", "2023")
+                vc.setMonthYear("09", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -109,7 +110,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectOct(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("10", "2023")
+                vc.setMonthYear("10", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -117,7 +118,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectNov(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("11", "2023")
+                vc.setMonthYear("11", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -125,7 +126,7 @@ class MonthSelectionViewController: UIViewController {
     @IBAction func selectDec(_ sender: Any) {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
-                vc.setMonthYear("12", "2023")
+                vc.setMonthYear("12", self.year.text!)
                 vc.tableView.reloadData()
             })
         }
@@ -163,9 +164,6 @@ class MonthSelectionViewController: UIViewController {
         setupView()
         monthView.layer.cornerRadius = 5
         
-    }
-    @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
-            dismiss(animated: true)
     }
     
     func setupView() {

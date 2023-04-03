@@ -11,7 +11,7 @@ class MoodListViewController: UITableViewController {
     
     var logItemStore: LogItemStore!
     var selectedMonthYear: String!
-    @IBOutlet weak var mothView: UIView!
+    @IBOutlet weak var monthView: UIView!
     @IBOutlet var monthYear: UILabel!
     
     @IBAction func deleteLogItem(_ sender: UIButton) {
@@ -66,7 +66,7 @@ class MoodListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(mothView)
+        self.view.addSubview(monthView)
         /*
         mothView.frame = CGRect(x: 0,
                                 //y: self.view.bounds.size.height - mothView.bounds.size.height,
@@ -75,13 +75,13 @@ class MoodListViewController: UITableViewController {
                                 height: 30.0)
         */
         
-        mothView.translatesAutoresizingMaskIntoConstraints = false
+        monthView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mothView.widthAnchor.constraint(equalToConstant: 300),
-            mothView.heightAnchor.constraint(equalToConstant: 50),
-            mothView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            mothView.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20)
+            monthView.widthAnchor.constraint(equalToConstant: 300),
+            monthView.heightAnchor.constraint(equalToConstant: 50),
+            monthView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            monthView.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20)
         ])
         
         tableView.rowHeight = UITableView.automaticDimension
@@ -170,8 +170,20 @@ class MoodListViewController: UITableViewController {
         cell.imageView?.layer.cornerRadius = 20 //half of your width or height
         cell.imageView?.image = moodItem?.mood.image
         //cell.textLabel?.text = "I was \(moodEntry.mood.name)"
+       
+        // print week day
+        let yearMonthDay = self.selectedMonthYear + "-" + day
         
-        cell.dateLabel?.text = "on \(day)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date_ = dateFormatter.date(from:yearMonthDay)
+        
+        let myFormat = Date.FormatStyle()
+            .weekday(.wide)
+        
+        let weekday = date_!.formatted(myFormat)
+        
+        cell.dateLabel?.text = "on \(weekday), \(day)"
         cell.noteLabel?.text = moodItem?.note
         
         return cell
