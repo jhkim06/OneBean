@@ -17,7 +17,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBAction private func moodSelectionChanged(_ sender: ImageSelector) {
         let selectedIndex = sender.selectedIndex
-
         currentMood = moods[selectedIndex]
     }
     
@@ -84,6 +83,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     */
     @objc func tapDone(sender: Any) {
+        // writeTime()
         self.view.endEditing(true)
     }
     @IBAction func addTime(sender: UIButton) {
@@ -93,8 +93,30 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
         if let selectedRange = textView.selectedTextRange {
             //self.currentLogItem
-            textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
-            //print("current position \(selectedRange)")
+            let dateString = "\n\(currentTime.formatted(date: .omitted, time: .shortened))"
+            textView.replace(selectedRange, withText: dateString)
+        }
+    }
+    func writeTime() {
+        let currentTime = Date()
+        //currentTime.formatted(date: .complete, time: .complete)
+        
+        if let selectedRange = textView.selectedTextRange {
+            
+           /*
+             let selectedNSRange = textView.selectedRange
+             textView.replace(selectedRange, withText: " (\(currentTime.formatted(date: .abbreviated, time: .shortened)))")
+             textView.textStorage.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 5), range: selectedNSRange)
+             //print("current position \(selectedRange)")
+             */
+            
+           let selectedNSRange = textView.selectedRange
+           textView.replace(selectedRange, withText: " (\(currentTime.formatted(date: .abbreviated, time: .shortened)))")
+           let lengthOfInsertedText = " (\(currentTime.formatted(date: .abbreviated, time: .shortened)))".count
+           let font = UIFont.boldSystemFont(ofSize: 7)
+           textView.textStorage.addAttribute(.font, value: font, range: NSRange(location: selectedNSRange.location, length: lengthOfInsertedText))
+           let newSelectedRange = NSRange(location: selectedNSRange.location + lengthOfInsertedText, length: 0)
+           textView.selectedRange = newSelectedRange
         }
     }
     
@@ -108,11 +130,16 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         }
         //dismiss(animated: true)
     }
-    /*
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        let endPosition = textView.endOfDocument
-        textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
-        textView.scrollRangeToVisible(textView.selectedRange)
+        //let endPosition = textView.endOfDocument
+        //print(endPosition)
+        //textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
+        //textView.scrollRangeToVisible(textView.selectedRange)
+    }
+    /*
+    func textViewDidChange(_ textView: UITextView) {
+        print("change")
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
