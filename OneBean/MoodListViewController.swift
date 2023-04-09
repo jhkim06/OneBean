@@ -202,6 +202,7 @@ class MoodListViewController: UITableViewController {
             
                 let detailViewController = segue.destination as! DetailViewController
                 detailViewController.currentLogItem = logItem
+                detailViewController.store = WeatherStore()
             }
         case "showMonth":
             print("showMonth segue")

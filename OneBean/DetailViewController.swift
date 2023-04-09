@@ -11,6 +11,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView: UITextView!
     @IBOutlet var moodSelector: ImageSelector!
+    @IBOutlet var temperature: UILabel!
+    
+    var store: WeatherStore!
  
     var currentLogItem: LogItem!
     var currentMood: Mood!
@@ -38,6 +41,27 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         textView.layer.borderWidth = 2.0
         textView.layer.cornerRadius = 5
         textView.text = currentLogItem.note
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let today = dateFormatter.string(from: Date())
+        if currentLogItem.date == today {
+            store.fetchWeatherInfo {
+                (weatherResult) in
+
+                switch weatherResult {
+                case let .success(weather):
+                    print("Successfully found \(weather.count) weather.")
+                    self.temperature.text = String(weather[3].obsrValue) + " °C"
+                    //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
+                    
+                case let .failure(error):
+                    print("Error fetching interesting photos: \(error)")
+                }
+            }
+        }
+        
+        
     }
     
     func setCursorToEnd() {
@@ -59,6 +83,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
+        //store.fetchWeatherInfo()
+        
+        // if selected date == today
+
         
         moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2

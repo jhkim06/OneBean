@@ -18,7 +18,6 @@ class CustomCalendarCell: FSCalendarCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
         
     }
     

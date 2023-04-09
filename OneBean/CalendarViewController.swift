@@ -76,7 +76,7 @@ class CalendarViewController: UIViewController {
     
     @objc func handleDayChangedNotification(_ notification: Notification) {
         // Handle date change here
-        print("The calendar day has changed.")
+        //print("The calendar day has changed.")
         OperationQueue.main.addOperation { [self] in
             
             self.calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cellCustom")
@@ -95,7 +95,7 @@ class CalendarViewController: UIViewController {
             calendarView.appearance.weekdayTextColor = .gray
             calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
             calendarView.appearance.subtitleSelectionColor = .red
-        
+            
             calendarView.placeholderType = .none // show only the days of the current month
             
             calendarView.today = Date()
