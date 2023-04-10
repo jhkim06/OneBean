@@ -97,7 +97,7 @@ struct WeatherAPI {
         let baseParams = ["base_date" : currentTime.components(separatedBy: "-")[0],
                           "base_time" : currentTime.components(separatedBy: "-")[1]
                             .components(separatedBy: ":")[0] + "00",
-                          "nx" : "55", "ny" : "127"]
+                          "nx" : "61", "ny" : "127"]
         
         var urlStr = baseURLString + "/" + endPoint.rawValue + "?serviceKey=\(apiKey)"
         

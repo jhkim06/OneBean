@@ -11,6 +11,7 @@ import FSCalendar
 class CalendarViewController: UIViewController {
 
     @IBOutlet var calendarView: FSCalendar!
+    var locationProvider: LocationProvider?
 
     @IBAction func selectMood(_ sender: UIButton) {
         if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
@@ -65,6 +66,8 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.subtitleSelectionColor = .red
         
         calendarView.placeholderType = .none // show only the days of the current month
+        
+        locationProvider = LocationProvider()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
     }
