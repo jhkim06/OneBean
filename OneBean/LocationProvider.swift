@@ -33,4 +33,10 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
             break
         }
     }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("locations: \(locations)")
+    }
+    func start() {
+        locationManager.startUpdatingLocation()
+    }
 }

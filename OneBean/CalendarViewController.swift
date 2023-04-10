@@ -31,6 +31,8 @@ class CalendarViewController: UIViewController {
         super.viewWillAppear(animated)
         selectedDate = dateFormatter.string(from:Date())
         calendarView.reloadData()
+        
+        locationProvider?.start()
     }
     
     override func viewDidLoad() {
@@ -145,14 +147,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     
     // selection condition
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        // block to select future date
-        let date = dateFormatter.string(from:date)
-        
-        if date > dateFormatter.string(from:Date()) {
-                return false
-        } else {
-            return true
-        }
+        return true
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
