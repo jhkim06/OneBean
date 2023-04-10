@@ -19,6 +19,7 @@ class WeatherStore {
     func fetchWeatherInfo(completion: @escaping (Result<[Weather], Error>) -> Void) {
         
         let url = WeatherAPI.ultraSrtURL
+        // set location
         //let url = WeatherAPI.ultraFcstURL
         let request = URLRequest(url: url)
         

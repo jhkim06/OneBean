@@ -39,4 +39,8 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
     func start() {
         locationManager.startUpdatingLocation()
     }
+    func getLocation()->CLLocation {
+        print("get location: \(String(describing: locationManager.location))")
+        return locationManager.location!
+    }
 }

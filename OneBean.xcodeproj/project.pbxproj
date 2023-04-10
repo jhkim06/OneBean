@@ -16,6 +16,7 @@
 		055356FE29E26557009DDF9F /* WeatherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055356FD29E26557009DDF9F /* WeatherStore.swift */; };
 		0553572029E2C296009DDF9F /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553571F29E2C296009DDF9F /* Weather.swift */; };
 		0553572429E3D08E009DDF9F /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553572329E3D08E009DDF9F /* LocationProvider.swift */; };
+		0553572629E43FF5009DDF9F /* MapConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553572529E43FF4009DDF9F /* MapConversion.swift */; };
 		056939D029D4761100CB2D05 /* MonthSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056939CF29D4761100CB2D05 /* MonthSelectionViewController.swift */; };
 		0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694B29B4A97900730B9C /* AppDelegate.swift */; };
 		0592694E29B4A97900730B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694D29B4A97900730B9C /* SceneDelegate.swift */; };
@@ -44,6 +45,7 @@
 		055356FD29E26557009DDF9F /* WeatherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStore.swift; sourceTree = "<group>"; };
 		0553571F29E2C296009DDF9F /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		0553572329E3D08E009DDF9F /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
+		0553572529E43FF4009DDF9F /* MapConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConversion.swift; sourceTree = "<group>"; };
 		056939CF29D4761100CB2D05 /* MonthSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectionViewController.swift; sourceTree = "<group>"; };
 		05921FC829DA882500A09690 /* OneBean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneBean.entitlements; sourceTree = "<group>"; };
 		0592694829B4A97900730B9C /* OneBean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneBean.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,7 @@
 				055356F929E256D9009DDF9F /* WeatherAPI.swift */,
 				055356FD29E26557009DDF9F /* WeatherStore.swift */,
 				0553571F29E2C296009DDF9F /* Weather.swift */,
+				0553572529E43FF4009DDF9F /* MapConversion.swift */,
 				0553572329E3D08E009DDF9F /* LocationProvider.swift */,
 				0592695129B4A97900730B9C /* Main.storyboard */,
 				056939CF29D4761100CB2D05 /* MonthSelectionViewController.swift */,
@@ -272,6 +275,7 @@
 				05D6AA7F29C7F7CB00A42F02 /* MoodSelectionViewController.swift in Sources */,
 				05FFB20B29B62BD100C8156E /* Mood.swift in Sources */,
 				056939D029D4761100CB2D05 /* MonthSelectionViewController.swift in Sources */,
+				0553572629E43FF5009DDF9F /* MapConversion.swift in Sources */,
 				05FFB21329B781A200C8156E /* LogItemStore.swift in Sources */,
 				055356FA29E256D9009DDF9F /* WeatherAPI.swift in Sources */,
 				053C650229C4523700708FF1 /* CustomCalendarCell.swift in Sources */,

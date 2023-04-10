@@ -36,11 +36,24 @@ class CalendarViewController: UIViewController {
         
         locationProvider?.start() // track location
         
-        //let dateFormatter = DateFormatter()
-        //dateFormatter.dateFormat = "yyyy-MM-dd"
-        // let today = dateFormatter.string(from: Date())
+        OperationQueue.main.addOperation {
+                self.store.fetchWeatherInfo {
+                (weatherResult) in
 
-        calendarView.reloadData()
+                switch weatherResult {
+                case let .success(weather):
+                    // TODO convert Weather to dictionary with desired key
+                    // self.temperature.text = String(weather[3].obsrValue) + " °C"
+                    self.currentTMP = String(weather[3].obsrValue) + " °C"
+                    DispatchQueue.main.async {
+                        self.calendarView.reloadData() // wait and reload
+                    }
+                    //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
+                case let .failure(error):
+                    print("Error fetching interesting photos: \(error)")
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -82,24 +95,7 @@ class CalendarViewController: UIViewController {
         
         locationProvider = LocationProvider()
         
-        OperationQueue.main.addOperation {
-            self.store.fetchWeatherInfo {
-            (weatherResult) in
 
-            switch weatherResult {
-            case let .success(weather):
-                // TODO convert Weather to dictionary with desired key
-                // self.temperature.text = String(weather[3].obsrValue) + " °C"
-                self.currentTMP = String(weather[3].obsrValue) + " °C"
-                DispatchQueue.main.async {
-                    self.calendarView.reloadData()
-                }
-                //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
-            case let .failure(error):
-                print("Error fetching interesting photos: \(error)")
-            }
-        }
-        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
     }
@@ -122,14 +118,18 @@ class CalendarViewController: UIViewController {
             self.calendarView.appearance.titleTodayColor = .black
             self.calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
         
-            self.calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
+            calendarView.appearance.headerTitleFont = UIFont(name: "Avenir-Light", size: 20.0)
             calendarView.appearance.headerTitleColor = .gray
-        
+            
             calendarView.appearance.titleFont = UIFont(name: "Avenir-Light", size: 10.0)
-        
+            
             calendarView.appearance.weekdayTextColor = .gray
             calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
-            calendarView.appearance.subtitleSelectionColor = .red
+            
+            calendarView.appearance.subtitleSelectionColor = .black
+            calendarView.appearance.subtitleOffset = CGPoint(x:0.0, y:-12.0)
+            calendarView.appearance.subtitleFont = UIFont(name: "Avenir-Light", size: 7.0)
+            calendarView.appearance.subtitleTodayColor = .black
             
             calendarView.placeholderType = .none // show only the days of the current month
             

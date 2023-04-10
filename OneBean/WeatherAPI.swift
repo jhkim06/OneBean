@@ -75,7 +75,17 @@ struct WeatherAPI {
         return components.url!
         */
         
-        // FIXME use current location
+        let locationProvider = LocationProvider()
+        locationProvider.start()
+        let location = locationProvider.getLocation()
+        var nx = location.coordinate.latitude
+        var ny = location.coordinate.longitude
+        print("nx \(nx) ny \(ny)")
+        let mapConv = MapConversion()
+        print(mapConv.lamcproj(ny, nx))
+        (nx, ny) = mapConv.lamcproj(ny, nx)
+         
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd-HH:mm"
 
@@ -97,7 +107,7 @@ struct WeatherAPI {
         let baseParams = ["base_date" : currentTime.components(separatedBy: "-")[0],
                           "base_time" : currentTime.components(separatedBy: "-")[1]
                             .components(separatedBy: ":")[0] + "00",
-                          "nx" : "61", "ny" : "127"]
+                          "nx" : String(Int(nx)), "ny" : String(Int(ny))]
         
         var urlStr = baseURLString + "/" + endPoint.rawValue + "?serviceKey=\(apiKey)"
         
