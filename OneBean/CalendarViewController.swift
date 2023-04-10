@@ -12,6 +12,8 @@ class CalendarViewController: UIViewController {
 
     @IBOutlet var calendarView: FSCalendar!
     var locationProvider: LocationProvider?
+    var store: WeatherStore!
+    var currentTMP: String?
 
     @IBAction func selectMood(_ sender: UIButton) {
         if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
@@ -32,7 +34,13 @@ class CalendarViewController: UIViewController {
         selectedDate = dateFormatter.string(from:Date())
         calendarView.reloadData()
         
-        locationProvider?.start()
+        locationProvider?.start() // track location
+        
+        //let dateFormatter = DateFormatter()
+        //dateFormatter.dateFormat = "yyyy-MM-dd"
+        // let today = dateFormatter.string(from: Date())
+
+        calendarView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -65,11 +73,33 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.weekdayTextColor = .gray
         calendarView.appearance.weekdayFont = UIFont(name: "Avenir-Light", size: 18.0)
         
-        calendarView.appearance.subtitleSelectionColor = .red
+        calendarView.appearance.subtitleSelectionColor = .black
+        calendarView.appearance.subtitleOffset = CGPoint(x:0.0, y:-12.0)
+        calendarView.appearance.subtitleFont = UIFont(name: "Avenir-Light", size: 7.0)
+        calendarView.appearance.subtitleTodayColor = .black
         
         calendarView.placeholderType = .none // show only the days of the current month
         
         locationProvider = LocationProvider()
+        
+        OperationQueue.main.addOperation {
+            self.store.fetchWeatherInfo {
+            (weatherResult) in
+
+            switch weatherResult {
+            case let .success(weather):
+                // TODO convert Weather to dictionary with desired key
+                // self.temperature.text = String(weather[3].obsrValue) + " °C"
+                self.currentTMP = String(weather[3].obsrValue) + " °C"
+                DispatchQueue.main.async {
+                    self.calendarView.reloadData()
+                }
+                //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
+            case let .failure(error):
+                print("Error fetching interesting photos: \(error)")
+            }
+        }
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
     }
@@ -109,6 +139,16 @@ class CalendarViewController: UIViewController {
 }
 
 extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleOffsetFor date: Date) -> CGPoint {
+        switch dateFormatter.string(from: date) {
+            case dateFormatter.string(from: Date()):
+                return CGPoint(x:0.0, y:-17.0)
+            default:
+                return CGPoint(x:0.0, y:-20.0)
+        }
+    }
+    
 
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cellCustom", for: date, at: position)
@@ -170,15 +210,14 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
             
         //selectedDate = date
-        /*
+        
         switch dateFormatter.string(from: date) {
             case dateFormatter.string(from: Date()):
-                return "Today"
+                return self.currentTMP
             default:
                 return nil
         }
-        */
-        return nil
+        
     }
     
     func calendar(_ calendar: FSCalendar!, hasEventForDate date: Date) -> Bool {

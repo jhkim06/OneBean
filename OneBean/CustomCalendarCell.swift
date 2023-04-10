@@ -18,7 +18,7 @@ class CustomCalendarCell: FSCalendarCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        self.subtitle = "Today"
     }
     
     override func layoutSubviews() {

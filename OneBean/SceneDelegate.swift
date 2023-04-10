@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let barItemController = window!.rootViewController as! UITabBarController
         let logItemController = barItemController.viewControllers?[0] as! CalendarViewController
         logItemController.logItemStore = LogItemStore()
+        logItemController.store = WeatherStore()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -33,6 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        print("sceneDidBecomeActive")
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
