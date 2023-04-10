@@ -27,7 +27,7 @@ class WeatherStore {
                 if let jsonString = String(data: jsonData,
                                            encoding: .utf8) {
                     print(jsonString)
-                    let result = self.processPhotosRequest(data: data, error: err)
+                    let result = self.processWeathersRequest(data: data, error: err)
                     OperationQueue.main.addOperation {
                         completion(result)
                     }
@@ -42,12 +42,11 @@ class WeatherStore {
         }
         task.resume()
     }
-    private func processPhotosRequest(data: Data?,
+    private func processWeathersRequest(data: Data?,
                                       error: Error?) -> Result<[Weather], Error> {
         guard let jsonData = data else {
             return .failure(error!)
         }
-
         return WeatherAPI.weather(fromJSON: jsonData)
     }
 }

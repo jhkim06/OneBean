@@ -7,8 +7,6 @@
 
 import Foundation
 
-// {"baseDate":"20230409","baseTime":"1100","category":"TMP","fcstDate":"20230409","fcstTime":"1200","fcstValue":"15","nx":55,"ny":127
-
 class Weather: Codable {
     let baseDate: String
     let baseTime: String

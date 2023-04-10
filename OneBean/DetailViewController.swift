@@ -52,6 +52,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 switch weatherResult {
                 case let .success(weather):
                     print("Successfully found \(weather.count) weather.")
+                    // TODO convert Weather to dictionary with desired key
                     self.temperature.text = String(weather[3].obsrValue) + " °C"
                     //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
                     
@@ -60,8 +61,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 }
             }
         }
-        
-        
     }
     
     func setCursorToEnd() {
@@ -86,7 +85,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         //store.fetchWeatherInfo()
         
         // if selected date == today
-
         
         moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
