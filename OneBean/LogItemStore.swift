@@ -63,11 +63,14 @@ class LogItemStore {
 
     }
     
-    @discardableResult func createItem(date: String, mood: Mood) -> LogItem {
+    @discardableResult func createItem(date: String, mood: Mood, setByUser: Bool=true) -> LogItem {
         let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
         let day = date.components(separatedBy: "-")[2]
         
         let newItem = LogItem(date: date, mood: mood)
+        if setByUser {
+            newItem.setByUser()
+        }
         
         if allLogItems.contains(where: {$0.key == monthYear}) {
             

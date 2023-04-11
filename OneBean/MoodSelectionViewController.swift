@@ -19,10 +19,7 @@ class MoodSelectionViewController: UIViewController {
                 selectMood?.backgroundColor = nil
                 return
             }
-            //print(currentMood.name)
-            //dismiss(animated: true)
             
-            //if let vc = presentingViewController as? CalendarViewController {
             if let vc = presentingViewController?.children[0] as? CalendarViewController {
                 dismiss(animated: true, completion: {
                     vc.setMood(currentMood)

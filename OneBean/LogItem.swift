@@ -25,6 +25,9 @@ class LogItem: Codable {
     func setMood(mood: Mood) {
         self.mood = mood
     }
+    func setByUser(){
+        self.mood.selectedByUser = true
+    }
     func setNote(note: String) {
         self.note = note
     }

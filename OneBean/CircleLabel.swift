@@ -33,18 +33,19 @@ struct CircleText: View {
             ForEach(self.texts, id: \.self.offset) { (offset, element) in
                 
                 VStack {
-                    Text(String(element)).font(.system(size: 10))
+                    Text(String(element)).font(Font.custom("Avenir-Bold", size: 12))
+                        .foregroundColor(SwiftUI.Color(red: 149/255, green: 125/255, blue: 173/255))
                         .kerning(self.kerning)
                         .background(Sizeable())
                         .onPreferenceChange(WidthPreferenceKey.self, perform: { size in
-                            self.textSizes[offset] = Double(size) * 0.8 // space between letters
+                            self.textSizes[offset] = Double(size) * 0.9 // space between letters
                         })
                     Spacer()
                 }
                 .rotationEffect(self.angle(at: offset))
                 
             }
-        }.rotationEffect(-self.angle(at: self.texts.count-1)/5)
+        }.rotationEffect(-self.angle(at: self.texts.count-1)/3)
             
         .frame(width: 55, height: 55, alignment: .center)
     }

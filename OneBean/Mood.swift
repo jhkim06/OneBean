@@ -23,16 +23,19 @@ struct Mood: Equatable, Codable {
     var name: String
     var image: UIImage
     var color: UIColor
+    var selectedByUser: Bool
     
     enum CodingKeys: String, CodingKey {
         case name
         case image
         case color
+        case selectedByUser
     }
     init(name: String, image: UIImage, color: UIColor) {
         self.name = name
         self.image = image
         self.color = color
+        self.selectedByUser = false
     }
     
     init(from decoder: Decoder) throws {
@@ -42,6 +45,17 @@ struct Mood: Equatable, Codable {
         image = UIImage(data: imageData!, scale: 2.0)!
         //print("in decode \(image.size.width)")
         color = try container.decode(Color.self, forKey: .color).uiColor
+        do {
+            selectedByUser = try container.decode(Bool.self, forKey: .selectedByUser)
+        } catch let error as DecodingError {
+            switch error {
+            case .keyNotFound(let key, _):
+                selectedByUser = true
+            default:
+                selectedByUser = true
+                print("Error from decoder")
+            }
+        }
     }
     
     func encode(to encoder: Encoder) throws {
@@ -51,6 +65,7 @@ struct Mood: Equatable, Codable {
         try container.encode(name, forKey: .name)
         try container.encode(image.pngData(), forKey: .image)
         try container.encode(Color(uiColor: color), forKey: .color)
+        try container.encode(selectedByUser, forKey: .selectedByUser)
     }
     
     static func ==(lhs: Mood, rhs: Mood) -> Bool {

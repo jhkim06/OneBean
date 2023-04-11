@@ -43,7 +43,7 @@ class CalendarViewController: UIViewController {
                 switch weatherResult {
                 case let .success(weather):
                     // TODO convert Weather to dictionary with desired key
-                    self.currentTMP = "Today " + String(weather[3].obsrValue) + "°C"
+                    self.currentTMP = "today " + String(weather[3].obsrValue) + "°C"
                     
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
@@ -223,12 +223,15 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = dateFormatter.string(from:date)
         
-        // if LogItem exist show it
-        
         let monthYear = selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
         let day = selectedDate.components(separatedBy: "-")[2]
-        
-        if let _ = logItemStore.allLogItems[monthYear]![day] {
+       
+        if let nestedDict = logItemStore.allLogItems[monthYear], let _ = nestedDict[day] {
+            performSegue(withIdentifier: "showDetail", sender: date)
+        }
+        else {
+            let mood = Mood.soso
+            logItemStore.createItem(date: selectedDate, mood: mood, setByUser: false)
             performSegue(withIdentifier: "showDetail", sender: date)
         }
         /*
@@ -277,7 +280,24 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             //print("month year exitst")
             if ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true) {
             
+                
                 let tempImage = logItemStore.allLogItems[monthYear]?[day]!.mood.image
+                if let setByUser = logItemStore.allLogItems[monthYear]?[day]!.mood.selectedByUser {
+                    if setByUser == false {
+                        let tempImage = UIImage(resource: .bg)
+                        
+                        // resize image
+                        let scaledImageSize = CGSize(
+                            width: (tempImage.size.width ) * 0.3,
+                            height: (tempImage.size.height ) * 0.3)
+                        
+                        let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+                        let scaledImage = renderer.image { _ in
+                            tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+                        }
+                        return scaledImage
+                    }
+                }
                 //print("image width: \(tempImage.size.width)")
                 
                 //if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {

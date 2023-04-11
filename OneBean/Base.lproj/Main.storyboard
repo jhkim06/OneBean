@@ -464,7 +464,7 @@
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="5bu-2y-yTI">
                                                         <rect key="frame" x="0.0" y="0.0" width="280.5" height="200"/>
-                                                        <color key="backgroundColor" red="0.94418805839999997" green="0.95774501560000003" blue="0.92825990920000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="200" id="lmT-Fc-GMA"/>
                                                         </constraints>
@@ -511,10 +511,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="zJd-C5-KFe"/>
                     <connections>
+                        <outlet property="dateLabel" destination="ra3-2h-qVv" id="yf6-UF-MPh"/>
                         <outlet property="moodSelector" destination="bk0-BZ-jOJ" id="fJT-za-DK3"/>
                         <outlet property="planTextView" destination="2wZ-2y-KP4" id="tgz-Av-ib5"/>
                         <outlet property="temperature" destination="3lD-Lo-SHn" id="9eX-cm-fOP"/>
                         <outlet property="textView" destination="5bu-2y-yTI" id="Xi5-5K-xv2"/>
+                        <outlet property="titleLabel" destination="x68-b7-LK3" id="5xd-Nw-Bcq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iLr-ms-IQP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

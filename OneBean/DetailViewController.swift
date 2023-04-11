@@ -13,6 +13,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var planTextView: UITextView!
     @IBOutlet var moodSelector: ImageSelector!
     @IBOutlet var temperature: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
     
     var store: WeatherStore!
  
@@ -54,7 +56,17 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: Date())
+        let date = dateFormatter.date(from:currentLogItem.date)
+        if (date! <= Date()) {
+            titleLabel.text = "How was your day?"
+        } else {
+            titleLabel.text = "Plan for a day!"
+        }
+        
         if currentLogItem.date == today {
+    
+            /*
+            // show current temperature
             store.fetchWeatherInfo {
                 (weatherResult) in
 
@@ -69,6 +81,17 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                     print("Error fetching interesting photos: \(error)")
                 }
             }
+            */
+        }  else {
+            // update dateLabel
+            let myFormat = Date.FormatStyle()
+                .day()
+                .month(.abbreviated)
+                .year()
+                .weekday(.wide)
+            
+            let weekday = date!.formatted(myFormat)
+            dateLabel.text = weekday
         }
     }
     
@@ -164,6 +187,13 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             dismiss(animated: true, completion: {
                 //print(self.getMood())
                 vc.tableView.reloadData()
+            })
+        }
+        
+        if let vc = presentingViewController?.children[0] as? CalendarViewController {
+            dismiss(animated: true, completion: {
+                //print(self.getMood())
+                vc.calendarView.reloadData()
             })
         }
         //dismiss(animated: true)
