@@ -92,6 +92,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
+        planTextView.delegate = self
         //store.fetchWeatherInfo()
         
         // if selected date == today
@@ -99,6 +100,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         moods = [.happy, .good, .soso, .bad, .sad]
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
         self.textView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        self.planTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
         /*
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
