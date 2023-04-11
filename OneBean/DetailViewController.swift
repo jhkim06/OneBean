@@ -27,6 +27,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @IBAction private func moodSelectionChanged(_ sender: ImageSelector) {
         let selectedIndex = sender.selectedIndex
         currentMood = moods[selectedIndex]
+        currentMood.selectedByUser = true
     }
     
     var moods: [Mood] = [] {
