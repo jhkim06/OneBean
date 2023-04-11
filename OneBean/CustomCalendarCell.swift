@@ -16,9 +16,15 @@ class CustomCalendarCell: FSCalendarCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // to prevent unwanted view addition
+        self.subviews.filter({ $0 is CircleLabelWrapper }).forEach({ $0.removeFromSuperview() })
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.subtitle = "Today"
+       
     }
     
     override func layoutSubviews() {

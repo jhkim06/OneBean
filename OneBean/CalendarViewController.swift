@@ -44,10 +44,12 @@ class CalendarViewController: UIViewController {
                 case let .success(weather):
                     // TODO convert Weather to dictionary with desired key
                     // self.temperature.text = String(weather[3].obsrValue) + " °C"
-                    self.currentTMP = String(weather[3].obsrValue) + " °C"
+                    self.currentTMP = String(weather[3].obsrValue) + "°C"
+                    
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
                     }
+                     
                     //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
                 case let .failure(error):
                     print("Error fetching interesting photos: \(error)")
@@ -143,15 +145,29 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleOffsetFor date: Date) -> CGPoint {
         switch dateFormatter.string(from: date) {
             case dateFormatter.string(from: Date()):
-                return CGPoint(x:0.0, y:-17.0)
+                return CGPoint(x:0.0, y:-20.0)
             default:
                 return CGPoint(x:0.0, y:-20.0)
         }
     }
-    
-
+    /*
+    func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
+        // Remove your custom view from the cell's subviews
+        cell.subviews.filter({ $0 is CircleLabelWrapper }).forEach({ $0.removeFromSuperview() })
+    }
+    */
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cellCustom", for: date, at: position)
+        
+        if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
+            let circleSize = CGSize(width: 5, height: 5)
+            let circleOrigin = CGPoint(x: 25, y: 45)
+            let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin, size: circleSize), self.currentTMP ?? "")
+            //let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin))
+            // add the custom view to the cell
+            cell.addSubview(circleLabelWrapper)
+            //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
+        }
         
         //cell.backgroundColor = .red
         return cell
@@ -210,13 +226,15 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
             
         //selectedDate = date
-        
+        /*
         switch dateFormatter.string(from: date) {
             case dateFormatter.string(from: Date()):
                 return self.currentTMP
             default:
                 return nil
         }
+         */
+        return nil
         
     }
     
@@ -286,7 +304,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
         }
         return scaledImage
-        
     }
 }
 

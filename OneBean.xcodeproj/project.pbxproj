@@ -17,6 +17,8 @@
 		0553572029E2C296009DDF9F /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553571F29E2C296009DDF9F /* Weather.swift */; };
 		0553572429E3D08E009DDF9F /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553572329E3D08E009DDF9F /* LocationProvider.swift */; };
 		0553572629E43FF5009DDF9F /* MapConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553572529E43FF4009DDF9F /* MapConversion.swift */; };
+		0553572829E4F009009DDF9F /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553572729E4F009009DDF9F /* CircleLabel.swift */; };
+		0553572C29E4FE43009DDF9F /* CircleLabelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0553572B29E4FE43009DDF9F /* CircleLabelWrapper.swift */; };
 		056939D029D4761100CB2D05 /* MonthSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056939CF29D4761100CB2D05 /* MonthSelectionViewController.swift */; };
 		0592694C29B4A97900730B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694B29B4A97900730B9C /* AppDelegate.swift */; };
 		0592694E29B4A97900730B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0592694D29B4A97900730B9C /* SceneDelegate.swift */; };
@@ -46,6 +48,8 @@
 		0553571F29E2C296009DDF9F /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		0553572329E3D08E009DDF9F /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		0553572529E43FF4009DDF9F /* MapConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConversion.swift; sourceTree = "<group>"; };
+		0553572729E4F009009DDF9F /* CircleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLabel.swift; sourceTree = "<group>"; };
+		0553572B29E4FE43009DDF9F /* CircleLabelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLabelWrapper.swift; sourceTree = "<group>"; };
 		056939CF29D4761100CB2D05 /* MonthSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectionViewController.swift; sourceTree = "<group>"; };
 		05921FC829DA882500A09690 /* OneBean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneBean.entitlements; sourceTree = "<group>"; };
 		0592694829B4A97900730B9C /* OneBean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneBean.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +111,8 @@
 				0592694D29B4A97900730B9C /* SceneDelegate.swift */,
 				0592694F29B4A97900730B9C /* CalendarViewController.swift */,
 				053C650129C4523700708FF1 /* CustomCalendarCell.swift */,
+				0553572729E4F009009DDF9F /* CircleLabel.swift */,
+				0553572B29E4FE43009DDF9F /* CircleLabelWrapper.swift */,
 				05D6AA8029C81C5100A42F02 /* CustomVisualEffectView.swift */,
 				055356F929E256D9009DDF9F /* WeatherAPI.swift */,
 				055356FD29E26557009DDF9F /* WeatherStore.swift */,
@@ -279,6 +285,8 @@
 				05FFB21329B781A200C8156E /* LogItemStore.swift in Sources */,
 				055356FA29E256D9009DDF9F /* WeatherAPI.swift in Sources */,
 				053C650229C4523700708FF1 /* CustomCalendarCell.swift in Sources */,
+				0553572C29E4FE43009DDF9F /* CircleLabelWrapper.swift in Sources */,
+				0553572829E4F009009DDF9F /* CircleLabel.swift in Sources */,
 				055356FE29E26557009DDF9F /* WeatherStore.swift in Sources */,
 				05D6AA8129C81C5100A42F02 /* CustomVisualEffectView.swift in Sources */,
 				05FFB21129B7806D00C8156E /* LogItem.swift in Sources */,
