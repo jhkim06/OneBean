@@ -10,6 +10,7 @@ import UIKit
 class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView: UITextView!
+    @IBOutlet var planTextView: UITextView!
     @IBOutlet var moodSelector: ImageSelector!
     @IBOutlet var temperature: UILabel!
     
@@ -42,6 +43,14 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         textView.layer.cornerRadius = 5
         textView.text = currentLogItem.note
         
+        planTextView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+        planTextView.layer.borderWidth = 2.0
+        planTextView.layer.cornerRadius = 5
+        if let planNote = currentLogItem.planNote {
+            planTextView.text = planNote
+        }
+        // planTextView.text = currentLogItem.planNote
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: Date())
@@ -73,6 +82,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         super.viewWillDisappear(animated)
         currentLogItem.setMood(mood: currentMood)
         currentLogItem.setNote(note: textView.text)
+        currentLogItem.setPlanNote(note: planTextView.text)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

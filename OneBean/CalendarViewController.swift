@@ -43,7 +43,6 @@ class CalendarViewController: UIViewController {
                 switch weatherResult {
                 case let .success(weather):
                     // TODO convert Weather to dictionary with desired key
-                    // self.temperature.text = String(weather[3].obsrValue) + " °C"
                     self.currentTMP = "Today " + String(weather[3].obsrValue) + "°C"
                     
                     DispatchQueue.main.async {

@@ -12,11 +12,13 @@ class LogItem: Codable {
     var date: String
     var mood: Mood
     var note: String
+    var planNote: String?
     
     init(date: String, mood: Mood) {
         self.date = date
         self.mood = mood
         self.note = ""
+        self.planNote = ""
     }
     
     // setMood
@@ -25,6 +27,9 @@ class LogItem: Codable {
     }
     func setNote(note: String) {
         self.note = note
+    }
+    func setPlanNote(note: String) {
+        self.planNote = note
     }
     /*
     static func ==(lhs: LogItem, rhs: LogItem) -> Bool {
