@@ -10,6 +10,7 @@ import UIKit
 class ImageSelector: UIControl {
     
     @IBOutlet var view: UIView!
+    var buttonEnabled: Bool
 
     private let selectorStackView: UIStackView = {
         let stackView = UIStackView()
@@ -42,12 +43,14 @@ class ImageSelector: UIControl {
         ])
     }
     override init(frame: CGRect) {
+        self.buttonEnabled = true
         super.init(frame: frame)
         configureViewHierarchy()
         //view.layer.cornerRadius = 100.0
     }
 
     required init?(coder aDecoder: NSCoder) {
+        self.buttonEnabled = true
         super.init(coder: aDecoder)
         configureViewHierarchy()
     }
@@ -94,27 +97,27 @@ class ImageSelector: UIControl {
     }
     
     @objc private func imageButtonTapped(_ sender: UIButton) {
-        guard let buttonIndex = imageButtons.firstIndex(of: sender) else {
-            preconditionFailure("The buttons and images are not parallel.")
-        }
+        if self.buttonEnabled {
+            guard let buttonIndex = imageButtons.firstIndex(of: sender) else {
+                preconditionFailure("The buttons and images are not parallel.")
+            }
 
-        //selectedIndex = buttonIndex
-        
-        let selectionAnimator = UIViewPropertyAnimator(
-            duration: 0.3,
-            //curve: .easeInOut,
-            dampingRatio: 0.7,
-            animations: {
-                self.selectedIndex = buttonIndex
-                self.layoutIfNeeded()
-            })
-        selectionAnimator.startAnimation()
-        sendActions(for: .valueChanged)
+            let selectionAnimator = UIViewPropertyAnimator(
+                duration: 0.3,
+                //curve: .easeInOut,
+                dampingRatio: 0.7,
+                animations: {
+                    self.selectedIndex = buttonIndex
+                    self.layoutIfNeeded()
+                })
+            selectionAnimator.startAnimation()
+            sendActions(for: .valueChanged)
+        }
     }
     
     private let highlightView: UIView = {
         let view = UIView()
-        view.backgroundColor = view.tintColor
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -127,7 +130,9 @@ class ImageSelector: UIControl {
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        if self.buttonEnabled {
         highlightView.layer.cornerRadius = highlightView.bounds.width / 2.0
         highlightView.layer.backgroundColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+        }
     }
 }

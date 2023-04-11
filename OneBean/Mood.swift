@@ -49,7 +49,7 @@ struct Mood: Equatable, Codable {
             selectedByUser = try container.decode(Bool.self, forKey: .selectedByUser)
         } catch let error as DecodingError {
             switch error {
-            case .keyNotFound(let key, _):
+            case .keyNotFound( _, _):
                 selectedByUser = true
             default:
                 selectedByUser = true

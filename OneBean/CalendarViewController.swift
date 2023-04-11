@@ -43,7 +43,7 @@ class CalendarViewController: UIViewController {
                 switch weatherResult {
                 case let .success(weather):
                     // TODO convert Weather to dictionary with desired key
-                    self.currentTMP = "today " + String(weather[3].obsrValue) + "°C"
+                    self.currentTMP = String(weather[3].obsrValue) + "°C"
                     
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
@@ -279,7 +279,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         if logItemStore.allLogItems.contains(where: {$0.key == monthYear}) {
             //print("month year exitst")
             if ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true) {
-            
                 
                 let tempImage = logItemStore.allLogItems[monthYear]?[day]!.mood.image
                 if let setByUser = logItemStore.allLogItems[monthYear]?[day]!.mood.selectedByUser {

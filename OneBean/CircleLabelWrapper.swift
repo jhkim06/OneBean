@@ -30,7 +30,7 @@ class CircleLabelWrapper: UIView {
     
     private func setup(_ text: String) {
         
-        let swiftUIView = CircleText(radius: 30, text: text, kerning: 8)
+        let swiftUIView = CircleText(radius: 30, text: text, kerning: 6)
         let hostingController = UIHostingController(rootView: swiftUIView)
         //hostingController.view.backgroundColor = .clear
         addSubview(hostingController.view)

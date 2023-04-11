@@ -16,6 +16,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
     
+    var textOriginalText: String = ""
+    var planOriginalText: String = ""
+    
     var store: WeatherStore!
  
     var currentLogItem: LogItem!
@@ -61,10 +64,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             titleLabel.text = "How was your day?"
         } else {
             titleLabel.text = "Plan for a day!"
+            moodSelector.buttonEnabled = false
         }
         
         if currentLogItem.date == today {
-    
             /*
             // show current temperature
             store.fetchWeatherInfo {
@@ -124,6 +127,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
         self.textView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
         self.planTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        
+        self.planOriginalText = planTextView.text
+        self.textOriginalText = textView.text
         /*
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -182,6 +188,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
+        
         // if let vc = presentingViewController as? CalendarViewController
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
@@ -193,6 +200,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if let vc = presentingViewController?.children[0] as? CalendarViewController {
             dismiss(animated: true, completion: {
                 //print(self.getMood())
+                if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
+                    vc.logItemStore.removeItem(date: self.currentLogItem.date)
+                }
+                
                 vc.calendarView.reloadData()
             })
         }
@@ -205,11 +216,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         //textView.selectedTextRange = textView.textRange(from: endPosition, to: endPosition)
         //textView.scrollRangeToVisible(textView.selectedRange)
     }
-    /*
-    func textViewDidChange(_ textView: UITextView) {
-        print("change")
-    }
     
+     /*
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
         if let selectedRange = textView.selectedTextRange {
