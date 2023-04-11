@@ -205,9 +205,32 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            if let destinationVC = segue.destination as? DetailViewController, let _ = sender as? Date {
+                // Pass any data to the destination view controller here
+                let monthYear = self.selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
+                let day = self.selectedDate.components(separatedBy: "-")[2]
+                
+                let logItem = logItemStore.allLogItems[monthYear]![day]
+                
+                destinationVC.currentLogItem = logItem
+                destinationVC.store = WeatherStore()
+            }
+        }
+    }
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = dateFormatter.string(from:date)
         
+        // if LogItem exist show it
+        
+        let monthYear = selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = selectedDate.components(separatedBy: "-")[2]
+        
+        if let _ = logItemStore.allLogItems[monthYear]![day] {
+            performSegue(withIdentifier: "showDetail", sender: date)
+        }
         /*
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
