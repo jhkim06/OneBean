@@ -44,7 +44,7 @@ struct CircleText: View {
                 .rotationEffect(self.angle(at: offset))
                 
             }
-        }.rotationEffect(self.angle(at: self.texts.count-1)/50)
+        }.rotationEffect(-self.angle(at: self.texts.count-1)/5)
             
         .frame(width: 55, height: 55, alignment: .center)
     }
