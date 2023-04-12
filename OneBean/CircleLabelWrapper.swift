@@ -34,7 +34,6 @@ class CircleLabelWrapper: UIView {
         let hostingController = UIHostingController(rootView: swiftUIView)
         //hostingController.view.backgroundColor = .clear
         addSubview(hostingController.view)
-        print("hostingController.view \(hostingController.view.frame.origin)")
         self.hostingController = hostingController
     }
     

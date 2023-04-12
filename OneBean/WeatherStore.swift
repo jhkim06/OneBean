@@ -19,7 +19,6 @@ class WeatherStore {
     func fetchWeatherInfo(completion: @escaping (Result<[Weather], Error>) -> Void) {
         
         let url = WeatherAPI.ultraSrtURL
-        // set location
         //let url = WeatherAPI.ultraFcstURL
         let request = URLRequest(url: url)
         
@@ -30,6 +29,10 @@ class WeatherStore {
                     print(jsonString)
                     let result = self.processWeathersRequest(data: data, error: err)
                     OperationQueue.main.addOperation {
+                        // 'result' passed to a completion closure
+                        // the closure is defined in the caller side
+                        // TODO
+                        // lets modify the data type [Weather] to dictionary
                         completion(result)
                     }
                     

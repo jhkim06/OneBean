@@ -34,13 +34,13 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("locations: \(locations)")
+        print("updated locations: \(locations)")
     }
     func start() {
         locationManager.startUpdatingLocation()
     }
     func getLocation()->CLLocation {
-        print("get location: \(String(describing: locationManager.location))")
+        //print("get location: \(String(describing: locationManager.location))")
         return locationManager.location!
     }
 }

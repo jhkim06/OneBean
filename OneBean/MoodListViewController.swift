@@ -168,7 +168,15 @@ class MoodListViewController: UITableViewController {
         //cell.imageView?.bottomAnchor.constraint(equalTo: marginguide.bottomAnchor).isActive = true
         cell.imageView?.contentMode = .scaleAspectFill
         cell.imageView?.layer.cornerRadius = 20 //half of your width or height
-        cell.imageView?.image = moodItem?.mood.image
+        //cell.imageView?.image = moodItem?.mood.image
+        
+        if moodItem?.mood.selectedByUser == true {
+            cell.imageView?.image = moodItem?.mood.image
+        } else {
+            cell.imageView?.image = Mood.bg.image
+            cell.imageView?.backgroundColor = .clear
+        }
+         
         //cell.textLabel?.text = "I was \(moodEntry.mood.name)"
        
         // print week day

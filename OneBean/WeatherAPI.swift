@@ -80,9 +80,9 @@ struct WeatherAPI {
         let location = locationProvider.getLocation()
         var nx = location.coordinate.latitude
         var ny = location.coordinate.longitude
-        print("nx \(nx) ny \(ny)")
+        //print("nx \(nx) ny \(ny)")
         let mapConv = MapConversion()
-        print(mapConv.lamcproj(ny, nx))
+        //print(mapConv.lamcproj(ny, nx))
         (nx, ny) = mapConv.lamcproj(ny, nx)
          
         
@@ -134,11 +134,14 @@ struct WeatherAPI {
     static var ultraFcstURL: URL {
         return weatherURL(endPoint: .getUltraSrtFcst, parameters: ["pageNo" : "1", "numOfRows" : "72", "dataType" : "JSON"])
     }
+    
     static func weather(fromJSON data: Data) -> Result<[Weather], Error> {
         do {
             let decoder = JSONDecoder()
             let weatherResponse = try decoder.decode(Response.self, from: data)
-            
+            // weatherResponse.response.body.itemsInfo.items [Weather]
+            let weatherInfo = weatherResponse.response.body.itemsInfo.items
+            print(weatherInfo[0].category)
             return .success(weatherResponse.response.body.itemsInfo.items)
         } catch {
             return .failure(error)

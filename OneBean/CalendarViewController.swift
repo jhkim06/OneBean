@@ -35,14 +35,15 @@ class CalendarViewController: UIViewController {
         calendarView.reloadData()
         
         locationProvider?.start() // track location
-        
+       
+        // get current temperature of current location
         OperationQueue.main.addOperation {
                 self.store.fetchWeatherInfo {
                 (weatherResult) in
 
                 switch weatherResult {
                 case let .success(weather):
-                    // TODO convert Weather to dictionary with desired key
+                    // TODO convert Weather (array?) to dictionary with desired key
                     self.currentTMP = String(weather[3].obsrValue) + "°C"
                     
                     DispatchQueue.main.async {
@@ -271,7 +272,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
         
         let date = dateFormatter.string(from:date)
-        //print(date)
         // FIXME following lines are repeated fix this
         let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
         let day = date.components(separatedBy: "-")[2]
@@ -282,26 +282,34 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                 
                 let tempImage = logItemStore.allLogItems[monthYear]?[day]!.mood.image
                 if let setByUser = logItemStore.allLogItems[monthYear]?[day]!.mood.selectedByUser {
+                    // mood is not set by user
                     if setByUser == false {
                         let tempImage = UIImage(resource: .bg)
                         
                         // resize image
                         let scaledImageSize = CGSize(
-                            width: (tempImage.size.width ) * 0.3,
-                            height: (tempImage.size.height ) * 0.3)
+                            width: (tempImage.size.width ) * 0.25,
+                            height: (tempImage.size.height ) * 0.25)
                         
                         let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
                         let scaledImage = renderer.image { _ in
                             tempImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
                         }
                         return scaledImage
+                    } else {
+                        // resize image
+                        let scaledImageSize = CGSize(
+                            width: (tempImage!.size.width ) * 0.25,
+                            height: (tempImage!.size.height ) * 0.25)
+                        
+                        let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+                        let scaledImage = renderer.image { _ in
+                            tempImage!.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+                        }
+                        return scaledImage
+                        
                     }
                 }
-                //print("image width: \(tempImage.size.width)")
-                
-                //if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
-                //    print("TODAY")
-                //}
                 
                 // resize image
                 let scaledImageSize = CGSize(
@@ -315,30 +323,14 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                 return scaledImage
             }
         }
+        
         // default image for each cell
-            
-        // default image
-        /*
-        let startAngle = CGFloat(0.0)
-        let endAngle = CGFloat(360.0)
-        
-        let path = UIBezierPath(arcCenter: CGPoint(x: 25, y: 25), radius: 20, startAngle: startAngle.toRadians(), endAngle: endAngle.toRadians(), clockwise: true)
-        
-        let size = CGSize(width: 50, height: 50)
-        let circle = UIGraphicsImageRenderer(size: size).image { _ in
-            UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7).setStroke()
-            path.lineWidth = 1
-            path.stroke()
-        }
-        return circle
-        */
-        
         let tempImage = UIImage(resource: .bg)
         
         // resize image
         let scaledImageSize = CGSize(
-            width: (tempImage.size.width ) * 0.3,
-            height: (tempImage.size.height ) * 0.3)
+            width: (tempImage.size.width ) * 0.25,
+            height: (tempImage.size.height ) * 0.25)
         
         let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
         let scaledImage = renderer.image { _ in

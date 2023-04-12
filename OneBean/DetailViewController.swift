@@ -194,6 +194,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
             dismiss(animated: true, completion: {
                 //print(self.getMood())
+                if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
+                    vc.logItemStore.removeItem(date: self.currentLogItem.date)
+                }
+                
                 vc.tableView.reloadData()
             })
         }
