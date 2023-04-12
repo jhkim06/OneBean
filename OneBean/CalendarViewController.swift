@@ -16,6 +16,8 @@ class CalendarViewController: UIViewController {
     var currentTMP: String?
     var tomorrowTMX: String?
     var tomorrowTMN: String?
+    
+    @IBOutlet var addressLabel: UILabel!
 
     @IBAction func selectMood(_ sender: UIButton) {
         if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
@@ -36,7 +38,11 @@ class CalendarViewController: UIViewController {
         selectedDate = dateFormatter.string(from:Date())
         calendarView.reloadData()
         
-        locationProvider?.start() // track location
+        self.locationProvider?.start() // track location
+        self.locationProvider?.getAddress() {
+            (addressStr) in
+            self.addressLabel.text = "현위치 " + addressStr
+        }
        
         // get current temperature of current location
         
@@ -142,9 +148,7 @@ class CalendarViewController: UIViewController {
         
         calendarView.placeholderType = .none // show only the days of the current month
         
-        locationProvider = LocationProvider()
-        
-
+        //locationProvider = LocationProvider()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
     }

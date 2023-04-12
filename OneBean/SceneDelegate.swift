@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let logItemController = barItemController.viewControllers?[0] as! CalendarViewController
         logItemController.logItemStore = LogItemStore()
         logItemController.store = WeatherStore()
+        logItemController.locationProvider = LocationProvider()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -36,26 +36,37 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="0Hu-7a-l2d"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37R-18-Djb">
+                                <rect key="frame" x="10" y="749" width="204" height="14"/>
+                                <color key="tintColor" red="0.3803921569" green="0.68235294120000001" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="10"/>
+                                <color key="textColor" red="0.3803921569" green="0.68235294120000001" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.95686274509803915" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lKF-d7-iVG" secondAttribute="bottom" constant="20" id="50V-QK-yTt"/>
                             <constraint firstItem="A0G-8a-uFh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="85B-Ym-Tqg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="37R-18-Djb" secondAttribute="bottom" constant="50" id="Bfe-0C-qQQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="37R-18-Djb" secondAttribute="trailing" constant="200" id="D1U-Rd-hno"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0G-8a-uFh" secondAttribute="trailing" constant="10" id="MnZ-Gy-p66"/>
                             <constraint firstItem="lKF-d7-iVG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WUh-I2-fjy"/>
+                            <constraint firstItem="37R-18-Djb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="tnl-YK-MlA"/>
                             <constraint firstItem="A0G-8a-uFh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ute-Iz-4Ui"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="hY9-Zh-Ht5"/>
                     <connections>
+                        <outlet property="addressLabel" destination="37R-18-Djb" id="yUT-hM-RN9"/>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
                         <segue destination="d0f-S7-KxQ" kind="show" identifier="showDetail" id="sYs-wz-K69"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="684.05797101449275" y="346.875"/>
+            <point key="canvasLocation" x="682.60869565217399" y="346.875"/>
         </scene>
         <!--Month Selection View Controller-->
         <scene sceneID="b1d-CZ-LGg">

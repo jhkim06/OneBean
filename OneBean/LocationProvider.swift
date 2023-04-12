@@ -7,10 +7,12 @@
 
 import UIKit
 import CoreLocation
+import Contacts
 
 class LocationProvider: NSObject, CLLocationManagerDelegate {
 
     private let locationManager : CLLocationManager
+    var completion: ((String) -> Void)?
     
     override init() {
         locationManager = CLLocationManager()
@@ -35,6 +37,26 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("updated locations: \(locations)")
+        
+        let geocoder = CLGeocoder()
+        var addressStr: String!
+        
+        geocoder.reverseGeocodeLocation(locations.first!) { (placemarks, error) in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else if let placemarks = placemarks {
+                let placemark = placemarks[0]
+                // Use placemark to access the address information
+                if let address = placemark.postalAddress {
+                    //let formatter = CNPostalAddressFormatter()
+                
+                    //let addressString = formatter.string(from: address)
+                    //print(addressString)
+                    addressStr = address.city + " " + address.street
+                    self.completion!(addressStr)
+                }
+            }
+        }
     }
     func start() {
         locationManager.startUpdatingLocation()
@@ -43,4 +65,10 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
         //print("get location: \(String(describing: locationManager.location))")
         return locationManager.location!
     }
+    func getAddress(completion: @escaping (String) -> Void) {
+        self.completion = completion
+        locationManager.startUpdatingLocation()
+        
+    }
+    
 }

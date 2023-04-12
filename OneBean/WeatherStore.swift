@@ -42,8 +42,6 @@ class WeatherStore {
                     OperationQueue.main.addOperation {
                         // 'result' passed to a completion closure
                         // the closure is defined in the caller side
-                        // TODO
-                        // lets modify the data type [Weather] to dictionary
                         completion(result)
                     }
                     
