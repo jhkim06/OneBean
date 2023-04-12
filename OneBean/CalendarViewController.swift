@@ -14,6 +14,8 @@ class CalendarViewController: UIViewController {
     var locationProvider: LocationProvider?
     var store: WeatherStore!
     var currentTMP: String?
+    var tomorrowTMX: String?
+    var tomorrowTMN: String?
 
     @IBAction func selectMood(_ sender: UIButton) {
         if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
@@ -40,13 +42,13 @@ class CalendarViewController: UIViewController {
         
         OperationQueue.main.addOperation {
             
-            self.store.fetchWeatherInfo(test: "bye") { // selecte endpoint
+            self.store.fetchWeatherInfo() { // selecte endpoint
             (weatherResult) in
                 switch weatherResult {
                 case let .success(weather):
                     // TODO convert Weather (array?) to dictionary with desired key
                     //self.currentTMP = String(weather[3].obsrValue) + "°C"
-                    self.currentTMP = weather["T1H"]! + "°C"
+                    self.currentTMP = weather["T1H"] as! String + "°C"
                     
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
@@ -56,6 +58,50 @@ class CalendarViewController: UIViewController {
                     print("Error fetching interesting photos: \(error)")
                 }
             }
+            // 단기예보
+            self.store.fetchWeatherInfo(endpoint: EndPoint.getVilageFcst) { // selecte endpoint
+            (weatherResult) in
+                switch weatherResult {
+                case let .success(weather):
+                    // TODO convert Weather (array?) to dictionary with desired key
+                    //self.currentTMP = String(weather[3].obsrValue) + "°C"
+                    
+                    //print(weather["TMP"])
+                    
+                    if let dict = weather as? [String:[String:String]] {
+                        print("=======================================")
+                        print("max temp: \(dict["TMX"]!)")
+                        print("min temp: \(dict["TMN"]!)")
+                        
+                        let calendar = Calendar.current
+                        let currentDate = Date()
+                        let tomorrowDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyyMMdd:HHmm"
+                        let tomorrow = dateFormatter.string(from: tomorrowDate!)
+                        
+                        for (dateTime, value) in dict["TMX"]! {
+                            if dateTime.components(separatedBy: ":")[0] == tomorrow.components(separatedBy: ":")[0] {
+                                self.tomorrowTMX = value
+                            }
+                        }
+                        for (dateTime, value) in dict["TMN"]! {
+                            if dateTime.components(separatedBy: ":")[0] == tomorrow.components(separatedBy: ":")[0] {
+                                self.tomorrowTMN = value
+                            }
+                        }
+                        // find tomorrow's H/L temp
+                    }
+                    DispatchQueue.main.async {
+                        self.calendarView.reloadData() // wait and reload
+                    }
+                     
+                case let .failure(error):
+                    print("Error fetching interesting photos: \(error)")
+                }
+            }
+            
+            
         }
     }
     
@@ -160,6 +206,10 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cellCustom", for: date, at: position)
         
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let tomorrowDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
+        
         if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
             let circleSize = CGSize(width: 5, height: 5)
             let circleOrigin = CGPoint(x: 25, y: 45)
@@ -169,6 +219,17 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             cell.addSubview(circleLabelWrapper)
             //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
         }
+        
+        if dateFormatter.string(from: date) == dateFormatter.string(from: tomorrowDate!) {
+            let circleSize = CGSize(width: 5, height: 5)
+            let circleOrigin = CGPoint(x: 25, y: 45)
+            let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin, size: circleSize), "H/L" + (self.tomorrowTMX ?? "") + "/" + (self.tomorrowTMN ?? "") + "°C")
+            //let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin))
+            // add the custom view to the cell
+            cell.addSubview(circleLabelWrapper)
+            //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
+        }
+        
         
         //cell.backgroundColor = .red
         return cell

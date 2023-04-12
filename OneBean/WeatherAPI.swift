@@ -95,16 +95,33 @@ struct WeatherAPI {
         var currentTime = dateFormatter.string(from: Date())
         let minute =  Int(currentTime.components(separatedBy: "-")[1].components(separatedBy: ":")[1])
 
-        // 
-        if minute! < 40 { // information updated at every 40 min
-            let currentDate = Date()
-            let calendar = Calendar.current
+        //
+        if endPoint == EndPoint.getUltraSrtNcst {
+            if minute! < 40 { // information updated at every 40 min
+                let currentDate = Date()
+                let calendar = Calendar.current
 
-            // Subtract one hour from the current time
-            let newDate = calendar.date(byAdding: .hour, value: -1, to: currentDate)
+                // Subtract one hour from the current time
+                let newDate = calendar.date(byAdding: .hour, value: -1, to: currentDate)
 
-            // Format the new date as a string
-            currentTime = dateFormatter.string(from: newDate!)
+                // Format the new date as a string
+                currentTime = dateFormatter.string(from: newDate!)
+            }
+        }
+        if endPoint == EndPoint.getVilageFcst {
+            let hour = Int(currentTime.components(separatedBy: "-")[1].components(separatedBy: ":")[0])
+            if hour! > 6 {
+                let calendar = Calendar.current
+                //
+                let newDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: Date())
+                currentTime = dateFormatter.string(from: newDate!)
+                
+            } else {
+                let calendar = Calendar.current
+                let currentDate = Date()
+                let newDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -1, to: currentDate)!)
+                currentTime = dateFormatter.string(from: newDate!)
+            }
         }
         
         let baseParams = ["base_date" : currentTime.components(separatedBy: "-")[0],
@@ -132,20 +149,29 @@ struct WeatherAPI {
         return weatherURL(endPoint: .getUltraSrtNcst, parameters: ["pageNo" : "1", "numOfRows" : "72", "dataType" : "JSON"])
     }
     static var vilageFcstURL: URL {
-        return weatherURL(endPoint: .getVilageFcst, parameters: ["pageNo" : "1", "numOfRows" : "72", "dataType" : "JSON"])
+        return weatherURL(endPoint: .getVilageFcst, parameters: ["pageNo" : "1", "numOfRows" : "1000", "dataType" : "JSON"])
     }
     static var ultraFcstURL: URL {
         return weatherURL(endPoint: .getUltraSrtFcst, parameters: ["pageNo" : "1", "numOfRows" : "72", "dataType" : "JSON"])
     }
     
-    static func weather(fromJSON data: Data) -> Result<[String:String], Error> {
+    static func weather(fromJSON data: Data, endpoint: EndPoint = EndPoint.getUltraSrtNcst) -> Result<[String:Any], Error> {
         do {
             let decoder = JSONDecoder()
             let weatherResponse = try decoder.decode(Response.self, from: data)
             // weatherResponse.response.body.itemsInfo.items [Weather]
             let weatherInfo = weatherResponse.response.body.itemsInfo.items
-            let result = ultraSrtToDict(inputArray: weatherInfo)
-            // let dict = arrayToDict(weatherInfo, keys, value)
+            // call according to endpoint
+            let result : [String:Any]!
+            
+            switch endpoint {
+            case .getUltraSrtNcst:
+                result = ultraSrtToDict(inputArray: weatherInfo) // 초단기실황
+            case .getVilageFcst:
+                result = vilageFcstToDict(inputArray: weatherInfo) // 단기예보
+            case .getUltraSrtFcst:
+                result = ultraSrtToDict(inputArray: weatherInfo)
+            }
             // return .success(weatherResponse.response.body.itemsInfo.items)
             return .success(result)
         } catch {
@@ -153,7 +179,7 @@ struct WeatherAPI {
         }
     }
     
-    static func ultraSrtToDict(inputArray: [Weather]) -> [String: String] { // [category, value]
+    static func ultraSrtToDict(inputArray: [Weather]) -> [String: Any] { // [category, value]
         var resultDict = [String: String]()
         
         for item in inputArray {
@@ -162,11 +188,25 @@ struct WeatherAPI {
         return resultDict
     }
     
-    /*
-    static func ultraFcstToDict(inputArray: [Weather]) -> [String: [String: String]] { // [category, [fcstDate-fcstTime:value]]
+    static func vilageFcstToDict(inputArray: [Weather]) -> [String: [String: String]] { // [category, [fcstDate-fcstTime:value]]
+        var resultDict = [String: [String: String]]()
         
+        for item in inputArray {
+            
+            if resultDict.contains(where: {$0.key == item.category}) {
+                if ((resultDict[item.category]?.contains(where: {$0.key == item.fcstDate! + ":" + item.fcstTime!})) != nil) {
+                    resultDict[item.category]![item.fcstDate! + ":" + item.fcstTime!] = item.fcstValue!
+                } else {
+                    //new forecast date/time
+                    resultDict[item.category] = [item.fcstDate! + ":" + item.fcstTime!: item.fcstValue!]
+                }
+            } else {
+                // new category
+                resultDict[item.category] = [item.fcstDate! + ":" + item.fcstTime!: item.fcstValue!]
+            }
+        }
+        
+        return resultDict
     }
-    */
-
 }
 

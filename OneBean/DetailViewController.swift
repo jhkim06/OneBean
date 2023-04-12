@@ -189,32 +189,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
-        print("backgroundTapped")
-        /*
-        if let vc = presentingViewController?.children[1] as? MoodListViewController {
-            print("let vc = parent?.children[1] as? MoodListViewController")
-            dismiss(animated: true, completion: {
-                //print(self.getMood())
-                if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
-                    vc.logItemStore.removeItem(date: self.currentLogItem.date)
-                }
-                
-                vc.tableView.reloadData()
-            })
-        }
-       
-        if let vc = presentingViewController?.children[0] as? CalendarViewController {
-            print("vc = presentingViewController?.children[0] as? CalendarViewController")
-            dismiss(animated: true, completion: {
-                //print(self.getMood())
-                if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
-                    vc.logItemStore.removeItem(date: self.currentLogItem.date)
-                }
-                
-                vc.calendarView.reloadData()
-            })
-        }
-        */
         
         if let parent = presentingViewController as? UITabBarController {
             if let vc = parent.selectedViewController as? MoodListViewController {
