@@ -10,13 +10,17 @@ import Foundation
 
 class WeatherStore {
     
+    // var allLogItems = Dictionary<String, Dictionary<String, LogItem>>()
+    
     private let session: URLSession = {
         let config = URLSessionConfiguration.default
         
         return URLSession(configuration: config)
     }()
     
-    func fetchWeatherInfo(completion: @escaping (Result<[Weather], Error>) -> Void) {
+    func fetchWeatherInfo(test: String = "hello", completion: @escaping (Result<[String:String], Error>) -> Void) {
+        
+        print("fetchWeatherInfo says \(test)")
         
         let url = WeatherAPI.ultraSrtURL
         //let url = WeatherAPI.ultraFcstURL
@@ -47,7 +51,7 @@ class WeatherStore {
         task.resume()
     }
     private func processWeathersRequest(data: Data?,
-                                      error: Error?) -> Result<[Weather], Error> {
+                                        error: Error?) -> Result<[String:String], Error> {
         guard let jsonData = data else {
             return .failure(error!)
         }

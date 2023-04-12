@@ -15,6 +15,7 @@ class Weather: Codable {
     let nx: Int
     let ny: Int
     
-    // var allLogItems = Dictionary<String, Dictionary<String, LogItem>>()
-    // 
+    let fcstDate: String?
+    let fcstTime: String?
+    let fcstValue: String?
 }

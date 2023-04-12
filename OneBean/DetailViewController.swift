@@ -189,9 +189,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
-        
-        // if let vc = presentingViewController as? CalendarViewController
+        print("backgroundTapped")
+        /*
         if let vc = presentingViewController?.children[1] as? MoodListViewController {
+            print("let vc = parent?.children[1] as? MoodListViewController")
             dismiss(animated: true, completion: {
                 //print(self.getMood())
                 if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
@@ -201,8 +202,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 vc.tableView.reloadData()
             })
         }
-        
+       
         if let vc = presentingViewController?.children[0] as? CalendarViewController {
+            print("vc = presentingViewController?.children[0] as? CalendarViewController")
             dismiss(animated: true, completion: {
                 //print(self.getMood())
                 if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
@@ -212,6 +214,29 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 vc.calendarView.reloadData()
             })
         }
+        */
+        
+        if let parent = presentingViewController as? UITabBarController {
+            if let vc = parent.selectedViewController as? MoodListViewController {
+                print("MoodListViewController")
+                dismiss(animated: true, completion: {
+                    //print(self.getMood())
+                    vc.tableView.reloadData()
+                })
+            }
+            if let vc = parent.selectedViewController as? CalendarViewController {
+                print("CalendarViewController")
+                dismiss(animated: true, completion: {
+                    //print(self.getMood())
+                    if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
+                        vc.logItemStore.removeItem(date: self.currentLogItem.date)
+                    }
+                    
+                    vc.calendarView.reloadData()
+                })
+            }
+        }
+        
         //dismiss(animated: true)
     }
     

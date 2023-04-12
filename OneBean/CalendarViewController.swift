@@ -37,20 +37,21 @@ class CalendarViewController: UIViewController {
         locationProvider?.start() // track location
        
         // get current temperature of current location
+        
         OperationQueue.main.addOperation {
-                self.store.fetchWeatherInfo {
-                (weatherResult) in
-
+            
+            self.store.fetchWeatherInfo(test: "bye") { // selecte endpoint
+            (weatherResult) in
                 switch weatherResult {
                 case let .success(weather):
                     // TODO convert Weather (array?) to dictionary with desired key
-                    self.currentTMP = String(weather[3].obsrValue) + "°C"
+                    //self.currentTMP = String(weather[3].obsrValue) + "°C"
+                    self.currentTMP = weather["T1H"]! + "°C"
                     
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
                     }
                      
-                    //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
                 case let .failure(error):
                     print("Error fetching interesting photos: \(error)")
                 }

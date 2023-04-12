@@ -12,11 +12,14 @@ enum EndPoint: String {
     case getVilageFcst
     case getUltraSrtFcst
 }
+
+// structure of JSON data
 struct Response: Codable {
-    let response: WeatherResponse
+    let response: WeatherResponse // property name 'response' should be matched to JSON data
+                              // but can use more informative name using CodingKeys
 
     enum CodingKeys: String, CodingKey {
-        case response = "response"
+        case response = "response" // here "response" match to the name in JSON data
     }
 }
 struct WeatherResponse: Codable {
@@ -135,17 +138,35 @@ struct WeatherAPI {
         return weatherURL(endPoint: .getUltraSrtFcst, parameters: ["pageNo" : "1", "numOfRows" : "72", "dataType" : "JSON"])
     }
     
-    static func weather(fromJSON data: Data) -> Result<[Weather], Error> {
+    static func weather(fromJSON data: Data) -> Result<[String:String], Error> {
         do {
             let decoder = JSONDecoder()
             let weatherResponse = try decoder.decode(Response.self, from: data)
             // weatherResponse.response.body.itemsInfo.items [Weather]
             let weatherInfo = weatherResponse.response.body.itemsInfo.items
-            print(weatherInfo[0].category)
-            return .success(weatherResponse.response.body.itemsInfo.items)
+            let result = ultraSrtToDict(inputArray: weatherInfo)
+            // let dict = arrayToDict(weatherInfo, keys, value)
+            // return .success(weatherResponse.response.body.itemsInfo.items)
+            return .success(result)
         } catch {
             return .failure(error)
         }
     }
+    
+    static func ultraSrtToDict(inputArray: [Weather]) -> [String: String] { // [category, value]
+        var resultDict = [String: String]()
+        
+        for item in inputArray {
+            resultDict[item.category] = item.obsrValue
+        }
+        return resultDict
+    }
+    
+    /*
+    static func ultraFcstToDict(inputArray: [Weather]) -> [String: [String: String]] { // [category, [fcstDate-fcstTime:value]]
+        
+    }
+    */
+
 }
 
