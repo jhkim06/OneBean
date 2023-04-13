@@ -11,6 +11,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView: UITextView!
     @IBOutlet var planTextView: UITextView!
+    @IBOutlet var hourTextView: UITextView!
     @IBOutlet var moodSelector: ImageSelector!
     @IBOutlet var temperature: UILabel!
     @IBOutlet var dateLabel: UILabel!
@@ -55,6 +56,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if let planNote = currentLogItem.planNote {
             planTextView.text = planNote
         }
+        
+        hourTextView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+        hourTextView.layer.borderWidth = 2.0
+        hourTextView.layer.cornerRadius = 5
+        
         // planTextView.text = currentLogItem.planNote
         
         let dateFormatter = DateFormatter()
@@ -133,28 +139,43 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         //selectMood.layer.cornerRadius = selectMood.bounds.height/2
         self.textView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
         self.planTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        self.hourTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
         
         self.planOriginalText = planTextView.text
         self.textOriginalText = textView.text
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        // notificationCenter.post(name: UIResponder.keyboardWillShowNotification, object: self.hourTextView)
+        
         /*
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+        
+        nc.post(name: NSNotification.Name.NSCalendarDayChanged, object: nil)
         */
+        
     }
-    /*
-    @objc func keyboardWillShow(notification: NSNotification) {
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        print("keyboardWillShow called")
+        if self.hourTextView.isFirstResponder {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
+                self.view.frame.origin.y -= (keyboardSize.height + 100)
             }
         }
+        }
     }
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        if self.hourTextView.isFirstResponder {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
         }
+        }
     }
-    */
+    
     @objc func tapDone(sender: Any) {
         // writeTime()
         self.view.endEditing(true)
