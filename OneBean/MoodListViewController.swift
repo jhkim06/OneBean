@@ -13,6 +13,7 @@ class MoodListViewController: UITableViewController {
     var selectedMonthYear: String!
     @IBOutlet weak var monthView: UIView!
     @IBOutlet var monthYear: UILabel!
+    var selectedDate: String!
     
     @IBAction func deleteLogItem(_ sender: UIButton) {
         
@@ -44,23 +45,23 @@ class MoodListViewController: UITableViewController {
         //print("viewWillAppear MoodListView")
         super.viewWillAppear(animated)
         
-        
-        //let myFormat = Date.FormatStyle()
-        //    .year()
-        //    .month()
-        
-        //let currentTime = Date().formatted(myFormat)
-        
-        // textView.replace(selectedRange, withText: "\n\(currentTime.formatted(date: .omitted, time: .shortened))")
-        //self.mothYear.text = currentTime
-        
         if let vc = parent?.children[0] as? CalendarViewController {
             //print("set logItemstore")
             // show only logs in the selected month
             // self.logItemStore = self.func(vc.logItemstore) ?
             self.logItemStore = vc.logItemStore
+            self.selectedDate = vc.selectedDate
+            tableView.reloadData()
+            
+            if logItemStore.dates.contains(where: {$0.key == self.selectedMonthYear}) {
+                let day = self.selectedDate.components(separatedBy: "-")[2]
+                
+                if let index = self.logItemStore.dates[self.selectedMonthYear]!.firstIndex(of: day) {
+                    let indexPath = IndexPath(row:0, section: index)
+                    tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                }
+            }
         }
-        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -100,6 +101,13 @@ class MoodListViewController: UITableViewController {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         self.selectedMonthYear = dateFormatter.string(from:Date()).components(separatedBy: "-")[..<2].joined(separator: "-")
         //print("raw \(dateFormatter.string(from:Date())) selectedMonthYear \(selectedMonthYear)")
+        
+        
+        
+        /*
+         let cell = tableView.dequeueReusableCell(withIdentifier: "LogItemCell",
+                                                 for: indexPath) as! LogItemCell
+         */
     }
     
     func setMonthYear(_ month: String, _ year: String) {
@@ -154,7 +162,7 @@ class MoodListViewController: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "LogItemCell",
                                                  for: indexPath) as! LogItemCell
-
+        
         //imageView auto layout constraints
         cell.imageView?.translatesAutoresizingMaskIntoConstraints = false
 
