@@ -51,15 +51,19 @@ class MoodListViewController: UITableViewController {
             // self.logItemStore = self.func(vc.logItemstore) ?
             self.logItemStore = vc.logItemStore
             self.selectedDate = vc.selectedDate
-            tableView.reloadData()
             
-            if logItemStore.dates.contains(where: {$0.key == self.selectedMonthYear}) {
-                let day = self.selectedDate.components(separatedBy: "-")[2]
-                
-                if let index = self.logItemStore.dates[self.selectedMonthYear]!.firstIndex(of: day) {
-                    let indexPath = IndexPath(row:0, section: index)
-                    tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-                }
+        }
+        tableView.reloadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if logItemStore.dates.contains(where: {$0.key == self.selectedMonthYear}) {
+            let day = self.selectedDate.components(separatedBy: "-")[2]
+            
+            if let index = self.logItemStore.dates[self.selectedMonthYear]!.firstIndex(of: day) {
+                let indexPath = IndexPath(row:0, section: index)
+                tableView.scrollToRow(at: indexPath, at: .top, animated: true)
             }
         }
     }

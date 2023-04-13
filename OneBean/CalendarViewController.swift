@@ -16,6 +16,7 @@ class CalendarViewController: UIViewController {
     var currentTMP: String?
     var tomorrowTMX: String?
     var tomorrowTMN: String?
+    var selectedDateUpdated: Bool = false
     
     @IBOutlet var addressLabel: UILabel!
 
@@ -35,7 +36,9 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        selectedDate = dateFormatter.string(from:Date())
+        if selectedDateUpdated == false {
+            selectedDate = dateFormatter.string(from:Date())
+        }
         calendarView.reloadData()
         
         self.locationProvider?.start() // track location
@@ -218,7 +221,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         
         if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
             let circleSize = CGSize(width: 5, height: 5)
-            let circleOrigin = CGPoint(x: 25, y: 45)
+            let circleOrigin = CGPoint(x: 25, y: 38)
             let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin, size: circleSize), self.currentTMP ?? "")
             //let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin))
             // add the custom view to the cell
@@ -228,7 +231,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         
         if dateFormatter.string(from: date) == dateFormatter.string(from: tomorrowDate!) {
             let circleSize = CGSize(width: 5, height: 5)
-            let circleOrigin = CGPoint(x: 25, y: 45)
+            let circleOrigin = CGPoint(x: 25, y: 38)
             let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin, size: circleSize), "H/L" + (self.tomorrowTMX ?? "") + "/" + (self.tomorrowTMN ?? "") + "°C")
             //let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin))
             // add the custom view to the cell
@@ -257,6 +260,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
+        /*
         let date = dateFormatter.string(from:date)
         let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
         let day = date.components(separatedBy: "-")[2]
@@ -266,7 +270,8 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                 return CGPoint(x:0.0, y:0.0)
             }
         }
-        return CGPoint(x:0.0, y:0.0)
+        */
+        return CGPoint(x:0.0, y:-7.0)
     }
     
     // selection condition
@@ -291,6 +296,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = dateFormatter.string(from:date)
+        selectedDateUpdated = true
         
         let monthYear = selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
         let day = selectedDate.components(separatedBy: "-")[2]
