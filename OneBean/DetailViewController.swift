@@ -120,6 +120,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         textView.delegate = self
         planTextView.delegate = self
+        /*
+        currentMood = currentLogItem.mood
+        moodSelector.selectedIndex = moods.firstIndex(where: {$0 == currentMood})!
+        moodSelector.layer.cornerRadius = 5
+        */
         //store.fetchWeatherInfo()
         
         // if selected date == today
@@ -192,14 +197,12 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
         if let parent = presentingViewController as? UITabBarController {
             if let vc = parent.selectedViewController as? MoodListViewController {
-                print("MoodListViewController")
                 dismiss(animated: true, completion: {
                     //print(self.getMood())
                     vc.tableView.reloadData()
                 })
             }
             if let vc = parent.selectedViewController as? CalendarViewController {
-                print("CalendarViewController")
                 dismiss(animated: true, completion: {
                     //print(self.getMood())
                     if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {

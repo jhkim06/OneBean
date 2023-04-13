@@ -17,12 +17,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKF-d7-iVG">
-                                <rect key="frame" x="154.5" y="762" width="105.5" height="31"/>
+                                <rect key="frame" x="157" y="762" width="100.5" height="31"/>
                                 <color key="tintColor" red="0.38117927309999999" green="0.68085426090000001" blue="0.44644182919999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Select Mood"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Show Detail"/>
                                 <connections>
                                     <action selector="selectMood:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M2U-m8-l5B"/>
+                                    <segue destination="d0f-S7-KxQ" kind="show" identifier="showDetailButton" id="s62-7o-aLQ"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0G-8a-uFh" customClass="FSCalendar">
@@ -61,7 +62,6 @@
                     <connections>
                         <outlet property="addressLabel" destination="37R-18-Djb" id="yUT-hM-RN9"/>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
-                        <segue destination="d0f-S7-KxQ" kind="show" identifier="showDetail" id="sYs-wz-K69"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -410,7 +410,7 @@
         <!--Detail View Controller-->
         <scene sceneID="W07-Sz-m9l">
             <objects>
-                <viewController id="d0f-S7-KxQ" customClass="DetailViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="d0f-S7-KxQ" customClass="DetailViewController" customModule="OneBean" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ar0-T3-Tc2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -641,7 +641,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sYs-wz-K69"/>
+        <segue reference="s62-7o-aLQ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="calendar" catalog="system" width="128" height="106"/>

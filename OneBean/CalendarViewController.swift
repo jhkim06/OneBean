@@ -17,15 +17,32 @@ class CalendarViewController: UIViewController {
     var tomorrowTMX: String?
     var tomorrowTMN: String?
     var selectedDateUpdated: Bool = false
+    var isSegueInProgress = false
     
     @IBOutlet var addressLabel: UILabel!
 
     @IBAction func selectMood(_ sender: UIButton) {
+        // IT WAS NOT NEEDED ANYTHING!!
+        /*
         if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
             moodSelectionViewController.modalPresentationStyle = .overCurrentContext
             moodSelectionViewController.modalTransitionStyle = .crossDissolve
             present(moodSelectionViewController, animated: true)
         }
+         
+        */
+        /*
+        guard !isSegueInProgress else {
+            return
+        }
+        isSegueInProgress = true
+        
+        let delayTime = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+        self.performSegue(withIdentifier: "showDetailButton", sender: sender)
+            self.isSegueInProgress = false
+        }
+         */
     }
 
     //
@@ -280,14 +297,23 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let destinationVC = segue.destination as? DetailViewController, let _ = sender as? Date {
+        
+        if segue.identifier == "showDetailButton" {
+            //if let destinationVC = segue.destination as? DetailViewController, let _ = sender as? Date {
+            if let destinationVC = segue.destination as? DetailViewController {
                 // Pass any data to the destination view controller here
                 let monthYear = self.selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
                 let day = self.selectedDate.components(separatedBy: "-")[2]
                 
-                let logItem = logItemStore.allLogItems[monthYear]![day]
+                if let nestedDict = self.logItemStore.allLogItems[monthYear], let _ = nestedDict[day] {
+                    print("item exist")
+                }
+                else {
+                    let mood = Mood.soso
+                    self.logItemStore.createItem(date: self.selectedDate, mood: mood, setByUser: false)
+                }
                 
+                let logItem = self.logItemStore.allLogItems[monthYear]![day]
                 destinationVC.currentLogItem = logItem
                 destinationVC.store = WeatherStore()
             }
@@ -297,18 +323,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = dateFormatter.string(from:date)
         selectedDateUpdated = true
-        
-        let monthYear = selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
-        let day = selectedDate.components(separatedBy: "-")[2]
-       
-        if let nestedDict = logItemStore.allLogItems[monthYear], let _ = nestedDict[day] {
-            performSegue(withIdentifier: "showDetail", sender: date)
-        }
-        else {
-            let mood = Mood.soso
-            logItemStore.createItem(date: selectedDate, mood: mood, setByUser: false)
-            performSegue(withIdentifier: "showDetail", sender: date)
-        }
         /*
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
