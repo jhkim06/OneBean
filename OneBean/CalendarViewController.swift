@@ -47,7 +47,8 @@ class CalendarViewController: UIViewController {
         // get current temperature of current location
         
         OperationQueue.main.addOperation {
-            
+           
+            // current temperature
             self.store.fetchWeatherInfo() { // selecte endpoint
             (weatherResult) in
                 switch weatherResult {
@@ -75,9 +76,8 @@ class CalendarViewController: UIViewController {
                     //print(weather["TMP"])
                     
                     if let dict = weather as? [String:[String:String]] {
-                        print("=======================================")
-                        print("max temp: \(dict["TMX"]!)")
-                        print("min temp: \(dict["TMN"]!)")
+                        //print("max temp: \(dict["TMX"]!)")
+                        //print("min temp: \(dict["TMN"]!)")
                         
                         let calendar = Calendar.current
                         let currentDate = Date()
@@ -85,6 +85,7 @@ class CalendarViewController: UIViewController {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyyMMdd:HHmm"
                         let tomorrow = dateFormatter.string(from: tomorrowDate!)
+                        //print("SKY: \(dict["SKY"]![tomorrow])")
                         
                         for (dateTime, value) in dict["TMX"]! {
                             if dateTime.components(separatedBy: ":")[0] == tomorrow.components(separatedBy: ":")[0] {
@@ -96,7 +97,8 @@ class CalendarViewController: UIViewController {
                                 self.tomorrowTMN = value
                             }
                         }
-                        // find tomorrow's H/L temp
+                        
+                        
                     }
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload

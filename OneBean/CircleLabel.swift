@@ -33,8 +33,8 @@ struct CircleText: View {
             ForEach(self.texts, id: \.self.offset) { (offset, element) in
                 
                 VStack {
-                    Text(String(element)).font(.system(size: 12))
-                        .foregroundColor(SwiftUI.Color(red: 97/255, green: 174/255, blue: 114/255))
+                    Text(String(element)).font(.system(size: 10))
+                        .foregroundColor(SwiftUI.Color(red: 131/255, green: 105/255, blue: 83/255))
                         .kerning(self.kerning)
                         .background(Sizeable())
                         .onPreferenceChange(WidthPreferenceKey.self, perform: { size in
