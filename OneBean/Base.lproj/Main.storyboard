@@ -502,17 +502,17 @@
                                                         <rect key="frame" x="0.0" y="30" width="394" height="150"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="xOK-hO-yTa">
-                                                                <rect key="frame" x="0.0" y="0.0" width="112.5" height="150"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="65.5" height="150"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1J-ab-GkI">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="112.5" height="50"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="50"/>
                                                                         <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="01:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zw9-BR-vEX">
-                                                                        <rect key="frame" x="0.0" y="100" width="112.5" height="50"/>
+                                                                        <rect key="frame" x="0.0" y="100" width="65.5" height="50"/>
                                                                         <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -525,7 +525,7 @@
                                                                 </constraints>
                                                             </stackView>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-OB-1V7">
-                                                                <rect key="frame" x="113.5" y="0.0" width="280.5" height="150"/>
+                                                                <rect key="frame" x="66.5" y="0.0" width="327.5" height="150"/>
                                                                 <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
@@ -533,12 +533,12 @@
                                                             </textView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="MAK-OB-1V7" firstAttribute="width" secondItem="xOK-hO-yTa" secondAttribute="width" multiplier="2.5" id="32B-Ja-dBa"/>
+                                                            <constraint firstItem="MAK-OB-1V7" firstAttribute="width" secondItem="xOK-hO-yTa" secondAttribute="width" multiplier="5" id="32B-Ja-dBa"/>
                                                             <constraint firstAttribute="height" constant="150" id="VQk-PZ-B3T"/>
                                                         </constraints>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How is your current hour?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlp-oQ-Gsh">
-                                                        <rect key="frame" x="113.5" y="2.5" width="212" height="25.5"/>
+                                                        <rect key="frame" x="66.5" y="2.5" width="212" height="25.5"/>
                                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="18"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>

@@ -21,6 +21,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     var textOriginalText: String = ""
     var planOriginalText: String = ""
+    var firstLog: Bool = true
+    var currentLogTime: String = ""
     
     var store: WeatherStore!
  
@@ -60,6 +62,12 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         }
         if let hourNote = currentLogItem.hourNote {
             hourTextView.text = hourNote
+        }
+        if let firstLog = currentLogItem.firstLogInCurrentHour {
+            self.firstLog = firstLog
+        }
+        if let currentLogTime = currentLogItem.currentLogTime {
+            self.currentLogTime = currentLogTime
         }
         
         hourTextView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
@@ -133,6 +141,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         currentLogItem.setNote(note: textView.text)
         currentLogItem.setPlanNote(note: planTextView.text)
         currentLogItem.setHourNote(note: hourTextView.text)
+        currentLogItem.setFirstLog(first: firstLog)
+        currentLogItem.setCurrentLogTime(time: currentLogTime)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -215,8 +225,29 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if self.hourTextView.isFirstResponder {
             let trimmedString = hourTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
             if !trimmedString.isEmpty {
-                self.hourTextView.text = "\nhour log,\n" + self.hourTextView.text
-                self.textView.text += self.hourTextView.text
+                
+                let currentTime = Date()
+                let timeFormatter = DateFormatter()
+                timeFormatter.dateFormat = "HH:mm"
+                let timeString = timeFormatter.string(from: currentTime)
+                
+                if self.firstLog == false && timeString.components(separatedBy: ":")[0] != self.currentLogTime.components(separatedBy: ":")[0] {
+                    self.firstLog = true
+                }
+                
+                // if this is the first log of the current hour, put time
+                // else just add the text
+                if self.firstLog {
+                    self.hourTextView.text = "\n \(timeString.components(separatedBy: ":")[0]):00 log,\n" + self.hourTextView.text
+                    self.textView.text += self.hourTextView.text
+                    
+                    self.firstLog = false
+                } else {
+                    self.hourTextView.text = "\n" + self.hourTextView.text
+                    self.textView.text += self.hourTextView.text
+                }
+                self.currentLogTime = timeString
+                
             }
             self.hourTextView.text = ""
         }

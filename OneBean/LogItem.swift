@@ -14,6 +14,8 @@ class LogItem: Codable {
     var note: String
     var planNote: String?
     var hourNote: String?
+    var firstLogInCurrentHour: Bool?
+    var currentLogTime: String?
     
     init(date: String, mood: Mood) {
         self.date = date
@@ -21,6 +23,8 @@ class LogItem: Codable {
         self.note = ""
         self.planNote = ""
         self.hourNote = ""
+        self.firstLogInCurrentHour = true
+        self.currentLogTime = ""
     }
     
     // setMood
@@ -38,6 +42,12 @@ class LogItem: Codable {
     }
     func setHourNote(note: String) {
         self.hourNote = note
+    }
+    func setFirstLog(first: Bool) {
+        self.firstLogInCurrentHour = first
+    }
+    func setCurrentLogTime(time: String) {
+        self.currentLogTime = time
     }
     /*
     static func ==(lhs: LogItem, rhs: LogItem) -> Bool {
