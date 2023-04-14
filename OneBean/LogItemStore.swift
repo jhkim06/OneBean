@@ -79,7 +79,10 @@ class LogItemStore {
                 let str = allLogItems[monthYear]?[day]?.note
                 newItem.setNote(note: str!)
                 let planstr = allLogItems[monthYear]?[day]?.planNote
-                newItem.setNote(note: planstr!)
+                newItem.setPlanNote(note: planstr!)
+                let hourstr = allLogItems[monthYear]?[day]?.hourNote
+                newItem.setHourNote(note: hourstr!)
+
                 
                 allLogItems[monthYear]?.removeValue(forKey: day)
                 allLogItems[monthYear]?[day] = newItem

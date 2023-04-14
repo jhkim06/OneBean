@@ -480,7 +480,7 @@
                                                             <constraint firstAttribute="height" constant="200" id="lmT-Fc-GMA"/>
                                                         </constraints>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2wZ-2y-KP4">
@@ -499,7 +499,7 @@
                                                 <rect key="frame" x="0.0" y="249" width="394" height="391"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="jw5-dq-C0K">
-                                                        <rect key="frame" x="0.0" y="50" width="394" height="150"/>
+                                                        <rect key="frame" x="0.0" y="30" width="394" height="150"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="xOK-hO-yTa">
                                                                 <rect key="frame" x="0.0" y="0.0" width="112.5" height="150"/>
@@ -527,8 +527,8 @@
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-OB-1V7">
                                                                 <rect key="frame" x="113.5" y="0.0" width="280.5" height="150"/>
                                                                 <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <color key="textColor" systemColor="labelColor"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             </textView>
                                                         </subviews>
@@ -537,8 +537,8 @@
                                                             <constraint firstAttribute="height" constant="150" id="VQk-PZ-B3T"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How was your hour?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlp-oQ-Gsh">
-                                                        <rect key="frame" x="114" y="19.5" width="166" height="25.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How is your current hour?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlp-oQ-Gsh">
+                                                        <rect key="frame" x="113.5" y="2.5" width="212" height="25.5"/>
                                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="18"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -546,10 +546,10 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="jw5-dq-C0K" firstAttribute="centerX" secondItem="SJc-R1-Ndi" secondAttribute="centerX" id="0uh-HI-QPU"/>
+                                                    <constraint firstItem="MAK-OB-1V7" firstAttribute="leading" secondItem="Jlp-oQ-Gsh" secondAttribute="leading" id="2fi-ES-bES"/>
                                                     <constraint firstAttribute="trailing" secondItem="jw5-dq-C0K" secondAttribute="trailing" id="TgR-zH-4oX"/>
-                                                    <constraint firstItem="Jlp-oQ-Gsh" firstAttribute="centerX" secondItem="SJc-R1-Ndi" secondAttribute="centerX" id="Y34-xi-q79"/>
-                                                    <constraint firstItem="jw5-dq-C0K" firstAttribute="top" secondItem="SJc-R1-Ndi" secondAttribute="top" constant="50" id="ZIJ-br-7QA"/>
-                                                    <constraint firstItem="jw5-dq-C0K" firstAttribute="top" secondItem="Jlp-oQ-Gsh" secondAttribute="bottom" constant="5" id="ct4-jx-U3t"/>
+                                                    <constraint firstItem="jw5-dq-C0K" firstAttribute="top" secondItem="SJc-R1-Ndi" secondAttribute="top" constant="30" id="ZIJ-br-7QA"/>
+                                                    <constraint firstItem="jw5-dq-C0K" firstAttribute="top" secondItem="Jlp-oQ-Gsh" secondAttribute="bottom" constant="2" id="ct4-jx-U3t"/>
                                                     <constraint firstItem="jw5-dq-C0K" firstAttribute="leading" secondItem="SJc-R1-Ndi" secondAttribute="leading" id="hsF-3a-JmN"/>
                                                 </constraints>
                                             </view>
@@ -577,9 +577,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="zJd-C5-KFe"/>
                     <connections>
+                        <outlet property="currentHourLabel" destination="Z1J-ab-GkI" id="UZG-nv-MZg"/>
                         <outlet property="dateLabel" destination="ra3-2h-qVv" id="yf6-UF-MPh"/>
                         <outlet property="hourTextView" destination="MAK-OB-1V7" id="LQ2-n1-iQN"/>
                         <outlet property="moodSelector" destination="bk0-BZ-jOJ" id="fJT-za-DK3"/>
+                        <outlet property="nextHourLabel" destination="zw9-BR-vEX" id="cAh-Bl-AvM"/>
                         <outlet property="planTextView" destination="2wZ-2y-KP4" id="tgz-Av-ib5"/>
                         <outlet property="temperature" destination="3lD-Lo-SHn" id="9eX-cm-fOP"/>
                         <outlet property="textView" destination="5bu-2y-yTI" id="Xi5-5K-xv2"/>
@@ -700,15 +702,12 @@
         <segue reference="s62-7o-aLQ"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="calendar" catalog="system" width="32" height="32"/>
         <image name="calendar.day.timeline.left" catalog="system" width="128" height="91"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="trash" catalog="system" width="121" height="128"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

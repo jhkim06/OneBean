@@ -16,6 +16,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var temperature: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var nextHourLabel: UILabel!
+    @IBOutlet var currentHourLabel: UILabel!
     
     var textOriginalText: String = ""
     var planOriginalText: String = ""
@@ -56,6 +58,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if let planNote = currentLogItem.planNote {
             planTextView.text = planNote
         }
+        if let hourNote = currentLogItem.hourNote {
+            hourTextView.text = hourNote
+        }
         
         hourTextView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
         hourTextView.layer.borderWidth = 2.0
@@ -75,6 +80,17 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         }
         
         if currentLogItem.date == today {
+            
+            let currentTime = Date()
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "HH:mm"
+            let timeString = timeFormatter.string(from: currentTime)
+            
+            let calendar = Calendar.current
+            let nextHourTime = calendar.date(byAdding: .hour, value: +1, to: currentTime)
+            let nextTimeString = timeFormatter.string(from: nextHourTime!)
+            self.currentHourLabel.text = timeString.components(separatedBy: ":")[0] + ":00"
+            self.nextHourLabel.text = nextTimeString.components(separatedBy: ":")[0] + ":00"
             /*
             // show current temperature
             store.fetchWeatherInfo {
@@ -116,6 +132,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         currentLogItem.setMood(mood: currentMood)
         currentLogItem.setNote(note: textView.text)
         currentLogItem.setPlanNote(note: planTextView.text)
+        currentLogItem.setHourNote(note: hourTextView.text)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -126,6 +143,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         textView.delegate = self
         planTextView.delegate = self
+        hourTextView.delegate = self
         /*
         currentMood = currentLogItem.mood
         moodSelector.selectedIndex = moods.firstIndex(where: {$0 == currentMood})!
@@ -147,8 +165,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        // notificationCenter.post(name: UIResponder.keyboardWillShowNotification, object: self.hourTextView)
         
+        // use notification to mote text of hourTextView to the textView every hour.
+        /*
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHourChange), name: .NSCalendarDayChanged, object: nil)
+        */
         /*
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
@@ -157,27 +178,48 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         */
         
     }
-    
-    @objc func keyboardWillShow(_ notification: NSNotification) {
-        print("keyboardWillShow called")
-        if self.hourTextView.isFirstResponder {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= (keyboardSize.height + 100)
+    /*
+    @objc func handleHourChange() {
+        let currentMinute = NSCalendar.current.component(.minute, from: Date())
+        if currentMinute == 0 {
+            // Hour has changed, perform action
+            self.textView.text = "\nhour log,"
+            let trimmedString = hourTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedString.isEmpty {
+                self.textView.text += self.hourTextView.text
             }
+            self.hourTextView.text = ""
         }
+    }
+    */
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if self.hourTextView.isFirstResponder {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                if self.view.frame.origin.y == 0 {
+                    self.view.frame.origin.y -= (keyboardSize.height + 100)
+                }
+            }
+            
         }
     }
     @objc func keyboardWillHide(_ notification: NSNotification) {
         if self.hourTextView.isFirstResponder {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y = 0
+            }
         }
     }
     
     @objc func tapDone(sender: Any) {
         // writeTime()
+        if self.hourTextView.isFirstResponder {
+            let trimmedString = hourTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedString.isEmpty {
+                self.hourTextView.text = "\nhour log,\n" + self.hourTextView.text
+                self.textView.text += self.hourTextView.text
+            }
+            self.hourTextView.text = ""
+        }
         self.view.endEditing(true)
     }
     @IBAction func addTime(sender: UIButton) {
@@ -226,7 +268,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             if let vc = parent.selectedViewController as? CalendarViewController {
                 dismiss(animated: true, completion: {
                     //print(self.getMood())
-                    if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
+                    if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" && self.hourTextView.text == "" {
                         vc.logItemStore.removeItem(date: self.currentLogItem.date)
                     }
                     
