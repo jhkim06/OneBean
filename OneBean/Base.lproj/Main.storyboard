@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKF-d7-iVG">
-                                <rect key="frame" x="157" y="564" width="100.5" height="31"/>
+                                <rect key="frame" x="195" y="564" width="24" height="14"/>
                                 <color key="tintColor" red="0.38117927309999999" green="0.68085426090000001" blue="0.44644182919999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Show Detail"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
                                 <connections>
                                     <action selector="selectMood:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M2U-m8-l5B"/>
                                     <segue destination="d0f-S7-KxQ" kind="show" identifier="showDetailButton" id="s62-7o-aLQ"/>
@@ -62,6 +62,7 @@
                     <connections>
                         <outlet property="addressLabel" destination="37R-18-Djb" id="yUT-hM-RN9"/>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
+                        <outlet property="showDetailButton" destination="lKF-d7-iVG" id="sAS-bd-OL1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

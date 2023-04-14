@@ -34,7 +34,7 @@ struct CircleText: View {
                 
                 VStack {
                     Text(String(element)).font(.system(size: 10))
-                        .foregroundColor(SwiftUI.Color(red: 131/255, green: 105/255, blue: 83/255))
+                        //.foregroundColor(SwiftUI.Color(red: 131/255, green: 105/255, blue: 83/255))
                         .kerning(self.kerning)
                         .background(Sizeable())
                         .onPreferenceChange(WidthPreferenceKey.self, perform: { size in

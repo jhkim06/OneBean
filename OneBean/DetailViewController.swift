@@ -101,23 +101,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             self.nextHourLabel.text = nextTimeString.components(separatedBy: ":")[0] + ":00"
             
 
-            /*
-            // show current temperature
-            store.fetchWeatherInfo {
-                (weatherResult) in
-
-                switch weatherResult {
-                case let .success(weather):
-                    print("Successfully found \(weather.count) weather.")
-                    // TODO convert Weather to dictionary with desired key
-                    self.temperature.text = String(weather[3].obsrValue) + " °C"
-                    //print("cat: \(weather[3].category) obs: \(weather[3].obsrValue)")
-                    
-                case let .failure(error):
-                    print("Error fetching interesting photos: \(error)")
-                }
-            }
-            */
         }  else {
             // update dateLabel
             let myFormat = Date.FormatStyle()
@@ -159,6 +142,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         planTextView.delegate = self
         hourTextView.delegate = self
         
+        
+        var colonColor = UIColor.black
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             
             let currentTime = Date()
@@ -167,6 +152,24 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             let timeString = timeFormatter.string(from: currentTime)
             
             self.currentHourLabel.text = timeString
+            // Create a mutable attributed string from the label's text
+            let attributedString = NSMutableAttributedString(string: self.currentHourLabel.text!)
+            
+            // Find the range of the colon in the attributed string
+            if let colonRange = self.currentHourLabel.text?.range(of: ":")?.lowerBound.utf16Offset(in: self.currentHourLabel.text!) {
+                // Toggle the colon's visibility by setting its color to the background color
+                // when hidden, and to the specified color when visible
+                if self.currentHourLabel.textColor == colonColor {
+                    attributedString.addAttribute(.foregroundColor, value: UIColor.clear, range: NSRange(location: colonRange, length: 1))
+                    colonColor = UIColor.clear
+                } else {
+                    attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: colonRange, length: 1))
+                    colonColor = UIColor.black
+                }
+            }
+            
+            // Set the modified attributed string back to the label
+            self.currentHourLabel.attributedText = attributedString
         }
         /*
         currentMood = currentLogItem.mood
@@ -202,6 +205,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         */
         
     }
+    
     /*
     @objc func handleHourChange() {
         let currentMinute = NSCalendar.current.component(.minute, from: Date())
@@ -334,6 +338,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                     }
                     
                     vc.calendarView.reloadData()
+                    vc.viewWillAppear(true)
                 })
             }
         }

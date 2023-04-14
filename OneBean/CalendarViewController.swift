@@ -20,6 +20,7 @@ class CalendarViewController: UIViewController {
     var isSegueInProgress = false
     
     @IBOutlet var addressLabel: UILabel!
+    @IBOutlet var showDetailButton: UIButton!
 
     @IBAction func selectMood(_ sender: UIButton) {
         // IT WAS NOT NEEDED ANYTHING!!
@@ -57,6 +58,34 @@ class CalendarViewController: UIViewController {
             selectedDate = dateFormatter.string(from:Date())
         }
         calendarView.reloadData()
+        
+        // set image for button to show detail
+        let monthYear = self.selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = self.selectedDate.components(separatedBy: "-")[2]
+        
+        if logItemStore.allLogItems.contains(where: {$0.key == monthYear}) && ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true){
+            let tempImage = logItemStore.allLogItems[monthYear]?[day]!.mood.image
+            if let setByUser = logItemStore.allLogItems[monthYear]?[day]!.mood.selectedByUser {
+                // mood is not set by user
+                if setByUser == false {
+                    // show background image
+                    let scaledImage = self.rescaleImage(rawImage: UIImage(resource: .bg))
+                    self.showDetailButton.setImage(scaledImage, for: .normal)
+                    
+                } else {
+                    let scaledImage = self.rescaleImage(rawImage: tempImage!)
+                    self.showDetailButton.setImage(scaledImage, for: .normal)
+                }
+                
+            } else { // selectedByUser may not exist since recentrly added
+                let scaledImage = self.rescaleImage(rawImage: tempImage!)
+                self.showDetailButton.setImage(scaledImage, for: .normal)
+            }
+        } else {
+            // show background image
+            let scaledImage = self.rescaleImage(rawImage: UIImage(resource: .bg))
+            self.showDetailButton.setImage(scaledImage, for: .normal)
+        }
         
         self.locationProvider?.start() // track location
         self.locationProvider?.getAddress() {
@@ -173,6 +202,19 @@ class CalendarViewController: UIViewController {
         //locationProvider = LocationProvider()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+    }
+    
+    func rescaleImage(rawImage: UIImage, scale: CGFloat = 0.4) -> UIImage {
+        // resize image
+        let scaledImageSize = CGSize(
+            width: (rawImage.size.width ) * scale,
+            height: (rawImage.size.height ) * scale)
+        
+        let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
+        let scaledImage = renderer.image { _ in
+            rawImage.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+        }
+        return scaledImage
     }
     
     func setMood(_ mood: Mood) {
@@ -329,6 +371,34 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         
         nc.post(name: NSNotification.Name.NSCalendarDayChanged, object: nil)
         */
+        
+        let monthYear = self.selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
+        let day = self.selectedDate.components(separatedBy: "-")[2]
+        
+        if logItemStore.allLogItems.contains(where: {$0.key == monthYear}) && ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true){
+            let tempImage = logItemStore.allLogItems[monthYear]?[day]!.mood.image
+            if let setByUser = logItemStore.allLogItems[monthYear]?[day]!.mood.selectedByUser {
+                // mood is not set by user
+                if setByUser == false {
+                    // show background image
+                    let scaledImage = self.rescaleImage(rawImage: UIImage(resource: .bg))
+                    self.showDetailButton.setImage(scaledImage, for: .normal)
+                    
+                } else {
+                    let scaledImage = self.rescaleImage(rawImage: tempImage!)
+                    self.showDetailButton.setImage(scaledImage, for: .normal)
+                }
+                
+            } else { // selectedByUser may not exist since recentrly added
+                let scaledImage = self.rescaleImage(rawImage: tempImage!)
+                self.showDetailButton.setImage(scaledImage, for: .normal)
+            }
+        } else {
+            // show background image
+            let scaledImage = self.rescaleImage(rawImage: UIImage(resource: .bg))
+            self.showDetailButton.setImage(scaledImage, for: .normal)
+        }
+        
         print(selectedDate  + " 선택됨")
     }
     //
