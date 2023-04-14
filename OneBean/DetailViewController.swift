@@ -97,8 +97,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             let calendar = Calendar.current
             let nextHourTime = calendar.date(byAdding: .hour, value: +1, to: currentTime)
             let nextTimeString = timeFormatter.string(from: nextHourTime!)
-            self.currentHourLabel.text = timeString.components(separatedBy: ":")[0] + ":00"
+            self.currentHourLabel.text = timeString
             self.nextHourLabel.text = nextTimeString.components(separatedBy: ":")[0] + ":00"
+            
+
             /*
             // show current temperature
             store.fetchWeatherInfo {
@@ -127,6 +129,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             let weekday = date!.formatted(myFormat)
             dateLabel.text = weekday
         }
+        
     }
     
     func setCursorToEnd() {
@@ -151,9 +154,20 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layer.cornerRadius = self.view.frame.width / 50
         textView.delegate = self
         planTextView.delegate = self
         hourTextView.delegate = self
+        
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            
+            let currentTime = Date()
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "HH:mm"
+            let timeString = timeFormatter.string(from: currentTime)
+            
+            self.currentHourLabel.text = timeString
+        }
         /*
         currentMood = currentLogItem.mood
         moodSelector.selectedIndex = moods.firstIndex(where: {$0 == currentMood})!
@@ -223,34 +237,9 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @objc func tapDone(sender: Any) {
         // writeTime()
         if self.hourTextView.isFirstResponder {
-            let trimmedString = hourTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !trimmedString.isEmpty {
-                
-                let currentTime = Date()
-                let timeFormatter = DateFormatter()
-                timeFormatter.dateFormat = "HH:mm"
-                let timeString = timeFormatter.string(from: currentTime)
-                
-                if self.firstLog == false && timeString.components(separatedBy: ":")[0] != self.currentLogTime.components(separatedBy: ":")[0] {
-                    self.firstLog = true
-                }
-                
-                // if this is the first log of the current hour, put time
-                // else just add the text
-                if self.firstLog {
-                    self.hourTextView.text = "\n \(timeString.components(separatedBy: ":")[0]):00 log,\n" + self.hourTextView.text
-                    self.textView.text += self.hourTextView.text
-                    
-                    self.firstLog = false
-                } else {
-                    self.hourTextView.text = "\n" + self.hourTextView.text
-                    self.textView.text += self.hourTextView.text
-                }
-                self.currentLogTime = timeString
-                
-            }
-            self.hourTextView.text = ""
+            self.updateLog()
         }
+        self.setCursorToEnd()
         self.view.endEditing(true)
     }
     @IBAction func addTime(sender: UIButton) {
@@ -286,10 +275,49 @@ class DetailViewController: UIViewController, UITextViewDelegate {
            textView.selectedRange = newSelectedRange
         }
     }
-    
+    func updateLog() {
+        // TODO make a function for below
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let today = dateFormatter.string(from: Date())
+        print("today \(today) \(self.currentLogItem.date)")
+        if self.currentLogItem.date == today {
+            
+            let trimmedString = self.hourTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedString.isEmpty {
+                
+                let currentTime = Date()
+                let timeFormatter = DateFormatter()
+                timeFormatter.dateFormat = "HH:mm"
+                let timeString = timeFormatter.string(from: currentTime)
+                
+                if self.firstLog == false && timeString.components(separatedBy: ":")[0] != self.currentLogTime.components(separatedBy: ":")[0] {
+                    self.firstLog = true
+                }
+                
+                // if this is the first log of the current hour, put time
+                // else just add the text
+                if self.firstLog {
+                    self.hourTextView.text = "\n\(timeString.components(separatedBy: ":")[0]):00 one hour log...\n" + self.hourTextView.text
+                    self.textView.text += self.hourTextView.text
+                    
+                    self.firstLog = false
+                } else {
+                    self.hourTextView.text = "\n" + self.hourTextView.text
+                    self.textView.text += self.hourTextView.text
+                }
+                self.currentLogTime = timeString
+                
+            }
+        }
+        // always clear hourTextView
+        self.hourTextView.text = ""
+    }
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         
         if let parent = presentingViewController as? UITabBarController {
+            
+            self.updateLog()
             if let vc = parent.selectedViewController as? MoodListViewController {
                 dismiss(animated: true, completion: {
                     //print(self.getMood())
@@ -297,9 +325,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 })
             }
             if let vc = parent.selectedViewController as? CalendarViewController {
+                
                 dismiss(animated: true, completion: {
                     //print(self.getMood())
-                    if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" && self.hourTextView.text == "" {
+                    print("dismiss, CalendarViewController")
+                    if self.currentMood.selectedByUser == false && self.textView.text == "" && self.planTextView.text == "" {
                         vc.logItemStore.removeItem(date: self.currentLogItem.date)
                     }
                     
