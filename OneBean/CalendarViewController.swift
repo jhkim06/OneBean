@@ -21,8 +21,9 @@ class CalendarViewController: UIViewController {
     
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var showDetailButton: UIButton!
+    @IBOutlet var daateLabel: UILabel!
 
-    @IBAction func selectMood(_ sender: UIButton) {
+    @IBAction func showDetail(_ sender: UIButton) {
         // IT WAS NOT NEEDED ANYTHING!!
         /*
         if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
@@ -54,10 +55,30 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if selectedDateUpdated == false {
             selectedDate = dateFormatter.string(from:Date())
         }
         calendarView.reloadData()
+        
+        //
+        let myFormat = Date.FormatStyle()
+            .day()
+            .weekday(.abbreviated)
+            .month(.abbreviated)
+        
+        let calendar = Calendar.current
+        let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
+        let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
+        let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
+        var dateComponents = DateComponents()
+        dateComponents.year = Int(selectedYear)
+        dateComponents.month = Int(selectedMonth)
+        dateComponents.day = Int(selectedDay)
+        let selectedDate = calendar.date(from: dateComponents)
+        
+        let weekday = selectedDate!.formatted(myFormat)
+        self.daateLabel.text = weekday
         
         // set image for button to show detail
         let monthYear = self.selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
@@ -146,8 +167,6 @@ class CalendarViewController: UIViewController {
                                 self.tomorrowTMN = value
                             }
                         }
-                        
-                        
                     }
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
@@ -157,8 +176,6 @@ class CalendarViewController: UIViewController {
                     print("Error fetching interesting photos: \(error)")
                 }
             }
-            
-            
         }
     }
     
@@ -359,12 +376,13 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                 destinationVC.currentLogItem = logItem
                 destinationVC.store = WeatherStore()
             }
+            segue.destination.modalPresentationStyle = .fullScreen
         }
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        selectedDate = dateFormatter.string(from:date)
-        selectedDateUpdated = true
+        self.selectedDate = dateFormatter.string(from:date)
+        self.selectedDateUpdated = true
         /*
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
@@ -399,7 +417,26 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             self.showDetailButton.setImage(scaledImage, for: .normal)
         }
         
-        print(selectedDate  + " 선택됨")
+        
+        let myFormat = Date.FormatStyle()
+            .day()
+            .weekday(.abbreviated)
+            .month(.abbreviated)
+        
+        let calendar = Calendar.current
+        let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
+        let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
+        let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
+        var dateComponents = DateComponents()
+        dateComponents.year = Int(selectedYear)
+        dateComponents.month = Int(selectedMonth)
+        dateComponents.day = Int(selectedDay)
+        let selectedDate = calendar.date(from: dateComponents)
+        
+        let weekday = selectedDate!.formatted(myFormat)
+        self.daateLabel.text = weekday
+        
+        print(self.selectedDate  + " 선택됨")
     }
     //
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {

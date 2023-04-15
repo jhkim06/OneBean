@@ -16,13 +16,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKF-d7-iVG">
-                                <rect key="frame" x="195" y="564" width="24" height="14"/>
-                                <color key="tintColor" red="0.38117927309999999" green="0.68085426090000001" blue="0.44644182919999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKF-d7-iVG">
+                                <rect key="frame" x="170" y="545" width="24" height="14"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain"/>
+                                <buttonConfiguration key="configuration" style="plain" title="" titleAlignment="center"/>
                                 <connections>
-                                    <action selector="selectMood:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M2U-m8-l5B"/>
+                                    <action selector="showDetail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bVV-sS-ZSX"/>
                                     <segue destination="d0f-S7-KxQ" kind="show" identifier="showDetailButton" id="s62-7o-aLQ"/>
                                 </connections>
                             </button>
@@ -44,6 +44,12 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBh-kO-n8o">
+                                <rect key="frame" x="204" y="545" width="36.5" height="21"/>
+                                <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.95686274509803915" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -52,8 +58,10 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="37R-18-Djb" secondAttribute="bottom" constant="10" id="Bfe-0C-qQQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="37R-18-Djb" secondAttribute="trailing" constant="200" id="D1U-Rd-hno"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0G-8a-uFh" secondAttribute="trailing" constant="10" id="MnZ-Gy-p66"/>
-                            <constraint firstItem="lKF-d7-iVG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WUh-I2-fjy"/>
-                            <constraint firstItem="lKF-d7-iVG" firstAttribute="top" secondItem="A0G-8a-uFh" secondAttribute="bottom" constant="20" id="rAJ-xu-ewc"/>
+                            <constraint firstItem="bBh-kO-n8o" firstAttribute="leading" secondItem="lKF-d7-iVG" secondAttribute="trailing" constant="10" id="Wuz-qf-EzM"/>
+                            <constraint firstItem="lKF-d7-iVG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="170" id="eYX-U8-inh"/>
+                            <constraint firstItem="lKF-d7-iVG" firstAttribute="top" secondItem="A0G-8a-uFh" secondAttribute="bottom" constant="1" id="rAJ-xu-ewc"/>
+                            <constraint firstItem="bBh-kO-n8o" firstAttribute="top" secondItem="A0G-8a-uFh" secondAttribute="bottom" constant="1" id="tMr-iC-RYY"/>
                             <constraint firstItem="37R-18-Djb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="tnl-YK-MlA"/>
                             <constraint firstItem="A0G-8a-uFh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ute-Iz-4Ui"/>
                         </constraints>
@@ -62,6 +70,7 @@
                     <connections>
                         <outlet property="addressLabel" destination="37R-18-Djb" id="yUT-hM-RN9"/>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
+                        <outlet property="daateLabel" destination="bBh-kO-n8o" id="NCa-FG-2Wf"/>
                         <outlet property="showDetailButton" destination="lKF-d7-iVG" id="sAS-bd-OL1"/>
                     </connections>
                 </viewController>
@@ -500,20 +509,20 @@
                                                 <rect key="frame" x="0.0" y="249" width="394" height="391"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="jw5-dq-C0K">
-                                                        <rect key="frame" x="0.0" y="30" width="394" height="150"/>
+                                                        <rect key="frame" x="0.0" y="30" width="394" height="100"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="xOK-hO-yTa">
-                                                                <rect key="frame" x="0.0" y="0.0" width="65.5" height="150"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="65.5" height="100"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1J-ab-GkI">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="50"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="25"/>
                                                                         <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="01:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zw9-BR-vEX">
-                                                                        <rect key="frame" x="0.0" y="100" width="65.5" height="50"/>
+                                                                        <rect key="frame" x="0.0" y="75" width="65.5" height="25"/>
                                                                         <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -523,10 +532,11 @@
                                                                 <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstItem="zw9-BR-vEX" firstAttribute="height" secondItem="Z1J-ab-GkI" secondAttribute="height" id="BdP-0x-dB3"/>
+                                                                    <constraint firstAttribute="height" constant="100" id="RXz-PC-Lvt"/>
                                                                 </constraints>
                                                             </stackView>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-OB-1V7">
-                                                                <rect key="frame" x="66.5" y="0.0" width="327.5" height="150"/>
+                                                                <rect key="frame" x="66.5" y="0.0" width="327.5" height="100"/>
                                                                 <color key="backgroundColor" red="0.93634551759999995" green="0.94990140199999995" blue="0.92041742800000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
@@ -535,7 +545,6 @@
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="MAK-OB-1V7" firstAttribute="width" secondItem="xOK-hO-yTa" secondAttribute="width" multiplier="5" id="32B-Ja-dBa"/>
-                                                            <constraint firstAttribute="height" constant="150" id="VQk-PZ-B3T"/>
                                                         </constraints>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How is your current hour?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlp-oQ-Gsh">
@@ -548,6 +557,7 @@
                                                 <constraints>
                                                     <constraint firstItem="jw5-dq-C0K" firstAttribute="centerX" secondItem="SJc-R1-Ndi" secondAttribute="centerX" id="0uh-HI-QPU"/>
                                                     <constraint firstItem="MAK-OB-1V7" firstAttribute="leading" secondItem="Jlp-oQ-Gsh" secondAttribute="leading" id="2fi-ES-bES"/>
+                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Jlp-oQ-Gsh" secondAttribute="trailing" constant="20" symbolic="YES" id="9rE-67-Dpz"/>
                                                     <constraint firstAttribute="trailing" secondItem="jw5-dq-C0K" secondAttribute="trailing" id="TgR-zH-4oX"/>
                                                     <constraint firstItem="jw5-dq-C0K" firstAttribute="top" secondItem="SJc-R1-Ndi" secondAttribute="top" constant="30" id="ZIJ-br-7QA"/>
                                                     <constraint firstItem="jw5-dq-C0K" firstAttribute="top" secondItem="Jlp-oQ-Gsh" secondAttribute="bottom" constant="2" id="ct4-jx-U3t"/>
@@ -579,8 +589,10 @@
                     <navigationItem key="navigationItem" id="zJd-C5-KFe"/>
                     <connections>
                         <outlet property="currentHourLabel" destination="Z1J-ab-GkI" id="UZG-nv-MZg"/>
+                        <outlet property="currentHourView" destination="SJc-R1-Ndi" id="t2Q-8q-qcC"/>
                         <outlet property="dateLabel" destination="ra3-2h-qVv" id="yf6-UF-MPh"/>
                         <outlet property="hourTextView" destination="MAK-OB-1V7" id="LQ2-n1-iQN"/>
+                        <outlet property="logTitleLable" destination="Jlp-oQ-Gsh" id="6we-RJ-pdu"/>
                         <outlet property="moodSelector" destination="bk0-BZ-jOJ" id="fJT-za-DK3"/>
                         <outlet property="nextHourLabel" destination="zw9-BR-vEX" id="cAh-Bl-AvM"/>
                         <outlet property="planTextView" destination="2wZ-2y-KP4" id="tgz-Av-ib5"/>

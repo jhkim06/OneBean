@@ -18,6 +18,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var nextHourLabel: UILabel!
     @IBOutlet var currentHourLabel: UILabel!
+    @IBOutlet var currentHourView: UIView!
+    @IBOutlet var logTitleLable: UILabel!
     
     var textOriginalText: String = ""
     var planOriginalText: String = ""
@@ -78,16 +80,42 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: Date())
-        let date = dateFormatter.date(from:currentLogItem.date)
-        if (date! <= Date()) {
-            titleLabel.text = "How was your day?"
+        
+        let calendar = Calendar.current
+        let selectedYear = currentLogItem.date.components(separatedBy: "-")[0]
+        let selectedMonth = currentLogItem.date.components(separatedBy: "-")[1]
+        let selectedDay = currentLogItem.date.components(separatedBy: "-")[2]
+        var dateComponents = DateComponents()
+        dateComponents.year = Int(selectedYear)
+        dateComponents.month = Int(selectedMonth)
+        dateComponents.day = Int(selectedDay)
+        let selectedDate = calendar.date(from: dateComponents)
+        
+        let year = calendar.component(.year, from: Date())
+        let month = calendar.component(.month, from: Date())
+        let day = calendar.component(.day, from: Date())
+
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        let today = calendar.date(from: dateComponents)
+        
+        if (selectedDate! <= today!) {
+            if (selectedDate! < today!) {
+                titleLabel.text = "How was your day?"
+                logTitleLable.text = "You can't changed the past"
+            }
+            if (selectedDate! == today) {
+                titleLabel.text = "How is your day?"
+                logTitleLable.text = "How is your current hour?"
+            }
         } else {
             titleLabel.text = "Plan for a day!"
+            logTitleLable.text = "You can't log the future yet"
             moodSelector.buttonEnabled = false
         }
         
-        if currentLogItem.date == today {
+        if selectedDate == today {
             
             let currentTime = Date()
             let timeFormatter = DateFormatter()
@@ -109,8 +137,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 .year()
                 .weekday(.wide)
             
-            let weekday = date!.formatted(myFormat)
+            let weekday = selectedDate!.formatted(myFormat)
             dateLabel.text = weekday
+            
+            self.currentHourLabel.text = ""
+            self.nextHourLabel.text = ""
         }
         
     }
@@ -142,7 +173,12 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         planTextView.delegate = self
         hourTextView.delegate = self
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let today = dateFormatter.string(from: Date())
         
+        if currentLogItem.date == today {
+            
         var colonColor = UIColor.black
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             
@@ -170,6 +206,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             
             // Set the modified attributed string back to the label
             self.currentHourLabel.attributedText = attributedString
+        }
         }
         /*
         currentMood = currentLogItem.mood
@@ -224,7 +261,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if self.hourTextView.isFirstResponder {
             if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 if self.view.frame.origin.y == 0 {
-                    self.view.frame.origin.y -= (keyboardSize.height + 100)
+                    self.view.frame.origin.y -= (keyboardSize.height )
                 }
             }
             
@@ -284,7 +321,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: Date())
-        print("today \(today) \(self.currentLogItem.date)")
+        
         if self.currentLogItem.date == today {
             
             let trimmedString = self.hourTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -338,7 +375,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                     }
                     
                     vc.calendarView.reloadData()
-                    vc.viewWillAppear(true)
+                    vc.beginAppearanceTransition(true, animated: true)
                 })
             }
         }

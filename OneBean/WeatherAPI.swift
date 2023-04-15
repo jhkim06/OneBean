@@ -110,6 +110,7 @@ struct WeatherAPI {
         }
         if endPoint == EndPoint.getVilageFcst {
             let hour = Int(currentTime.components(separatedBy: "-")[1].components(separatedBy: ":")[0])
+            
             if hour! > 6 {
                 let calendar = Calendar.current
                 //
@@ -122,6 +123,7 @@ struct WeatherAPI {
                 let newDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -1, to: currentDate)!)
                 currentTime = dateFormatter.string(from: newDate!)
             }
+            
         }
         
         let baseParams = ["base_date" : currentTime.components(separatedBy: "-")[0],
