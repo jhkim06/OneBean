@@ -16,7 +16,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var temperature: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var nextHourLabel: UILabel!
     @IBOutlet var currentHourLabel: UILabel!
     @IBOutlet var currentHourView: UIView!
     @IBOutlet var logTitleLable: UILabel!
@@ -123,10 +122,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             let timeString = timeFormatter.string(from: currentTime)
             
             let calendar = Calendar.current
-            let nextHourTime = calendar.date(byAdding: .hour, value: +1, to: currentTime)
-            let nextTimeString = timeFormatter.string(from: nextHourTime!)
             self.currentHourLabel.text = timeString
-            self.nextHourLabel.text = nextTimeString.components(separatedBy: ":")[0] + ":00"
             
 
         }  else {
@@ -141,7 +137,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             dateLabel.text = weekday
             
             self.currentHourLabel.text = ""
-            self.nextHourLabel.text = ""
         }
         
     }
@@ -339,12 +334,13 @@ class DetailViewController: UIViewController, UITextViewDelegate {
                 // if this is the first log of the current hour, put time
                 // else just add the text
                 if self.firstLog {
-                    self.hourTextView.text = "\n\(timeString.components(separatedBy: ":")[0]):00 one hour log...\n" + self.hourTextView.text
+                    //self.hourTextView.text = "\n\(timeString.components(separatedBy: ":")[0]):00 one hour log...\n" + timeString + " " + self.hourTextView.text
+                    self.hourTextView.text = "\n" + timeString + " " + self.hourTextView.text
                     self.textView.text += self.hourTextView.text
                     
                     self.firstLog = false
                 } else {
-                    self.hourTextView.text = "\n" + self.hourTextView.text
+                    self.hourTextView.text = "\n" + timeString + " " + self.hourTextView.text
                     self.textView.text += self.hourTextView.text
                 }
                 self.currentLogTime = timeString

@@ -36,7 +36,9 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("updated locations: \(locations)")
+        //print("updated locations: \(locations)")
+        guard let location = locations.last else {return}
+        print("location: \(location)")
         
         let geocoder = CLGeocoder()
         var addressStr: String!
@@ -63,12 +65,17 @@ class LocationProvider: NSObject, CLLocationManagerDelegate {
     }
     func getLocation()->CLLocation {
         //print("get location: \(String(describing: locationManager.location))")
+        locationManager.requestLocation()
         return locationManager.location!
     }
     func getAddress(completion: @escaping (String) -> Void) {
         self.completion = completion
-        locationManager.startUpdatingLocation()
-        
+        //locationManager.startUpdatingLocation()
+        locationManager.requestLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("fail with error") // need to use requestLocation()?
     }
     
 }

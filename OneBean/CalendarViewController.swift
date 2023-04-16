@@ -19,32 +19,15 @@ class CalendarViewController: UIViewController {
     var selectedDateUpdated: Bool = false
     var isSegueInProgress = false
     
+    @IBOutlet var SKY1: UIImageView?
+    @IBOutlet var SK1Time: UILabel?
+    
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var showDetailButton: UIButton!
     @IBOutlet var daateLabel: UILabel!
 
     @IBAction func showDetail(_ sender: UIButton) {
-        // IT WAS NOT NEEDED ANYTHING!!
-        /*
-        if let moodSelectionViewController = storyboard?.instantiateViewController(identifier: "MoodSelectionViewController") {
-            moodSelectionViewController.modalPresentationStyle = .overCurrentContext
-            moodSelectionViewController.modalTransitionStyle = .crossDissolve
-            present(moodSelectionViewController, animated: true)
-        }
-         
-        */
-        /*
-        guard !isSegueInProgress else {
-            return
-        }
-        isSegueInProgress = true
-        
-        let delayTime = DispatchTime.now() + 0.5
-        DispatchQueue.main.asyncAfter(deadline: delayTime) {
-        self.performSegue(withIdentifier: "showDetailButton", sender: sender)
-            self.isSegueInProgress = false
-        }
-         */
+        // no need to add here for segue
     }
 
     //
@@ -108,14 +91,13 @@ class CalendarViewController: UIViewController {
             self.showDetailButton.setImage(scaledImage, for: .normal)
         }
         
-        self.locationProvider?.start() // track location
+        //self.locationProvider?.start() // track location
         self.locationProvider?.getAddress() {
             (addressStr) in
             self.addressLabel.text = "현위치 " + addressStr
         }
        
         // get current temperature of current location
-        
         OperationQueue.main.addOperation {
            
             // current temperature
@@ -123,8 +105,6 @@ class CalendarViewController: UIViewController {
             (weatherResult) in
                 switch weatherResult {
                 case let .success(weather):
-                    // TODO convert Weather (array?) to dictionary with desired key
-                    //self.currentTMP = String(weather[3].obsrValue) + "°C"
                     self.currentTMP = weather["T1H"] as! String + "°C"
                     
                     DispatchQueue.main.async {
@@ -136,18 +116,13 @@ class CalendarViewController: UIViewController {
                 }
             }
             // 단기예보
-            self.store.fetchWeatherInfo(endpoint: EndPoint.getVilageFcst) { // selecte endpoint
+            self.store.fetchWeatherInfo(endpoint: EndPoint.getVilageFcst) { // select endpoint
             (weatherResult) in
                 switch weatherResult {
                 case let .success(weather):
-                    // TODO convert Weather (array?) to dictionary with desired key
-                    //self.currentTMP = String(weather[3].obsrValue) + "°C"
-                    
                     //print(weather["TMP"])
                     
                     if let dict = weather as? [String:[String:String]] {
-                        //print("max temp: \(dict["TMX"]!)")
-                        //print("min temp: \(dict["TMN"]!)")
                         
                         let calendar = Calendar.current
                         let currentDate = Date()
@@ -155,7 +130,7 @@ class CalendarViewController: UIViewController {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyyMMdd:HHmm"
                         let tomorrow = dateFormatter.string(from: tomorrowDate!)
-                        //print("SKY: \(dict["SKY"]![tomorrow])")
+                        //print(dict["SKY"])
                         
                         for (dateTime, value) in dict["TMX"]! {
                             if dateTime.components(separatedBy: ":")[0] == tomorrow.components(separatedBy: ":")[0] {
@@ -167,6 +142,77 @@ class CalendarViewController: UIViewController {
                                 self.tomorrowTMN = value
                             }
                         }
+                        
+                        // forecast of sky state
+                        // current hour, tomorrow morning (7am), noon, evening (6pm)
+                        
+                        // check if selected date key exist
+                        //if let dict["SKY"][]
+                        let myFormat = Date.FormatStyle()
+                            .day()
+                            .weekday(.abbreviated)
+                            .month(.abbreviated)
+                        
+                        let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
+                        let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
+                        let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
+                        var dateComponents = DateComponents()
+                        dateComponents.year = Int(selectedYear)
+                        dateComponents.month = Int(selectedMonth)
+                        dateComponents.day = Int(selectedDay)
+                        let selectedDate = calendar.date(from: dateComponents)
+                        
+                        let weekday = selectedDate!.formatted(myFormat)
+                        self.daateLabel.text = weekday
+                        
+                        let currentTime = Date()
+                        let timeFormatter = DateFormatter()
+                        timeFormatter.dateFormat = "yyyyMMdd:HH"
+                        
+                        let currentString = timeFormatter.string(from: currentTime) + "00"
+                        let selectedString = timeFormatter.string(from: selectedDate!) + "00"
+                        print("currentString \(currentString) selectedString \(selectedString)")
+                        
+                        if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
+                            // show current SKY
+                            let sky = dict["SKY"]![currentString]
+                            switch sky {
+                            case "1":
+                                self.SKY1?.image = UIImage(systemName: "sun.max.fill")
+                                self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
+                            case "3":
+                                self.SKY1?.image = UIImage(systemName: "cloud")
+                                self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
+                            case "4":
+                                self.SKY1?.image = UIImage(systemName: "cloud.fill")
+                                self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
+                            default:
+                                print("something wrong")
+                            }
+                        } else {
+                            if var sky = dict["SKY"]![selectedString] {
+                                sky = dict["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
+                                switch sky {
+                                case "1":
+                                    self.SKY1?.image = UIImage(systemName: "sun.max.fill")
+                                    self.SK1Time!.text = "0600"
+                                case "3":
+                                    self.SKY1?.image = UIImage(systemName: "cloud")
+                                    self.SK1Time!.text = "0600"
+                                case "4":
+                                    print("흐림")
+                                    self.SKY1?.image = UIImage(systemName: "cloud.fill")
+                                    self.SK1Time!.text = "0600"
+                                default:
+                                    print("something wrong")
+                                }
+                            } else {
+                                print("not exist")
+                                self.SKY1?.image = nil
+                                self.SK1Time!.text = nil
+                            }
+                        }
+                        //
                     }
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
@@ -215,8 +261,6 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.subtitleTodayColor = .black
         
         calendarView.placeholderType = .none // show only the days of the current month
-        
-        //locationProvider = LocationProvider()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
     }
@@ -275,12 +319,7 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleOffsetFor date: Date) -> CGPoint {
-        switch dateFormatter.string(from: date) {
-            case dateFormatter.string(from: Date()):
-                return CGPoint(x:0.0, y:-20.0)
-            default:
-                return CGPoint(x:0.0, y:-20.0)
-        }
+        return CGPoint(x:0.0, y:-20.0)
     }
     /*
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
@@ -299,7 +338,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             let circleSize = CGSize(width: 5, height: 5)
             let circleOrigin = CGPoint(x: 25, y: 38)
             let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin, size: circleSize), self.currentTMP ?? "")
-            //let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin))
             // add the custom view to the cell
             cell.addSubview(circleLabelWrapper)
             //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
@@ -315,8 +353,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
         }
         
-        
-        //cell.backgroundColor = .red
         return cell
     }
     
@@ -336,17 +372,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     
     //
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
-        /*
-        let date = dateFormatter.string(from:date)
-        let monthYear = date.components(separatedBy: "-")[..<2].joined(separator: "-")
-        let day = date.components(separatedBy: "-")[2]
-        
-        if logItemStore.allLogItems.contains(where: {$0.key == monthYear}) {
-            if ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true) {
-                return CGPoint(x:0.0, y:0.0)
-            }
-        }
-        */
         return CGPoint(x:0.0, y:-7.0)
     }
     
@@ -368,6 +393,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                     print("item exist")
                 }
                 else {
+                    // if item not exist, create with setByUser is false
                     let mood = Mood.soso
                     self.logItemStore.createItem(date: self.selectedDate, mood: mood, setByUser: false)
                 }
@@ -383,12 +409,6 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.selectedDate = dateFormatter.string(from:date)
         self.selectedDateUpdated = true
-        /*
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
-        
-        nc.post(name: NSNotification.Name.NSCalendarDayChanged, object: nil)
-        */
         
         let monthYear = self.selectedDate.components(separatedBy: "-")[..<2].joined(separator: "-")
         let day = self.selectedDate.components(separatedBy: "-")[2]
@@ -417,24 +437,98 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             self.showDetailButton.setImage(scaledImage, for: .normal)
         }
         
-        
-        let myFormat = Date.FormatStyle()
-            .day()
-            .weekday(.abbreviated)
-            .month(.abbreviated)
-        
-        let calendar = Calendar.current
-        let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
-        let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
-        let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
-        var dateComponents = DateComponents()
-        dateComponents.year = Int(selectedYear)
-        dateComponents.month = Int(selectedMonth)
-        dateComponents.day = Int(selectedDay)
-        let selectedDate = calendar.date(from: dateComponents)
-        
-        let weekday = selectedDate!.formatted(myFormat)
-        self.daateLabel.text = weekday
+        // 단기예보
+        self.store.fetchWeatherInfo(endpoint: EndPoint.getVilageFcst) { // select endpoint
+        (weatherResult) in
+            switch weatherResult {
+            case let .success(weather):
+                //print(weather["TMP"])
+                
+                if let dict = weather as? [String:[String:String]] {
+                    
+                    let calendar = Calendar.current
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyyMMdd:HHmm"
+                    
+                    // forecast of sky state
+                    // current hour, tomorrow morning (7am), noon, evening (6pm)
+                    
+                    // check if selected date key exist
+                    //if let dict["SKY"][]
+                    let myFormat = Date.FormatStyle()
+                        .day()
+                        .weekday(.abbreviated)
+                        .month(.abbreviated)
+                    
+                    let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
+                    let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
+                    let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
+                    var dateComponents = DateComponents()
+                    dateComponents.year = Int(selectedYear)
+                    dateComponents.month = Int(selectedMonth)
+                    dateComponents.day = Int(selectedDay)
+                    let selectedDate = calendar.date(from: dateComponents)
+                    
+                    let weekday = selectedDate!.formatted(myFormat)
+                    self.daateLabel.text = weekday
+                    
+                    let currentTime = Date()
+                    let timeFormatter = DateFormatter()
+                    timeFormatter.dateFormat = "yyyyMMdd:HH"
+                    
+                    let currentString = timeFormatter.string(from: currentTime) + "00"
+                    let selectedString = timeFormatter.string(from: selectedDate!) + "00"
+                    print("currentString \(currentString) selectedString \(selectedString)")
+                    
+                    if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
+                        // show current SKY
+                        let sky = dict["SKY"]![currentString]
+                        switch sky {
+                        case "1":
+                            self.SKY1?.image = UIImage(systemName: "sun.max.fill")
+                            self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
+                        case "3":
+                            self.SKY1?.image = UIImage(systemName: "cloud")
+                            self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
+                        case "4":
+                            self.SKY1?.image = UIImage(systemName: "cloud.fill")
+                            self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
+                        default:
+                            print("something wrong")
+                        }
+                    } else {
+                        if var sky = dict["SKY"]![selectedString] {
+                            sky = dict["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
+                            switch sky {
+                            case "1":
+                                self.SKY1?.image = UIImage(systemName: "sun.max.fill")
+                                self.SK1Time!.text = "0600"
+                            case "3":
+                                self.SKY1?.image = UIImage(systemName: "cloud")
+                                self.SK1Time!.text = "0600"
+                            case "4":
+                                print("흐림")
+                                self.SKY1?.image = UIImage(systemName: "cloud.fill")
+                                self.SK1Time!.text = "0600"
+                            default:
+                                print("something wrong")
+                            }
+                        } else {
+                            print("not exist")
+                            self.SKY1?.image = nil
+                            self.SK1Time!.text = nil
+                        }
+                    }
+                    //
+                }
+                DispatchQueue.main.async {
+                    self.calendarView.reloadData() // wait and reload
+                }
+                 
+            case let .failure(error):
+                print("Error fetching interesting photos: \(error)")
+            }
+        }
         
         print(self.selectedDate  + " 선택됨")
     }
@@ -445,18 +539,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     }
     
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
-            
-        //selectedDate = date
-        /*
-        switch dateFormatter.string(from: date) {
-            case dateFormatter.string(from: Date()):
-                return self.currentTMP
-            default:
-                return nil
-        }
-         */
         return nil
-        
     }
     
     func calendar(_ calendar: FSCalendar!, hasEventForDate date: Date) -> Bool {
