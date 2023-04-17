@@ -7,10 +7,9 @@
 
 import UIKit
 import Foundation
+import SwiftUI
 
 class WeatherStore {
-    
-    // var allLogItems = Dictionary<String, Dictionary<String, LogItem>>()
     
     private let session: URLSession = {
         let config = URLSessionConfiguration.default
@@ -43,6 +42,7 @@ class WeatherStore {
                         // 'result' passed to a completion closure
                         // the closure is defined in the caller side
                         completion(result)
+                        
                     }
                     
                     // print(result)

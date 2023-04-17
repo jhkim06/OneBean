@@ -51,22 +51,41 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5RA-hr-d7W">
-                                <rect key="frame" x="204" y="571" width="30" height="40"/>
+                                <rect key="frame" x="204" y="571" width="20" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wu3-y1-a4W">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="31"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="26.5"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otO-qm-tTc">
-                                        <rect key="frame" x="0.0" y="31" width="30" height="9"/>
-                                        <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="7"/>
+                                        <rect key="frame" x="0.0" y="26.5" width="20" height="13.5"/>
+                                        <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="9"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="otO-qm-tTc" firstAttribute="height" secondItem="wu3-y1-a4W" secondAttribute="height" multiplier="0.3" id="3XA-T9-BjI"/>
-                                    <constraint firstAttribute="width" constant="30" id="5JQ-15-cNG"/>
+                                    <constraint firstItem="otO-qm-tTc" firstAttribute="height" secondItem="wu3-y1-a4W" secondAttribute="height" multiplier="0.5" id="3XA-T9-BjI"/>
+                                    <constraint firstAttribute="width" constant="20" id="5JQ-15-cNG"/>
                                     <constraint firstAttribute="height" constant="40" id="lAt-RJ-RWm"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Oc7-HO-Vey">
+                                <rect key="frame" x="234" y="571" width="20" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JCE-2g-KSV">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="26.5"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tI-uY-ouu">
+                                        <rect key="frame" x="0.0" y="26.5" width="20" height="13.5"/>
+                                        <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="9"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="8tI-uY-ouu" firstAttribute="height" secondItem="JCE-2g-KSV" secondAttribute="height" multiplier="0.5" id="GPO-Av-SMf"/>
+                                    <constraint firstAttribute="width" constant="20" id="bGg-b5-KTC"/>
+                                    <constraint firstAttribute="height" constant="40" id="gId-l5-zCe"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -79,7 +98,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="37R-18-Djb" secondAttribute="trailing" constant="200" id="D1U-Rd-hno"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0G-8a-uFh" secondAttribute="trailing" constant="10" id="MnZ-Gy-p66"/>
                             <constraint firstItem="bBh-kO-n8o" firstAttribute="leading" secondItem="lKF-d7-iVG" secondAttribute="trailing" constant="10" id="Wuz-qf-EzM"/>
+                            <constraint firstItem="Oc7-HO-Vey" firstAttribute="leading" secondItem="5RA-hr-d7W" secondAttribute="trailing" constant="10" id="Xa7-dp-q95"/>
                             <constraint firstItem="5RA-hr-d7W" firstAttribute="leading" secondItem="bBh-kO-n8o" secondAttribute="leading" id="cBc-Mz-At0"/>
+                            <constraint firstItem="Oc7-HO-Vey" firstAttribute="top" secondItem="5RA-hr-d7W" secondAttribute="top" id="daU-7k-EKP"/>
                             <constraint firstItem="lKF-d7-iVG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="170" id="eYX-U8-inh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bBh-kO-n8o" secondAttribute="trailing" symbolic="YES" id="kdR-so-cFU"/>
                             <constraint firstItem="lKF-d7-iVG" firstAttribute="top" secondItem="A0G-8a-uFh" secondAttribute="bottom" constant="1" id="rAJ-xu-ewc"/>
@@ -91,7 +112,9 @@
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="hY9-Zh-Ht5"/>
                     <connections>
                         <outlet property="SK1Time" destination="otO-qm-tTc" id="VhP-1i-8KL"/>
+                        <outlet property="SK2Time" destination="8tI-uY-ouu" id="YPF-eE-gQS"/>
                         <outlet property="SKY1" destination="wu3-y1-a4W" id="tR7-hi-j2I"/>
+                        <outlet property="SKY2" destination="JCE-2g-KSV" id="AKQ-3d-V2t"/>
                         <outlet property="addressLabel" destination="37R-18-Djb" id="yUT-hM-RN9"/>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
                         <outlet property="daateLabel" destination="bBh-kO-n8o" id="NCa-FG-2Wf"/>

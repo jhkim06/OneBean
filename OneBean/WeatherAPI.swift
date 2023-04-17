@@ -79,9 +79,7 @@ struct WeatherAPI {
         */
         
         let locationProvider = LocationProvider()
-        print("call get location")
         let location = locationProvider.getLocation()
-        print("get location")
         var nx = location.coordinate.latitude
         var ny = location.coordinate.longitude
         //print("nx \(nx) ny \(ny)")

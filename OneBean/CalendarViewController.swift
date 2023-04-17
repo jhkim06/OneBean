@@ -19,8 +19,13 @@ class CalendarViewController: UIViewController {
     var selectedDateUpdated: Bool = false
     var isSegueInProgress = false
     
+    var vilageFcst = [String: [String:String]]()
+    
     @IBOutlet var SKY1: UIImageView?
     @IBOutlet var SK1Time: UILabel?
+    @IBOutlet var SKY2: UIImageView?
+    @IBOutlet var SK2Time: UILabel?
+
     
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var showDetailButton: UIButton!
@@ -37,12 +42,14 @@ class CalendarViewController: UIViewController {
     var logItemStore: LogItemStore!
     
     override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear")
         super.viewWillAppear(animated)
         
         if selectedDateUpdated == false {
             selectedDate = dateFormatter.string(from:Date())
         }
         calendarView.reloadData()
+        
         
         //
         let myFormat = Date.FormatStyle()
@@ -96,7 +103,7 @@ class CalendarViewController: UIViewController {
             (addressStr) in
             self.addressLabel.text = "현위치 " + addressStr
         }
-       
+        
         // get current temperature of current location
         OperationQueue.main.addOperation {
            
@@ -115,6 +122,7 @@ class CalendarViewController: UIViewController {
                     print("Error fetching interesting photos: \(error)")
                 }
             }
+            
             // 단기예보
             self.store.fetchWeatherInfo(endpoint: EndPoint.getVilageFcst) { // select endpoint
             (weatherResult) in
@@ -123,7 +131,7 @@ class CalendarViewController: UIViewController {
                     //print(weather["TMP"])
                     
                     if let dict = weather as? [String:[String:String]] {
-                        
+                        self.vilageFcst = dict
                         let calendar = Calendar.current
                         let currentDate = Date()
                         let tomorrowDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
@@ -189,6 +197,26 @@ class CalendarViewController: UIViewController {
                             default:
                                 print("something wrong")
                             }
+                            /*
+                            let secondTime = calendar.date(byAdding: .hour, value: 6, to: currentTime)
+                            let secondString = timeFormatter.string(from: secondTime!) + "00"
+                            
+                            let sky2 = dict["SKY"]![secondString]
+                            switch sky2 {
+                            case "1":
+                                self.SKY2?.image = UIImage(systemName: "sun.max.fill")
+                                self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
+                            case "3":
+                                self.SKY2?.image = UIImage(systemName: "cloud")
+                                self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
+                            case "4":
+                                self.SKY2?.image = UIImage(systemName: "cloud.fill")
+                                self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
+                            default:
+                                print("something wrong")
+                            }
+                             */
+                            
                         } else {
                             if var sky = dict["SKY"]![selectedString] {
                                 sky = dict["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
@@ -226,6 +254,7 @@ class CalendarViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        print("viewDidLoad")
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
@@ -263,6 +292,7 @@ class CalendarViewController: UIViewController {
         calendarView.placeholderType = .none // show only the days of the current month
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDayChangedNotification(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+        
     }
     
     func rescaleImage(rawImage: UIImage, scale: CGFloat = 0.4) -> UIImage {
@@ -437,15 +467,8 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             self.showDetailButton.setImage(scaledImage, for: .normal)
         }
         
+        
         // 단기예보
-        self.store.fetchWeatherInfo(endpoint: EndPoint.getVilageFcst) { // select endpoint
-        (weatherResult) in
-            switch weatherResult {
-            case let .success(weather):
-                //print(weather["TMP"])
-                
-                if let dict = weather as? [String:[String:String]] {
-                    
                     let calendar = Calendar.current
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyyMMdd:HHmm"
@@ -482,7 +505,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                     
                     if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
                         // show current SKY
-                        let sky = dict["SKY"]![currentString]
+                        let sky = self.vilageFcst["SKY"]![currentString]
                         switch sky {
                         case "1":
                             self.SKY1?.image = UIImage(systemName: "sun.max.fill")
@@ -495,10 +518,36 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                             self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
                         default:
                             print("something wrong")
+                            self.SKY1?.image = nil
+                            self.SK1Time!.text = nil
                         }
+                       
+                        /*
+                        let secondTime = calendar.date(byAdding: .hour, value: 6, to: currentTime)
+                        let secondString = timeFormatter.string(from: secondTime!) + "00"
+                        
+                        let sky2 = self.vilageFcst["SKY"]![secondString]
+                        switch sky2 {
+                        case "1":
+                            self.SKY2?.image = UIImage(systemName: "sun.max.fill")
+                            self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
+                        case "3":
+                            self.SKY2?.image = UIImage(systemName: "cloud")
+                            self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
+                        case "4":
+                            self.SKY2?.image = UIImage(systemName: "cloud.fill")
+                            self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
+                        default:
+                            print("something wrong")
+                        }
+                         */
+                        
                     } else {
-                        if var sky = dict["SKY"]![selectedString] {
-                            sky = dict["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
+                        // ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true
+                        if var _ = self.vilageFcst["SKY"]![selectedString], (self.vilageFcst["SKY"]?.contains(where: {$0.key == selectedString.components(separatedBy: ":")[0] + ":0600"})) == true {
+                            
+                            let sky = self.vilageFcst["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
+                            
                             switch sky {
                             case "1":
                                 self.SKY1?.image = UIImage(systemName: "sun.max.fill")
@@ -512,6 +561,8 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                                 self.SK1Time!.text = "0600"
                             default:
                                 print("something wrong")
+                                self.SKY1?.image = nil
+                                self.SK1Time!.text = nil
                             }
                         } else {
                             print("not exist")
@@ -520,15 +571,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
                         }
                     }
                     //
-                }
-                DispatchQueue.main.async {
-                    self.calendarView.reloadData() // wait and reload
-                }
-                 
-            case let .failure(error):
-                print("Error fetching interesting photos: \(error)")
-            }
-        }
+                self.calendarView.reloadData() // wait and reload
         
         print(self.selectedDate  + " 선택됨")
     }
