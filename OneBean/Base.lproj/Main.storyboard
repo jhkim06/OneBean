@@ -45,13 +45,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBh-kO-n8o">
-                                <rect key="frame" x="204" y="545" width="36.5" height="21"/>
+                                <rect key="frame" x="195" y="545" width="36.5" height="21"/>
                                 <fontDescription key="fontDescription" name="KohinoorTelugu-Regular" family="Kohinoor Telugu" pointSize="15"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5RA-hr-d7W">
-                                <rect key="frame" x="204" y="571" width="20" height="40"/>
+                                <rect key="frame" x="195" y="571" width="20" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wu3-y1-a4W">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="26.5"/>
@@ -70,7 +70,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Oc7-HO-Vey">
-                                <rect key="frame" x="234" y="571" width="20" height="40"/>
+                                <rect key="frame" x="225" y="571" width="20" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JCE-2g-KSV">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="26.5"/>
@@ -97,7 +97,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="37R-18-Djb" secondAttribute="bottom" constant="10" id="Bfe-0C-qQQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="37R-18-Djb" secondAttribute="trailing" constant="200" id="D1U-Rd-hno"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0G-8a-uFh" secondAttribute="trailing" constant="10" id="MnZ-Gy-p66"/>
-                            <constraint firstItem="bBh-kO-n8o" firstAttribute="leading" secondItem="lKF-d7-iVG" secondAttribute="trailing" constant="10" id="Wuz-qf-EzM"/>
+                            <constraint firstItem="bBh-kO-n8o" firstAttribute="leading" secondItem="lKF-d7-iVG" secondAttribute="trailing" constant="1" id="Wuz-qf-EzM"/>
                             <constraint firstItem="Oc7-HO-Vey" firstAttribute="leading" secondItem="5RA-hr-d7W" secondAttribute="trailing" constant="10" id="Xa7-dp-q95"/>
                             <constraint firstItem="5RA-hr-d7W" firstAttribute="leading" secondItem="bBh-kO-n8o" secondAttribute="leading" id="cBc-Mz-At0"/>
                             <constraint firstItem="Oc7-HO-Vey" firstAttribute="top" secondItem="5RA-hr-d7W" secondAttribute="top" id="daU-7k-EKP"/>
@@ -111,10 +111,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="hY9-Zh-Ht5"/>
                     <connections>
-                        <outlet property="SK1Time" destination="otO-qm-tTc" id="VhP-1i-8KL"/>
-                        <outlet property="SK2Time" destination="8tI-uY-ouu" id="YPF-eE-gQS"/>
                         <outlet property="SKY1" destination="wu3-y1-a4W" id="tR7-hi-j2I"/>
+                        <outlet property="SKY1Time" destination="otO-qm-tTc" id="VhP-1i-8KL"/>
                         <outlet property="SKY2" destination="JCE-2g-KSV" id="AKQ-3d-V2t"/>
+                        <outlet property="SKY2Time" destination="8tI-uY-ouu" id="YPF-eE-gQS"/>
                         <outlet property="addressLabel" destination="37R-18-Djb" id="yUT-hM-RN9"/>
                         <outlet property="calendarView" destination="A0G-8a-uFh" id="rqR-1S-Kg2"/>
                         <outlet property="daateLabel" destination="bBh-kO-n8o" id="NCa-FG-2Wf"/>

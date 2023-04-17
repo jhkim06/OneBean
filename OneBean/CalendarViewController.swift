@@ -21,10 +21,11 @@ class CalendarViewController: UIViewController {
     
     var vilageFcst = [String: [String:String]]()
     
+    // views for forecast weather
     @IBOutlet var SKY1: UIImageView?
-    @IBOutlet var SK1Time: UILabel?
+    @IBOutlet var SKY1Time: UILabel?
     @IBOutlet var SKY2: UIImageView?
-    @IBOutlet var SK2Time: UILabel?
+    @IBOutlet var SKY2Time: UILabel?
 
     
     @IBOutlet var addressLabel: UILabel!
@@ -151,105 +152,147 @@ class CalendarViewController: UIViewController {
                             }
                         }
                         
-                        // forecast of sky state
-                        // current hour, tomorrow morning (7am), noon, evening (6pm)
-                        
-                        // check if selected date key exist
-                        //if let dict["SKY"][]
-                        let myFormat = Date.FormatStyle()
-                            .day()
-                            .weekday(.abbreviated)
-                            .month(.abbreviated)
-                        
-                        let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
-                        let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
-                        let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
-                        var dateComponents = DateComponents()
-                        dateComponents.year = Int(selectedYear)
-                        dateComponents.month = Int(selectedMonth)
-                        dateComponents.day = Int(selectedDay)
-                        let selectedDate = calendar.date(from: dateComponents)
-                        
-                        let weekday = selectedDate!.formatted(myFormat)
-                        self.daateLabel.text = weekday
-                        
-                        let currentTime = Date()
-                        let timeFormatter = DateFormatter()
-                        timeFormatter.dateFormat = "yyyyMMdd:HH"
-                        
-                        let currentString = timeFormatter.string(from: currentTime) + "00"
-                        let selectedString = timeFormatter.string(from: selectedDate!) + "00"
-                        print("currentString \(currentString) selectedString \(selectedString)")
-                        
-                        if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
-                            // show current SKY
-                            let sky = dict["SKY"]![currentString]
-                            switch sky {
-                            case "1":
-                                self.SKY1?.image = UIImage(systemName: "sun.max.fill")
-                                self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
-                            case "3":
-                                self.SKY1?.image = UIImage(systemName: "cloud")
-                                self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
-                            case "4":
-                                self.SKY1?.image = UIImage(systemName: "cloud.fill")
-                                self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
-                            default:
-                                print("something wrong")
-                            }
-                            /*
-                            let secondTime = calendar.date(byAdding: .hour, value: 6, to: currentTime)
-                            let secondString = timeFormatter.string(from: secondTime!) + "00"
-                            
-                            let sky2 = dict["SKY"]![secondString]
-                            switch sky2 {
-                            case "1":
-                                self.SKY2?.image = UIImage(systemName: "sun.max.fill")
-                                self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
-                            case "3":
-                                self.SKY2?.image = UIImage(systemName: "cloud")
-                                self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
-                            case "4":
-                                self.SKY2?.image = UIImage(systemName: "cloud.fill")
-                                self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
-                            default:
-                                print("something wrong")
-                            }
-                             */
-                            
-                        } else {
-                            if var sky = dict["SKY"]![selectedString] {
-                                sky = dict["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
-                                switch sky {
-                                case "1":
-                                    self.SKY1?.image = UIImage(systemName: "sun.max.fill")
-                                    self.SK1Time!.text = "0600"
-                                case "3":
-                                    self.SKY1?.image = UIImage(systemName: "cloud")
-                                    self.SK1Time!.text = "0600"
-                                case "4":
-                                    print("흐림")
-                                    self.SKY1?.image = UIImage(systemName: "cloud.fill")
-                                    self.SK1Time!.text = "0600"
-                                default:
-                                    print("something wrong")
-                                }
-                            } else {
-                                print("not exist")
-                                self.SKY1?.image = nil
-                                self.SK1Time!.text = nil
-                            }
+                        DispatchQueue.main.async {
+                            self.calendarView.reloadData() // wait and reload
                         }
-                        //
-                    }
-                    DispatchQueue.main.async {
-                        self.calendarView.reloadData() // wait and reload
+                        
+                        self.showFcstWeather()
                     }
                      
                 case let .failure(error):
                     print("Error fetching interesting photos: \(error)")
                 }
             }
+        }
+    }
+    
+    func showFcstWeather() {
+        
+        let myFormat = Date.FormatStyle()
+            .day()
+            .weekday(.abbreviated)
+            .month(.abbreviated)
+        
+        let calendar = Calendar.current
+        let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
+        let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
+        let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
+        var dateComponents = DateComponents()
+        dateComponents.year = Int(selectedYear)
+        dateComponents.month = Int(selectedMonth)
+        dateComponents.day = Int(selectedDay)
+        let selectedDate = calendar.date(from: dateComponents)
+        
+        let weekday = selectedDate!.formatted(myFormat)
+        self.daateLabel.text = weekday
+        
+        let currentTime = Date()
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "yyyyMMdd:HH"
+        
+        let currentString = timeFormatter.string(from: currentTime) + "00"
+        let selectedString = timeFormatter.string(from: selectedDate!) + "00"
+        
+        if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
+            // show current SKY
+            let sky = self.vilageFcst["SKY"]![currentString]
+        
+            switch sky {
+            case "1":
+                self.SKY1?.image = UIImage(systemName: "sun.max.fill")
+                self.SKY1Time!.text = "Now"
+            case "3":
+                self.SKY1?.image = UIImage(systemName: "cloud")
+                self.SKY1Time!.text = "Now"
+            case "4":
+                self.SKY1?.image = UIImage(systemName: "cloud.fill")
+                self.SKY1Time!.text = "Now"
+            default:
+                print("something wrong")
+            }
+           
+            let secondTime = calendar.date(byAdding: .hour, value: 6, to: currentTime)
+            let secondString = timeFormatter.string(from: secondTime!) + "00"
+            
+            let sky2 = self.vilageFcst["SKY"]![secondString]
+            switch sky2 {
+            case "1":
+                self.SKY2?.image = UIImage(systemName: "sun.max.fill")
+                self.SKY2Time!.text = secondString.components(separatedBy: ":")[1]
+            case "3":
+                self.SKY2?.image = UIImage(systemName: "cloud")
+                self.SKY2Time!.text = secondString.components(separatedBy: ":")[1]
+            case "4":
+                self.SKY2?.image = UIImage(systemName: "cloud.fill")
+                self.SKY2Time!.text = secondString.components(separatedBy: ":")[1]
+            default:
+                print("something wrong")
+            }
+            
+        } else {
+            
+            // fcstTime, button
+            // self.SKY1
+            if var _ = self.vilageFcst["SKY"]![selectedString], (self.vilageFcst["SKY"]?.contains(where: {$0.key == selectedString.components(separatedBy: ":")[0] + ":0600"})) == true {
+                let sky = self.vilageFcst["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
+                let pty = self.vilageFcst["PTY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
+                
+                switch sky {
+                case "1":
+                    self.SKY1?.image = UIImage(systemName: "sun.max.fill")
+                    self.SKY1Time!.text = "0600"
+                case "3":
+                    self.SKY1?.image = UIImage(systemName: "cloud")
+                    if pty == "1" {
+                        self.SKY1?.image = UIImage(systemName: "cloud.rain")
+                    }
+                    self.SKY1Time!.text = "0600"
+                case "4":
+                    self.SKY1?.image = UIImage(systemName: "cloud.fill")
+                    if pty == "1" {
+                        self.SKY1?.image = UIImage(systemName: "cloud.rain.fill")
+                    }
+                    self.SKY1Time!.text = "0600"
+                default:
+                    print("something wrong")
+                }
+                
+            } else {
+                print("not exist")
+                self.SKY1?.image = nil
+                self.SKY1Time!.text = nil
+            }
+            
+            if var _ = self.vilageFcst["SKY"]![selectedString], (self.vilageFcst["SKY"]?.contains(where: {$0.key == selectedString.components(separatedBy: ":")[0] + ":1200"})) == true {
+                let sky = self.vilageFcst["SKY"]![selectedString.components(separatedBy: ":")[0] + ":1200"]!
+                let pty = self.vilageFcst["PTY"]![selectedString.components(separatedBy: ":")[0] + ":1200"]!
+                
+                switch sky {
+                case "1":
+                    self.SKY2?.image = UIImage(systemName: "sun.max.fill")
+                    self.SKY2Time!.text = "1200"
+                case "3":
+                    self.SKY2?.image = UIImage(systemName: "cloud")
+                    if pty == "1" {
+                        self.SKY2?.image = UIImage(systemName: "cloud.rain")
+                    }
+                    self.SKY2Time!.text = "1200"
+                case "4":
+                    self.SKY2?.image = UIImage(systemName: "cloud.fill")
+                    if pty == "1" {
+                        self.SKY2?.image = UIImage(systemName: "cloud.rain.fill")
+                    }
+                    self.SKY2Time!.text = "1200"
+                default:
+                    print("something wrong")
+                }
+                
+            } else {
+                print("not exist")
+                self.SKY2?.image = nil
+                self.SKY2Time!.text = nil
+            }
+            
         }
     }
     
@@ -270,8 +313,8 @@ class CalendarViewController: UIViewController {
         calendarView.register(CustomCalendarCell.self, forCellReuseIdentifier: "cellCustom")
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
-        calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
-        calendarView.appearance.todayColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.2)
+        calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.2)
+        calendarView.appearance.todayColor = UIColor(red: 255/255, green: 105/255, blue: 97/255, alpha: 0.7)
         //calendarView.appearance.borderRadius = 0.7
         calendarView.appearance.titleTodayColor = .black
         calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)
@@ -467,111 +510,7 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             self.showDetailButton.setImage(scaledImage, for: .normal)
         }
         
-        
-        // 단기예보
-                    let calendar = Calendar.current
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyyMMdd:HHmm"
-                    
-                    // forecast of sky state
-                    // current hour, tomorrow morning (7am), noon, evening (6pm)
-                    
-                    // check if selected date key exist
-                    //if let dict["SKY"][]
-                    let myFormat = Date.FormatStyle()
-                        .day()
-                        .weekday(.abbreviated)
-                        .month(.abbreviated)
-                    
-                    let selectedYear = self.selectedDate.components(separatedBy: "-")[0]
-                    let selectedMonth = self.selectedDate.components(separatedBy: "-")[1]
-                    let selectedDay = self.selectedDate.components(separatedBy: "-")[2]
-                    var dateComponents = DateComponents()
-                    dateComponents.year = Int(selectedYear)
-                    dateComponents.month = Int(selectedMonth)
-                    dateComponents.day = Int(selectedDay)
-                    let selectedDate = calendar.date(from: dateComponents)
-                    
-                    let weekday = selectedDate!.formatted(myFormat)
-                    self.daateLabel.text = weekday
-                    
-                    let currentTime = Date()
-                    let timeFormatter = DateFormatter()
-                    timeFormatter.dateFormat = "yyyyMMdd:HH"
-                    
-                    let currentString = timeFormatter.string(from: currentTime) + "00"
-                    let selectedString = timeFormatter.string(from: selectedDate!) + "00"
-                    print("currentString \(currentString) selectedString \(selectedString)")
-                    
-                    if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
-                        // show current SKY
-                        let sky = self.vilageFcst["SKY"]![currentString]
-                        switch sky {
-                        case "1":
-                            self.SKY1?.image = UIImage(systemName: "sun.max.fill")
-                            self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
-                        case "3":
-                            self.SKY1?.image = UIImage(systemName: "cloud")
-                            self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
-                        case "4":
-                            self.SKY1?.image = UIImage(systemName: "cloud.fill")
-                            self.SK1Time!.text = currentString.components(separatedBy: ":")[1]
-                        default:
-                            print("something wrong")
-                            self.SKY1?.image = nil
-                            self.SK1Time!.text = nil
-                        }
-                       
-                        /*
-                        let secondTime = calendar.date(byAdding: .hour, value: 6, to: currentTime)
-                        let secondString = timeFormatter.string(from: secondTime!) + "00"
-                        
-                        let sky2 = self.vilageFcst["SKY"]![secondString]
-                        switch sky2 {
-                        case "1":
-                            self.SKY2?.image = UIImage(systemName: "sun.max.fill")
-                            self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
-                        case "3":
-                            self.SKY2?.image = UIImage(systemName: "cloud")
-                            self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
-                        case "4":
-                            self.SKY2?.image = UIImage(systemName: "cloud.fill")
-                            self.SK2Time!.text = secondString.components(separatedBy: ":")[1]
-                        default:
-                            print("something wrong")
-                        }
-                         */
-                        
-                    } else {
-                        // ((logItemStore.allLogItems[monthYear]?.contains(where: {$0.key == day})) == true
-                        if var _ = self.vilageFcst["SKY"]![selectedString], (self.vilageFcst["SKY"]?.contains(where: {$0.key == selectedString.components(separatedBy: ":")[0] + ":0600"})) == true {
-                            
-                            let sky = self.vilageFcst["SKY"]![selectedString.components(separatedBy: ":")[0] + ":0600"]!
-                            
-                            switch sky {
-                            case "1":
-                                self.SKY1?.image = UIImage(systemName: "sun.max.fill")
-                                self.SK1Time!.text = "0600"
-                            case "3":
-                                self.SKY1?.image = UIImage(systemName: "cloud")
-                                self.SK1Time!.text = "0600"
-                            case "4":
-                                print("흐림")
-                                self.SKY1?.image = UIImage(systemName: "cloud.fill")
-                                self.SK1Time!.text = "0600"
-                            default:
-                                print("something wrong")
-                                self.SKY1?.image = nil
-                                self.SK1Time!.text = nil
-                            }
-                        } else {
-                            print("not exist")
-                            self.SKY1?.image = nil
-                            self.SK1Time!.text = nil
-                        }
-                    }
-                    //
-                self.calendarView.reloadData() // wait and reload
+        self.showFcstWeather()
         
         print(self.selectedDate  + " 선택됨")
     }
