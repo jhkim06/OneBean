@@ -26,7 +26,6 @@ class CalendarViewController: UIViewController {
     @IBOutlet var SKY1Time: UILabel?
     @IBOutlet var SKY2: UIImageView?
     @IBOutlet var SKY2Time: UILabel?
-
     
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var showDetailButton: UIButton!
@@ -50,7 +49,6 @@ class CalendarViewController: UIViewController {
             selectedDate = dateFormatter.string(from:Date())
         }
         calendarView.reloadData()
-        
         
         //
         let myFormat = Date.FormatStyle()
@@ -193,6 +191,7 @@ class CalendarViewController: UIViewController {
         let currentString = timeFormatter.string(from: currentTime) + "00"
         let selectedString = timeFormatter.string(from: selectedDate!) + "00"
         
+        // for today
         if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
             // show current SKY
             let sky = self.vilageFcst["SKY"]![currentString]
@@ -255,6 +254,8 @@ class CalendarViewController: UIViewController {
                     self.SKY1Time!.text = "0600"
                 default:
                     print("something wrong")
+                    self.SKY1?.image = nil
+                    self.SKY1Time!.text = nil
                 }
                 
             } else {
@@ -285,6 +286,8 @@ class CalendarViewController: UIViewController {
                     self.SKY2Time!.text = "1200"
                 default:
                     print("something wrong")
+                    self.SKY2?.image = nil
+                    self.SKY2Time!.text = nil
                 }
                 
             } else {
@@ -292,7 +295,6 @@ class CalendarViewController: UIViewController {
                 self.SKY2?.image = nil
                 self.SKY2Time!.text = nil
             }
-            
         }
     }
     
@@ -314,7 +316,7 @@ class CalendarViewController: UIViewController {
         
         calendarView.backgroundColor = UIColor(red: 241/255, green: 244/255, blue: 237/255, alpha: 1)
         calendarView.appearance.selectionColor = UIColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.2)
-        calendarView.appearance.todayColor = UIColor(red: 255/255, green: 105/255, blue: 97/255, alpha: 0.7)
+        calendarView.appearance.todayColor = UIColor(red: 255/255, green: 105/255, blue: 97/255, alpha: 0.3)
         //calendarView.appearance.borderRadius = 0.7
         calendarView.appearance.titleTodayColor = .black
         calendarView.appearance.titleOffset = CGPoint(x:0.0, y:-20.0)

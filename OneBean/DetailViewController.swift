@@ -121,10 +121,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             timeFormatter.dateFormat = "HH:mm"
             let timeString = timeFormatter.string(from: currentTime)
             
-            let calendar = Calendar.current
             self.currentHourLabel.text = timeString
             
-
         }  else {
             // update dateLabel
             let myFormat = Date.FormatStyle()
@@ -175,7 +173,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         if currentLogItem.date == today {
             
         var colonColor = UIColor.black
-        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
             
             let currentTime = Date()
             let timeFormatter = DateFormatter()

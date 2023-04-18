@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //let logItemController = window!.rootViewController as! ViewController
         let barItemController = window!.rootViewController as! UITabBarController
+        barItemController.tabBar.tintColor = UIColor.black
         let logItemController = barItemController.viewControllers?[0] as! CalendarViewController
         logItemController.logItemStore = LogItemStore()
         logItemController.store = WeatherStore()

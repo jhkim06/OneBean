@@ -93,7 +93,6 @@ struct WeatherAPI {
 
         var currentTime = dateFormatter.string(from: Date())
         let minute =  Int(currentTime.components(separatedBy: "-")[1].components(separatedBy: ":")[1])
-
         //
         if endPoint == EndPoint.getUltraSrtNcst {
             if minute! < 40 { // information updated at every 40 min
@@ -108,21 +107,45 @@ struct WeatherAPI {
             }
         }
         if endPoint == EndPoint.getVilageFcst {
-            let hour = Int(currentTime.components(separatedBy: "-")[1].components(separatedBy: ":")[0])
-            
-            if hour! > 6 {
-                let calendar = Calendar.current
-                //
-                let newDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: Date())
-                currentTime = dateFormatter.string(from: newDate!)
-                
+            let calendar = Calendar.current
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "yyyy-MM-dd-HH"
+            let timeString = timeFormatter.string(from: Date())
+
+            let currentYear = timeString.components(separatedBy: "-")[0]
+            let currentMonth = timeString.components(separatedBy: "-")[1]
+            let currentDay = timeString.components(separatedBy: "-")[2]
+            let currentHour = Int(timeString.components(separatedBy: "-")[3])
+
+            var offset = (currentHour! - 2) % 3
+
+            if offset >= 0 {
+                if offset == 0 {
+                    offset = 0
+                }
+                else if offset == 1 {
+                    offset = -1
+                }
+                else {
+                    offset = -2
+                }
             } else {
-                let calendar = Calendar.current
-                let currentDate = Date()
-                let newDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: -1, to: currentDate)!)
-                currentTime = dateFormatter.string(from: newDate!)
+                if offset == -1 {
+                    offset = -2
+                } else {
+                    offset = -1
+                }
             }
-            
+
+            var dateComponents = DateComponents()
+            dateComponents.year = Int(currentYear)
+            dateComponents.month = Int(currentMonth)
+            dateComponents.day = Int(currentDay)
+            dateComponents.hour = Int(currentHour!)
+            let currentDate = calendar.date(from: dateComponents)
+
+            let baseDate = calendar.date(byAdding: .hour, value: offset, to: currentDate!)
+            currentTime = dateFormatter.string(from: baseDate!)
         }
         
         let baseParams = ["base_date" : currentTime.components(separatedBy: "-")[0],
