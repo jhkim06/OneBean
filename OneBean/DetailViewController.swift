@@ -50,12 +50,12 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         moodSelector.selectedIndex = moods.firstIndex(where: {$0 == currentMood})!
         moodSelector.layer.cornerRadius = 5
         
-        textView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+        textView.layer.borderColor = CGColor(red: 136/255, green: 139/255, blue: 141/255, alpha: 0.7)
         textView.layer.borderWidth = 2.0
         textView.layer.cornerRadius = 5
         textView.text = currentLogItem.note
         
-        planTextView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+        planTextView.layer.borderColor = CGColor(red: 136/255, green: 139/255, blue: 141/255, alpha: 0.7)
         planTextView.layer.borderWidth = 2.0
         planTextView.layer.cornerRadius = 5
         if let planNote = currentLogItem.planNote {
@@ -71,7 +71,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             self.currentLogTime = currentLogTime
         }
         
-        hourTextView.layer.borderColor = CGColor(red: 97/255, green: 174/255, blue: 114/255, alpha: 0.7)
+        hourTextView.layer.borderColor = CGColor(red: 136/255, green: 139/255, blue: 141/255, alpha: 0.7)
         hourTextView.layer.borderWidth = 2.0
         hourTextView.layer.cornerRadius = 5
         
@@ -276,6 +276,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         self.setCursorToEnd()
         self.view.endEditing(true)
     }
+    
     @IBAction func addTime(sender: UIButton) {
        
         let currentTime = Date()
@@ -287,6 +288,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             textView.replace(selectedRange, withText: dateString)
         }
     }
+    
     func writeTime() {
         let currentTime = Date()
         //currentTime.formatted(date: .complete, time: .complete)

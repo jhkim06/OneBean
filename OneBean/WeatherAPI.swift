@@ -121,7 +121,7 @@ struct WeatherAPI {
 
             if offset >= 0 {
                 if offset == 0 {
-                    offset = 0
+                    offset = -3 // to get forecast of current hour
                 }
                 else if offset == 1 {
                     offset = -1

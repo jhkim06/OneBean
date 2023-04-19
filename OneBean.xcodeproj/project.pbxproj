@@ -449,6 +449,7 @@
 				DEVELOPMENT_TEAM = MV778C53Q7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneBean/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gurunica;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to get weather information.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -482,6 +483,7 @@
 				DEVELOPMENT_TEAM = MV778C53Q7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneBean/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gurunica;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to get weather information.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

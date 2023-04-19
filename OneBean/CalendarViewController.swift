@@ -26,6 +26,7 @@ class CalendarViewController: UIViewController {
     @IBOutlet var SKY1Time: UILabel?
     @IBOutlet var SKY2: UIImageView?
     @IBOutlet var SKY2Time: UILabel?
+    @IBOutlet var temperature: UILabel?
     
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var showDetailButton: UIButton!
@@ -107,11 +108,16 @@ class CalendarViewController: UIViewController {
         OperationQueue.main.addOperation {
            
             // current temperature
-            self.store.fetchWeatherInfo() { // selecte endpoint
+            self.store.fetchWeatherInfo() { [self] // selecte endpoint
             (weatherResult) in
                 switch weatherResult {
                 case let .success(weather):
                     self.currentTMP = weather["T1H"] as! String + "°C"
+                    if self.selectedDate == dateFormatter.string(from: Date()) {
+                        self.temperature!.text = self.currentTMP
+                    } else {
+                        self.temperature!.text = "No data"
+                    }
                     
                     DispatchQueue.main.async {
                         self.calendarView.reloadData() // wait and reload
@@ -155,6 +161,11 @@ class CalendarViewController: UIViewController {
                         }
                         
                         self.showFcstWeather()
+                        
+                        if dateFormatter.string(from: selectedDate!) == dateFormatter.string(from: tomorrowDate!) {
+                            self.temperature!.text = "H/L" + (self.tomorrowTMX ?? "") + "/" + (self.tomorrowTMN ?? "") + "°C"
+                        }
+                        
                     }
                      
                 case let .failure(error):
@@ -194,7 +205,7 @@ class CalendarViewController: UIViewController {
         // for today
         if currentString.components(separatedBy: ":")[0] == selectedString.components(separatedBy: ":")[0] {
             // show current SKY
-            let sky = self.vilageFcst["SKY"]![currentString]
+            let sky = self.vilageFcst["SKY"]![currentString] // can raise error?
         
             switch sky {
             case "1":
@@ -405,9 +416,10 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cellCustom", for: date, at: position)
         
+        /*
+         // example of CircleLabelWrapper
         let calendar = Calendar.current
         let currentDate = Date()
-        let tomorrowDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
         
         if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
             let circleSize = CGSize(width: 5, height: 5)
@@ -417,16 +429,19 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
             cell.addSubview(circleLabelWrapper)
             //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
         }
-        
+       
         if dateFormatter.string(from: date) == dateFormatter.string(from: tomorrowDate!) {
             let circleSize = CGSize(width: 5, height: 5)
             let circleOrigin = CGPoint(x: 25, y: 38)
             let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin, size: circleSize), "H/L" + (self.tomorrowTMX ?? "") + "/" + (self.tomorrowTMN ?? "") + "°C")
-            //let circleLabelWrapper = CircleLabelWrapper(frame: CGRect(origin: circleOrigin))
             // add the custom view to the cell
             cell.addSubview(circleLabelWrapper)
             //circleLabelWrapper.frame = CGRect(origin: circleOrigin, size: circleSize)
         }
+         */
+       
+       
+        
         
         return cell
     }
@@ -513,6 +528,19 @@ extension CalendarViewController : FSCalendarDelegate, FSCalendarDataSource, FSC
         }
         
         self.showFcstWeather()
+        
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let tomorrowDate = calendar.date(bySettingHour: 5, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
+        
+        if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
+            self.temperature!.text = self.currentTMP
+        } else if dateFormatter.string(from: date) == dateFormatter.string(from: tomorrowDate!) {
+            self.temperature!.text = "H/L " + (self.tomorrowTMX ?? "") + "/" + (self.tomorrowTMN ?? "") + "°C"
+        } else {
+            self.temperature!.text = "No data"
+        }
+        
         
         print(self.selectedDate  + " 선택됨")
     }

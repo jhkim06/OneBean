@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:OneBean.xcodeproj">
+      location = "group:/Users/jhkim/programming_study/iOS/OneBean/OneBean.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
